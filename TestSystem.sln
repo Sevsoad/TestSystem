@@ -5,7 +5,9 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSystem", "TestSystem\TestSystem.csproj", "{8A736ABF-31E1-4C83-9D52-172ADA4B6008}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSystem.WebTests", "TestSystem.WebTests\TestSystem.WebTests.csproj", "{04860A43-AF86-4D58-BE6E-AEB2AC55743D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSystem.Tests", "TestSystem.WebTests\TestSystem.Tests.csproj", "{04860A43-AF86-4D58-BE6E-AEB2AC55743D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FF118A58-45F9-481F-97D9-52474249A692}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
