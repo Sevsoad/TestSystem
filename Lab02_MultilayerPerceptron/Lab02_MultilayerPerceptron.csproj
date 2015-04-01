@@ -52,8 +52,11 @@
     <Compile Include="ApplicationForm.Designer.cs">
       <DependentUpon>ApplicationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="NeuronHelper.cs" />
+    <Compile Include="NoiseGenerator.cs" />
     <Compile Include="Perceptron.cs" />
     <Compile Include="PerceptronHelper.cs" />
+    <Compile Include="PictureContainer.cs" />
     <Compile Include="PicturesPath.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

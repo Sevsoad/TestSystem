@@ -30,5 +30,9 @@ namespace Lab02_MultilayerPerceptron
         /// </summary>
         public static String PathToOriginalC =
             @"D:\Projects\cosi-master\DigitalImagesAndSignalsProcessing-master\Pictures Sources\original\10\C\C1.bmp";
+
+
+        public static String PathToNoiseFolder =
+            @"D:\Projects\cosi-master\DigitalImagesAndSignalsProcessing-master\Pictures Sources\original\noise";
     }
 }

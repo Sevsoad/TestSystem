@@ -6,7 +6,6 @@
     using System.Windows.Forms;
     using System.Linq;
 
-    using Lab01_HopfieldNN;
     using System.Collections.Generic;
 
     public partial class ApplicationForm : Form
