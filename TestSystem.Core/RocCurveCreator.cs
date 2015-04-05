@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace TestSystem.BL
+namespace TestSystem.Core
 {
     public class RocCurveCreator //interface?
     {

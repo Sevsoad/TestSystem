@@ -6,6 +6,7 @@
 
 namespace Lab02_MultilayerPerceptron
 {
+    using System;
     using System.Drawing;
 
     /// <summary>
@@ -61,6 +62,42 @@ namespace Lab02_MultilayerPerceptron
                 }
             }
 
+            return vector;
+        }
+
+        //sb
+        public sbyte[] ConvertTestInputToVector(string testLine)
+        {
+            var vector = new sbyte[10*10];
+            var testStringArray = testLine.ToCharArray();
+
+            for (var i = 0; i < 10*10; i++)
+            {
+                vector[i] = -1;
+            }
+
+            for (var i = 0; i < testStringArray.Length; i++)
+            {
+                if (testStringArray[i] == ':')
+                {
+                    var j = i-1;
+                    var tempStr = string.Empty;
+                    while (j >= 0 && testStringArray[j] != ' ')
+                    {
+                        j--;
+                    }
+                    j++;
+                    while (testStringArray[j] != ':')
+                    {
+                        tempStr += testStringArray[j];
+                        j++;
+                    }
+
+                    
+                    vector[Convert.ToInt32(tempStr)] = 1;
+                }
+            }
+            
             return vector;
         }
 

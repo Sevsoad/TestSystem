@@ -36,31 +36,34 @@
         private void ButtonNoiseClick(object sender, EventArgs e)
         {
             this.DeletePreveousFile(NoiseGenerator.PicturePath);
-
+            var classNumber = 0;
             var noiseLevel = numericUpDownPercentage.Value;
 
             if (radioButtonA.Checked)
             {
                 picturePath = PicturesPath.PathToOriginalA;
+                classNumber = 1;
             }
             else if (radioButtonB.Checked)
             {
                 picturePath = PicturesPath.PathToOriginalB;
+                classNumber = 2;
             }
             else if (radioButtonC.Checked)
             {
                 picturePath = PicturesPath.PathToOriginalC;
+                classNumber = 3;
             }
 
             var noisePicture = string.Empty;
 
-            noisePicture = NoiseGenerator.Generate(picturePath, (int)noiseLevel, 10, 3);
+            //noisePicture = NoiseGenerator.Generate(picturePath, (int)noiseLevel, 10, 3);
 
             //sb test gen
-            //for (var i = 0; i < 20; i++)
-            //{
-            //   noisePicture  = NoiseGenerator.Generate(picturePath, (int)noiseLevel, 10, 3);
-            //}
+            for (var i = 0; i < 20; i++)
+            {
+                noisePicture = NoiseGenerator.Generate(picturePath, (int)noiseLevel, 10, classNumber);
+            }
 
             picturePath = noisePicture;
 
@@ -143,7 +146,7 @@
         /// <param name="pathC">The path asynchronous.</param>
         /// <param name="neuronHelper">The helper.</param>
         /// <returns></returns>
-        private VectorsContainer GetVectorContainer(String pathA, String pathB, String pathC, NeuronHelper neuronHelper)
+        public VectorsContainer GetVectorContainer(String pathA, String pathB, String pathC, NeuronHelper neuronHelper)
         {
             var vectorA = neuronHelper.ConvertToVector(new PictureContainer(pathA, 10));
             var vectorB = neuronHelper.ConvertToVector(new PictureContainer(pathB, 10));
@@ -168,18 +171,9 @@
 
             var picture = new PictureContainer(picturePath, 10);
 
-            var vector = neuronHelper.ConvertToVector(picture);
+            var vector = neuronHelper.ConvertToVector(picture); 
 
-            //cycle here for sending testing vetors 
-            var percentage = helper.Recognize(vector);
-
-
-            var calssNumber = Array.IndexOf<double>(percentage, percentage.Max()) + 1; //added for getting classification result for test inputs
-            //to do: add  saving to file. try to clasterize some other pics? or calculate their attributes. use tests from MLComp
-
-            //saving test number and result to file
-
-            //end of cycle
+            var percentage = helper.Recognize(vector);     
 
             textBoxA.Text = percentage[0].ToString(CultureInfo.InvariantCulture);
             textBoxB.Text = percentage[1].ToString(CultureInfo.InvariantCulture);
@@ -190,12 +184,36 @@
 
         private void AutoTest_Click(object sender, EventArgs e)
         {
+            ButtonTeachClick(sender, e);
+            var testingResults = string.Empty;
+            var neuronHelper = new NeuronHelper();
+            var expectedResults = string.Empty;
+
+            using (StreamReader file = new System.IO.StreamReader(@"D:\DPtests\test1.txt", true))
+            {
+
+                while (!file.EndOfStream)
+                {
+                    var testLine = file.ReadLine();
+                    expectedResults += testLine.ToCharArray()[0] + " ";
+                    testLine = testLine.Remove(0, 2);
+                    var byteVector = neuronHelper.ConvertTestInputToVector(testLine);
+
+                    var percentage = helper.Recognize(byteVector);
+
+                    var classNumber = Array.IndexOf<double>(percentage, percentage.Max()) + 1;
+
+                    testingResults += classNumber.ToString() + " ";
+                }
+            }
+
+            using (StreamWriter file = new System.IO.StreamWriter(@"D:\DPtests\results.txt", true))
+            {
+                file.WriteLine(testingResults);
+            }                     
 
 
-            
-        }
-
-
+        }       
 
     }
 }

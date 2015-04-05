@@ -79,26 +79,25 @@ namespace Lab02_MultilayerPerceptron
             }
 
             //sb test gen
-            //using (StreamWriter file = new System.IO.StreamWriter(@"D:\DPtests\test2.txt", true))
-            //{
-            //    var testDataStr = string.Empty;
-                                
-            //    for (var i = 0; i < picture.Size; i++)
-            //    {
-            //        for (var j = 0; j < picture.Size; j++)
-            //        {
-            //            pixel = picture.Picture.GetPixel(i, j);
+            using (StreamWriter file = new System.IO.StreamWriter(@"D:\DPtests\10.txt", true))
+            {
+                var testDataStr = string.Empty;
 
+                for (var i = 0; i < picture.Size; i++)
+                {
+                    for (var j = 0; j < picture.Size; j++)
+                    {
+                        pixel = picture.Picture.GetPixel(i, j);
 
-            //            if (pixel.GetBrightness() == 1)
-            //            {
-            //                testDataStr += (i * picture.Size + j).ToString() + ":1 "; //picture.Picture.SetPixel(i, j, InvertPixel(pixel));
-            //            }
-            //        }
-            //    }
+                        if (pixel.GetBrightness() == 1)
+                        {
+                            testDataStr += (i * picture.Size + j).ToString() + ":1 "; //picture.Picture.SetPixel(i, j, InvertPixel(pixel));
+                        }
+                    }
+                }
 
-            //    file.WriteLine(ethalonClassNumber.ToString() + " " + testDataStr);
-            //}
+                file.WriteLine(ethalonClassNumber.ToString() + " " + testDataStr);
+            }
            
 
             var oldPicture = PicturePath;
