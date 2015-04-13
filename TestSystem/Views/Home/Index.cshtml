@@ -1,7 +1,73 @@
-﻿@section SPAViews {
-    @Html.Partial("_Home")
+﻿
+@using System.Web.Optimization
+
+@Scripts.Render("~/bundles/jsScripts")
+
+@{
+    Layout = null;
 }
-@section Scripts{
-    @Scripts.Render("~/bundles/knockout")
-    @Scripts.Render("~/bundles/app")
-}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div> 
+        <p>Hello world!</p>
+    </div>
+    <button id="button1">Hi</button>
+
+    <div id="chart2" style="height:400px;width:600px; "></div>
+
+    <script>
+        $(document).ready(
+            function () {                
+                var graph2 = [[0.06071429, 0.1955604], [0.1, 0.2080358], [0.1392857, 0.262852], [0.1928571, 0.4011823], [0.2392857, 0.4413808], [0.2892857, 0.4685148], [0.3428572, 0.4978489], [0.4035714, 0.5760731], [0.45, 0.6141559], [0.4928571, 0.6327091], [0.5535714, 0.6930069], [0.6142857, 0.7120483], [0.65, 0.7120483], [0.7035714, 0.7406104], [0.7535714, 0.7922943], [0.7928571, 0.801815], [0.8392857, 0.8800392], [0.8928571, 0.9213862], [0.9428571, 0.9523965], [0.9999999, 1]];
+                var title = "Roc-curves";
+                var jsonurl = "/Home/GetCurveCoordinates"; //[graph1, graph2, [[0, 0], [1, 1]]]
+                var graphInfo = ajaxDataRenderer(jsonurl);//[[[0.04301075, 0], [0.09408602, 0.1017417], [0.1478495, 0.1356555], [0.1989247, 0.1356555], [0.25, 0.1678737], [0.2983871, 0.2000919], [0.3521505, 0.2331362], [0.4032258, 0.3297908], [0.4543011, 0.3942271], [0.5026882, 0.4908817], [0.5483871, 0.6381649], [0.6021506, 0.7703421], [0.6505377, 0.7703421], [0.6962366, 0.7703421], [0.7446237, 0.7703421], [0.7930108, 0.7703421], [0.8467743, 0.8347784], [0.9005377, 0.9339113], [0.9489248, 0.9999999], [1, 0.9999999]]];// 
+                var graph2Infro = [[[0.04301075, 0], [0.09408602, 0.1017417], [0.1478495, 0.1356555], [0.1989247, 0.1356555], [0.25, 0.1678737], [0.2983871, 0.2000919], [0.3521505, 0.2331362], [0.4032258, 0.3297908], [0.4543011, 0.3942271], [0.5026882, 0.4908817], [0.5483871, 0.6381649], [0.6021506, 0.7703421], [0.6505377, 0.7703421], [0.6962366, 0.7703421], [0.7446237, 0.7703421], [0.7930108, 0.7703421], [0.8467743, 0.8347784], [0.9005377, 0.9339113], [0.9489248, 0.9999999], [1, 0.9999999]]];
+                debugger;
+
+                var plot2 = $.jqplot('chart2', jsonurl, {
+                    title: title,
+                    axesDefaults: {
+                        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                    },
+                    dataRenderer: ajaxDataRenderer,
+                    axes: {
+                        xaxis: {
+                            label: "FPR",
+                            pad: 1
+                        },
+                        yaxis: {
+                            label: "TPR"
+                        }
+                    }
+                });
+            });
+
+        var ajaxDataRenderer = function (url) {
+            var ret = null;
+
+            $.ajax({
+                // have to use synchronous here, else the function 
+                // will return before the data is fetched
+                async: false,
+                url: url,
+                dataType: "json",
+                success: function (data) {
+                    debugger;
+                    ret = data;
+
+                }
+            });
+            return ret;
+        };
+    </script>
+
+</body>
+</html>

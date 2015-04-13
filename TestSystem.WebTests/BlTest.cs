@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TestSystem.Core;
+using System.Text.RegularExpressions;
 
 namespace TestSystem.WebTests
 {
@@ -16,7 +18,7 @@ namespace TestSystem.WebTests
         
         public void TestNTimesAndCalcMiddle() 
         {
-            //30 tests for 1 testSuite with different learning. output is their middle true positive rate 
+            //30 tests for 1 testSuite that contains 20 test inputs with different learning. output is their middle true positive rate 
             //for 0, 10, 20, 30, 40 percentage of noise
 
             var outputPath = @"D:\DPtests\comparsionResultsCommon.txt";
@@ -39,15 +41,45 @@ namespace TestSystem.WebTests
             RunTestingNTimesWithStat(testPath5, outputPath, numberOfRepeats);
         }
 
+        [TestMethod]
+        public void RunAlphaValueVariationTests()
+        {
+            var outputPath = @"D:\DPtests\alphaChangeTestingResults.txt";
+            var testPath20percent = @"D:\DPtests\test20percNoise.txt";
+            var rocCurveCreator = new TestSystem.Core.RocCurveCreator();
+            var testingResults = new List<string>();
+            TestFormatConverter formatConverter = new TestFormatConverter();
+
+            var expectedResults = formatConverter.GetResultsFromTestSet(testPath20percent);
+
+            for (var i = 0f; i < 1; i += 0.05f)
+            {
+                testingResults.Add(BiTestHelper.RunAlgorithmAnalyze(testPath20percent, outputPath, i));
+            }
+
+
+            var result =  rocCurveCreator.GenerateRocCurveCoordinates(expectedResults, testingResults, "2");
+            var resultStr = string.Empty;
+
+            for (var i = 0; i < result.rocCoordinatesSensivity.Count; i++)
+            {
+                resultStr += "[" + result.rocCoordinatesSensivity[i] + ", " + result.rocCoordinatesSpecifity[i] + "],";
+            }
+
+                using (StreamWriter file = new System.IO.StreamWriter(outputPath, true))
+                {
+                    file.WriteLine(resultStr);
+                }
+        }
         
         private void RunTestingNTimesWithStat(string testPath, string outputPath, int numberOfRepeats)
         {
             var percents = new List<float>();
 
-            for (var i = 0; i < numberOfRepeats; i++)
-            {
-                percents.Add(RunAlgorithmAnalyze(testPath, outputPath));
-            }
+            //for (var i = 0; i < numberOfRepeats; i++)
+            //{
+            //    percents.Add(BiTestHelper.RunAlgorithmAnalyze(testPath, outputPath, 0.7f));
+            //}
 
             float count = percents.Count;
             float middle = percents.Sum() / count;
@@ -57,70 +89,8 @@ namespace TestSystem.WebTests
             {
                 file.WriteLine(DateTime.Now + ": middle true pos - " + middle.ToString("0.00"));
             }
-        }        
-        
-        private float RunAlgorithmAnalyze(string testsPath, string outPath)
-        {
-            var testingResults = string.Empty;
-            var neuronHelper = new NeuronHelper();
-            var expectedResults = string.Empty;
-            var resultAnalyzer = new TestSystem.Core.ResultsAnalyzer();
-            var container = GetVectorContainer(PicturesPath.PathToOriginalA, PicturesPath.PathToOriginalB,
-                PicturesPath.PathToOriginalC, new NeuronHelper());
-            var alpha = 0.7;
-            var beta = 0.01;
-            var error = 0.05;
-            var timeout = 10000;
-
-            var perceptron = new Perceptron(
-               alpha,
-               beta,
-               error,
-               timeout,
-               container);
-
-            var helper = new PerceptronHelper(perceptron, 100, 3);
-
-            helper.Teach();
-
-            using (StreamReader file = new System.IO.StreamReader(testsPath, true))
-            {
-
-                while (!file.EndOfStream)
-                {
-                    var testLine = file.ReadLine();
-                    expectedResults += testLine.ToCharArray()[0] + " ";
-                    testLine = testLine.Remove(0, 2);
-                    var byteVector = neuronHelper.ConvertTestInputToVector(testLine);
-
-                    var percentage = helper.Recognize(byteVector);
-
-                    var classNumber = Array.IndexOf<double>(percentage, percentage.Max()) + 1;
-
-                    testingResults += classNumber.ToString() + " ";
-                }
-            }
-
-            using (StreamWriter file = new System.IO.StreamWriter(@"D:\DPtests\results.txt", true))
-            {
-                file.WriteLine(testingResults);
-            }
-
-            var result = resultAnalyzer.CalcTruePositives(expectedResults.ToCharArray(), testingResults.ToCharArray());
-            //resultAnalyzer.OutputStatistics(outPath);
-
-            return result;
         }
 
-        private VectorsContainer GetVectorContainer(String pathA, String pathB, String pathC, NeuronHelper neuronHelper)
-        {
-            var vectorA = neuronHelper.ConvertToVector(new PictureContainer(pathA, 10));
-            var vectorB = neuronHelper.ConvertToVector(new PictureContainer(pathB, 10));
-            var vectorC = neuronHelper.ConvertToVector(new PictureContainer(pathC, 10));
-
-            return new VectorsContainer(vectorA, vectorB, vectorC);
-        }
-
-        
+          
     }
 }

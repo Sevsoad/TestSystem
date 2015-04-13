@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBoxSources = new System.Windows.Forms.GroupBox();
             this.radioButtonC = new System.Windows.Forms.RadioButton();
             this.radioButtonB = new System.Windows.Forms.RadioButton();
@@ -58,6 +61,7 @@
             this.buttonRecognize = new System.Windows.Forms.Button();
             this.buttonTeach = new System.Windows.Forms.Button();
             this.textBoxStatistics = new System.Windows.Forms.TextBox();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBoxSources.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxC)).BeginInit();
@@ -66,6 +70,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPercentage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxNoise)).BeginInit();
             this.groupBoxStatistics.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxSources
@@ -385,11 +390,28 @@
             this.textBoxStatistics.Size = new System.Drawing.Size(300, 217);
             this.textBoxStatistics.TabIndex = 0;
             // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(960, 51);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(239, 239);
+            this.chart1.TabIndex = 3;
+            this.chart1.Text = "chart1";
+            // 
             // ApplicationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(944, 682);
+            this.ClientSize = new System.Drawing.Size(1227, 682);
+            this.Controls.Add(this.chart1);
             this.Controls.Add(this.groupBoxStatistics);
             this.Controls.Add(this.groupBoxNoise);
             this.Controls.Add(this.groupBoxSources);
@@ -407,6 +429,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxNoise)).EndInit();
             this.groupBoxStatistics.ResumeLayout(false);
             this.groupBoxStatistics.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -443,6 +466,7 @@
         private System.Windows.Forms.Label labelAlpha;
         private System.Windows.Forms.TextBox textBoxAlpha;
         private System.Windows.Forms.Button AutoTest;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }
 

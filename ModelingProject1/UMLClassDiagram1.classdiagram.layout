@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="UMLClassDiagram1">
+  <logicalClassDesignerModelMoniker Id="2ea3feb9-9a4f-420a-baa2-08517c2557b6" />
+  <nestedChildShapes>
+    <classShape Id="b8afb70c-3d59-44bd-ba32-9e3c7e6a8646" absoluteBounds="1.875, 0.5, 4.25, 1.9886168446143473" hideQualifiedName="false" increaseHeight="0.18800345897674561" customColor="181, 193, 223">
+      <classMoniker Id="1b58a27e-0f39-410f-a37d-e8e3c2a7c878" LastKnownName="ResultsAnalyzer" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="51c184d1-c917-4da1-a7c3-a830db5d00db" absoluteBounds="1.89, 1.0153356393178306, 4.2200000000000006, 0.68164060264825832" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="278f8ba4-49dc-4c0e-9236-0afb46b15cd7" absoluteBounds="1.89, 1.7069762419660888, 4.2200000000000006, 0.68164060264825821" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5d5b42f7-0551-467d-9d28-36c1d47790a6" absoluteBounds="7.625, 0.75, 2.75, 1.5429687152306237" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+      <classMoniker Id="357d23fb-ee0c-4ed2-8abd-7cfb1941d828" LastKnownName="RocCurveCreator" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="91107d42-88e1-44e0-8eb9-d9239ddaa787" absoluteBounds="7.64, 1.1400000000000001, 2.7199999999999998, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="c0f4ae48-6cf0-4f87-864e-e9a55cc129f7" absoluteBounds="7.64, 1.3511718675494193, 2.7199999999999998, 0.84179684768120444" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</logicalClassDesignerDiagram>
