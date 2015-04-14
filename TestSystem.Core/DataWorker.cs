@@ -11,6 +11,8 @@ namespace TestSystem.Core
     {
         public string GetExpectedResults()
         {
+            
+
             TestFormatConverter formatConverter = new TestFormatConverter();
             var testPath20percent = @"D:\DPtests\test10percNoise.txt";
             var expectedResults = formatConverter.GetResultsFromTestSet(testPath20percent);

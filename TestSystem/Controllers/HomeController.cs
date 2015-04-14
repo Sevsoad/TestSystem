@@ -21,10 +21,10 @@ namespace TestSystem.Controllers
         {
             var rocCurveCreator = new RocCurveCreator();
             var dataWorker = new DataWorker();
-            //var rocResults = rocCurveCreator.GenerateRocCurveCoordinates( dataWorker.GetExpectedResults(),
-            //    dataWorker.GetTestingResults(), "1");
+            var rocResults = rocCurveCreator.GenerateRocCurveCoordinates( dataWorker.GetExpectedResults(),
+                dataWorker.GetTestingResults(), "1");
 
-            var jsonResult = new List<float[]>();
+            //var jsonResult = new List<float[]>();
             var jsonResult2 = new List<List<float[]>>();
 
             //for (var i = 0; i < rocResults.rocCoordinatesSensivity.Count; i++)
