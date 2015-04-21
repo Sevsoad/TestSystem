@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[TestSets]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1), 
     [CreatorId] INT NOT NULL, 
     [DateOfCreation] DATETIME NOT NULL, 
     [TotalRuns] INT NOT NULL, 
