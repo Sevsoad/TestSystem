@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="2e5806f4-2fe5-4ea9-a93c-b8ac060e0b72"
+  name="TestSystem"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="6bfcf906-2d49-453b-abff-a7b06d46612f"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DTestSystem"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="9591e019-3491-4808-868d-946cb1a399b4"
+        LastKnownName="Core"
+        LastKnownLocation="Package1_0338.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="45682792-8a25-4116-bed2-a14b9fd332d9"
+        LastKnownName="DataAccess"
+        LastKnownLocation="Package_0339.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="7b32f30f-d427-4aa0-9839-961bc1442264"
+        LastKnownName="Controllers"
+        LastKnownLocation="Package_0352.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="b475e186-ffbe-4875-9f5e-c143ff99efd7"
+        LastKnownName="Models"
+        LastKnownLocation="Package3_0352.uml" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

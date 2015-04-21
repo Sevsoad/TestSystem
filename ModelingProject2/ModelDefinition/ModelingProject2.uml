@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
-  Id="5ca8d91b-5ae3-49f3-9cb7-b9a29d6d84ee"
-  name="ModelingProject1" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  Id="3d7cfe2f-6181-4db5-b881-d1cdf0248cdc"
+  name="ModelingProject2" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
   <profileInstances>
     <packageHasProfileInstances
       Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
@@ -17,32 +17,24 @@
         name="StandardProfileL3" />
     </packageHasProfileInstances>
     <packageHasProfileInstances
-      Id="c5560515-1e61-4335-80fb-ac1b28630fc8">
+      Id="a25e0893-4d54-4cb8-888d-3e235b821977">
       <profileInstance
-        Id="7f76692f-d078-455c-8085-2566535e941f"
+        Id="0dca75a3-af11-4ec0-ba84-770b7e971ac3"
         name="CSharpProfile" />
     </packageHasProfileInstances>
   </profileInstances>
   <packagedElements>
     <packageHasNamedElement>
       <packageMoniker
-        Id="4f2e6297-8693-4cf7-9bcf-70a9d57aab60"
+        Id="2e5806f4-2fe5-4ea9-a93c-b8ac060e0b72"
         LastKnownName="TestSystem"
-        LastKnownLocation="Package_0049.uml" />
+        LastKnownLocation="Package_0338.uml" />
     </packageHasNamedElement>
     <packageHasNamedElement>
       <packageMoniker
-        Id="df9e9451-ea06-4aa0-97df-1ac9cd16aaaf"
+        Id="4880cbcb-75a4-489d-9906-4a2f91d4b1b7"
         LastKnownName="System"
-        LastKnownLocation="Package2_0049.uml" />
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <class
-        Id="d27f3554-a5a7-479e-95d5-f0e80a0ab935"
-        name="Class1"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false" />
+        LastKnownLocation="Package2_0338.uml" />
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

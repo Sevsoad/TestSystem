@@ -1,8 +1,8 @@
-﻿CREATE TABLE [dbo].[Users]
+﻿CREATE TABLE [dbo].[USERS]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
-    [Password] NVARCHAR(50) NOT NULL, 
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1), 
+    [Password] NVARCHAR(MAX) NOT NULL, 
     [Role] INT NOT NULL, 
     [UserName] NVARCHAR(50) NOT NULL, 
-	CONSTRAINT [Fk_Users_ToRoles] FOREIGN KEY (Role) references Roles(Id) 
+	CONSTRAINT [Fk_Users_ToRoles] FOREIGN KEY (Role) references USER_LOGIN_ROLES(Id) 
 )

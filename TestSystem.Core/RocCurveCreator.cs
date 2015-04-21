@@ -13,8 +13,6 @@ namespace TestSystem.Core
         public AnalyzedResults GenerateRocCurveCoordinates(string expectedResults, List<string> testingResults, string trueClassNumber)
         {           
             var analyzedResults = new AnalyzedResults();
-            var dbacc = new DataAccess.Users();
-            dbacc.Password = "12345678";
             
 
             //foreach(var testResult in testingResults)

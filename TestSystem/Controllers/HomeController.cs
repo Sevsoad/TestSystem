@@ -16,6 +16,13 @@ namespace TestSystem.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult About()
+        {
+
+            return View();
+        }
+
         [HttpGet]
         public JsonResult GetCurveCoordinates()
         {
@@ -41,6 +48,11 @@ namespace TestSystem.Controllers
             jsonResult2.Add(defaultCurve);
 
             return Json(jsonResult2, JsonRequestBehavior.AllowGet);
+
+        }
+
+        private void SaveUsersSettings()
+        {
 
         }
 

@@ -1,8 +1,8 @@
-﻿CREATE TABLE [dbo].[UserInfo]
+﻿CREATE TABLE [dbo].[USER_DETAILS]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
-    [Email] NVARCHAR(50) NULL, 
-    [FullName] NVARCHAR(50) NULL, 
+    [Email] NVARCHAR(50) NOT NULL, 
+    [User_full_name] NVARCHAR(50) NULL, 
     [Company] NVARCHAR(50) NULL, 
     [Other] NVARCHAR(MAX) NULL,
 	CONSTRAINT [FK_UserInfo_ToUsers] FOREIGN KEY (Id) REFERENCES Users(Id)

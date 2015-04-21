@@ -27,28 +27,36 @@ namespace TestSystem.Controllers
 
             using (var context = new Entities())
             {
-                var user = new Users
+                if (context.USERS.FirstOrDefault<USERS>(x => x.UserName.ToLower() == input.UserName) != null)
+                {                    
+                    ViewBag.UserNameError = "This username is already registered.";
+                    return View(input);
+                }
+
+                var user = new USERS
                 {
-                    UserName = input.UserName,
+                    UserName = input.UserName.ToLower(),
                     Password = input.Password,
-                    Roles = context.Roles.Find(2)
+                    USER_LOGIN_ROLES = context.USER_LOGIN_ROLES.Find(2)
                 };                
 
-                context.Users.Add(user);
+                context.USERS.Add(user);
+                context.SaveChanges();
 
-                //var UserInfo = new UserInfo
-                //{
-                //    Users = context.Users.First<Users> ( x => x.UserName == input.UserName),
-                //    Company = input.Company,
-                //    Email = input.Email,
-                //    FullName = input.FullName,
-                //    Other = input.OtherDetails
-                //};
+                var userDetails = new USER_DETAILS
+                {
+                    Id = context.USERS.First<USERS>(x => x.UserName == input.UserName.ToLower()).Id,
+                    Company = input.Company,
+                    Email = input.Email,
+                    User_full_name = input.FullName,
+                    Other = input.OtherDetails
+                };
 
+                context.USER_DETAILS.Add(userDetails);
                 context.SaveChanges();
             }
 
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -67,12 +75,16 @@ namespace TestSystem.Controllers
 
             using (var context = new Entities())
             {
-                context.Users.Add(new Users {UserName = input.UserName,
-                    Password = input.Password, Roles = context.Roles.Find(2)});
-                context.SaveChanges();            
+                if (context.USERS.FirstOrDefault<USERS>(x => x.UserName.ToLower() == input.UserName) == null
+                    || context.USERS.FirstOrDefault<USERS>(x => x.UserName.ToLower() == input.UserName)
+                    .Password != input.Password)
+                {
+                    ViewBag.UserNameError = "Username - password combination don't match.";
+                    return View(input);
+                }       
             }
 
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

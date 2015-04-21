@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestSystem.Core.AzureVM
+namespace TestSystem.Core
 {
-    class AzureVmWorker
+    class TestSequenceCreator
     {
     }
 }
