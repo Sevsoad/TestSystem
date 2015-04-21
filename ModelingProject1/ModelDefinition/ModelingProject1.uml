@@ -36,14 +36,6 @@
         LastKnownName="System"
         LastKnownLocation="Package2_0049.uml" />
     </packageHasNamedElement>
-    <packageHasNamedElement>
-      <class
-        Id="d27f3554-a5a7-479e-95d5-f0e80a0ab935"
-        name="Class1"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false" />
-    </packageHasNamedElement>
   </packagedElements>
   <primitiveType
     Id="220a3521-e091-4221-bae9-3ef9018e845c"

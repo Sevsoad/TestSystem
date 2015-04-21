@@ -38,30 +38,9 @@
       <SubType>Content</SubType>
       <DependentUpon>UMLClassDiagram1.classdiagram</DependentUpon>
     </Content>
-    <Content Include="UMLClassDiagram2.classdiagram">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="UMLClassDiagram2.classdiagram.layout">
-      <SubType>Content</SubType>
-      <DependentUpon>UMLClassDiagram2.classdiagram</DependentUpon>
-    </Content>
     <Folder Include="ModelDefinition\" />
     <Content Include="ModelDefinition\ModelingProject1.uml">
       <SubType>Content</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TestSystem.Core\TestSystem.Core.csproj">
-      <Name>TestSystem.Core</Name>
-      <Project>{d38fe040-8c1c-49ac-9c93-9426135cdefc}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\TestSystem.DataAccess\TestSystem.DataAccess.csproj">
-      <Name>TestSystem.DataAccess</Name>
-      <Project>{ebe586f6-c463-49c9-a2d7-71e9ea24f9fe}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\TestSystem\TestSystem.csproj">
-      <Name>TestSystem</Name>
-      <Project>{57a12c50-0eff-4e71-89ef-54d0a0ed0a2e}</Project>
-    </ProjectReference>
   </ItemGroup>
 </Project>

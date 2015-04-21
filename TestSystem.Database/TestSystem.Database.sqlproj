@@ -60,15 +60,14 @@
     <Folder Include="Tables" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\USERS.sql" />
-    <Build Include="Tables\USER_DETAILS.sql" />
-    <Build Include="Tables\USER_LOGIN_ROLES.sql" />
-    <Build Include="Tables\TEST_DATA_SETS.sql" />
-    <Build Include="Tables\ALGORITMS.sql" />
-    <Build Include="Tables\TEST_RUNS.sql" />
-    <Build Include="Tables\TEST_RUN_RESULTS.sql" />
-    <Build Include="Tables\USER_SAVED_SETTINGS.sql" />
-    <Build Include="Tables\ALGORITHM_TYPES.sql" />
+    <Build Include="Tables\Users.sql" />
+    <Build Include="Tables\UserInfo.sql" />
+    <Build Include="Tables\Roles.sql" />
+    <Build Include="Tables\TestSets.sql" />
+    <Build Include="Tables\Algorithms.sql" />
+    <Build Include="Tables\TestRuns.sql" />
+    <Build Include="Tables\TestResults.sql" />
+    <Build Include="Tables\UserSavedSettings.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TestSystem.Database.refactorlog" />
