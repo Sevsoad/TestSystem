@@ -11,7 +11,7 @@ namespace TestSystem
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jsScripts").Include(
-                        "~/Scripts/jquery-{version}.min.js",
+                        "~/Scripts/jquery-1.9.1.min.js",
                         "~/Scripts/jquery.jqplot.min.js",
                         "~/Scripts/excanvas.min.js"));
             
@@ -27,9 +27,10 @@ namespace TestSystem
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap.min.css",
                       "~/Content/Site.css",
-                      "~/Scripts/jquery.jqplot.min.css"));
+                      "~/Scripts/jquery.jqplot.min.css"
+                      ));
         }
     }
 }

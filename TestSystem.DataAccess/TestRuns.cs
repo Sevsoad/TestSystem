@@ -12,21 +12,17 @@ namespace TestSystem.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class TEST_DATA_SETS
+    public partial class TestRuns
     {
-        public TEST_DATA_SETS()
-        {
-            this.TEST_RUNS = new HashSet<TEST_RUNS>();
-        }
-    
         public int Id { get; set; }
-        public int TestCreatorId { get; set; }
-        public System.DateTime DateOfCreation { get; set; }
-        public int NumberOfRuns { get; set; }
-        public string TestDescription { get; set; }
-        public string TestFieldOfUse { get; set; }
+        public int AlgorithmId { get; set; }
+        public int TestSetId { get; set; }
+        public int UserId { get; set; }
+        public System.DateTime DateOfRun { get; set; }
     
-        public virtual ICollection<TEST_RUNS> TEST_RUNS { get; set; }
-        public virtual USERS USERS { get; set; }
+        public virtual Algorithms Algorithms { get; set; }
+        public virtual TestResults TestResults { get; set; }
+        public virtual TestSets TestSets { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

@@ -12,14 +12,14 @@ namespace TestSystem.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class USERS
+    public partial class Users
     {
-        public USERS()
+        public Users()
         {
-            this.ALGORITHMS = new HashSet<ALGORITHMS>();
-            this.TEST_DATA_SETS = new HashSet<TEST_DATA_SETS>();
-            this.TEST_RUNS = new HashSet<TEST_RUNS>();
-            this.USER_SAVED_SETTINGS = new HashSet<USER_SAVED_SETTINGS>();
+            this.Algorithms = new HashSet<Algorithms>();
+            this.TestRuns = new HashSet<TestRuns>();
+            this.TestSets = new HashSet<TestSets>();
+            this.UserSavedSettings = new HashSet<UserSavedSettings>();
         }
     
         public int Id { get; set; }
@@ -27,11 +27,11 @@ namespace TestSystem.DataAccess
         public int Role { get; set; }
         public string UserName { get; set; }
     
-        public virtual ICollection<ALGORITHMS> ALGORITHMS { get; set; }
-        public virtual ICollection<TEST_DATA_SETS> TEST_DATA_SETS { get; set; }
-        public virtual ICollection<TEST_RUNS> TEST_RUNS { get; set; }
-        public virtual USER_DETAILS USER_DETAILS { get; set; }
-        public virtual USER_LOGIN_ROLES USER_LOGIN_ROLES { get; set; }
-        public virtual ICollection<USER_SAVED_SETTINGS> USER_SAVED_SETTINGS { get; set; }
+        public virtual ICollection<Algorithms> Algorithms { get; set; }
+        public virtual Roles Roles { get; set; }
+        public virtual ICollection<TestRuns> TestRuns { get; set; }
+        public virtual ICollection<TestSets> TestSets { get; set; }
+        public virtual UserInfo UserInfo { get; set; }
+        public virtual ICollection<UserSavedSettings> UserSavedSettings { get; set; }
     }
 }

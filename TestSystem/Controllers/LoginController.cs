@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using TestSystem.DataAccess;
 using TestSystem.Models;
 
@@ -11,6 +12,7 @@ namespace TestSystem.Controllers
     public class LoginController : Controller
     {
         private string cacheKey = "tetsSys";
+
         [HttpGet]
         public ActionResult Register()
         {
@@ -27,28 +29,36 @@ namespace TestSystem.Controllers
 
             using (var context = new Entities())
             {
+                if (context.Users.FirstOrDefault<Users>(x => x.UserName.ToLower() == input.UserName) != null)
+                {
+                    ModelState.AddModelError("UserName", "This username is already registered.");
+                    return View(input);
+                }
+
                 var user = new Users
                 {
-                    UserName = input.UserName,
+                    UserName = input.UserName.ToLower(),
                     Password = input.Password,
                     Roles = context.Roles.Find(2)
-                };                
+                };
 
                 context.Users.Add(user);
+                context.SaveChanges();
 
-                //var UserInfo = new UserInfo
-                //{
-                //    Users = context.Users.First<Users> ( x => x.UserName == input.UserName),
-                //    Company = input.Company,
-                //    Email = input.Email,
-                //    FullName = input.FullName,
-                //    Other = input.OtherDetails
-                //};
+                var userDetails = new UserInfo
+                {
+                    Id = context.Users.First<Users>(x => x.UserName == input.UserName.ToLower()).Id,
+                    Company = input.Company,
+                    Email = input.Email,
+                    FullName = input.FullName,
+                    Other = input.OtherDetails
+                };
 
+                context.UserInfo.Add(userDetails);
                 context.SaveChanges();
             }
-
-            return View();
+            //redirect to login + message
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -67,18 +77,24 @@ namespace TestSystem.Controllers
 
             using (var context = new Entities())
             {
-                context.Users.Add(new Users {UserName = input.UserName,
-                    Password = input.Password, Roles = context.Roles.Find(2)});
-                context.SaveChanges();            
+                if (context.Users.FirstOrDefault<Users>(x => x.UserName.ToLower() == input.UserName) == null
+                   || context.Users.FirstOrDefault<Users>(x => x.UserName.ToLower() == input.UserName)
+                   .Password != input.Password)
+                {
+                    ModelState.AddModelError("UserName", "Username - password combination don't match.");
+                    return View(input);
+                }
+                FormsAuthentication.SetAuthCookie(input.UserName, true);
+                //HttpContext.Cache.Remove(cacheKey);
             }
 
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
         public ActionResult Logout()
         {
-            //FormsAuthentication.SignOut();
+            FormsAuthentication.SignOut();
             //HttpContext.Cache.Remove(cacheKey);
             return RedirectToAction("Index", "Home");
         }

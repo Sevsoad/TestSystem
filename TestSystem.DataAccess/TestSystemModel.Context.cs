@@ -25,14 +25,13 @@ namespace TestSystem.DataAccess
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ALGORITHM_TYPES> ALGORITHM_TYPES { get; set; }
-        public virtual DbSet<ALGORITHMS> ALGORITHMS { get; set; }
-        public virtual DbSet<TEST_DATA_SETS> TEST_DATA_SETS { get; set; }
-        public virtual DbSet<TEST_RUN_RESULTS> TEST_RUN_RESULTS { get; set; }
-        public virtual DbSet<TEST_RUNS> TEST_RUNS { get; set; }
-        public virtual DbSet<USER_DETAILS> USER_DETAILS { get; set; }
-        public virtual DbSet<USER_LOGIN_ROLES> USER_LOGIN_ROLES { get; set; }
-        public virtual DbSet<USER_SAVED_SETTINGS> USER_SAVED_SETTINGS { get; set; }
-        public virtual DbSet<USERS> USERS { get; set; }
+        public virtual DbSet<Algorithms> Algorithms { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<TestResults> TestResults { get; set; }
+        public virtual DbSet<TestRuns> TestRuns { get; set; }
+        public virtual DbSet<TestSets> TestSets { get; set; }
+        public virtual DbSet<UserInfo> UserInfo { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<UserSavedSettings> UserSavedSettings { get; set; }
     }
 }

@@ -5,14 +5,7 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="TestSystem.DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="ALGORITHM_TYPES">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ALGORITHMS">
+        <EntityType Name="Algorithms">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -20,265 +13,244 @@
           <Property Name="CreatorId" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="SourceCode" Type="nvarchar(max)" />
-          <Property Name="RunsCount" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="AlgoritmType" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="TEST_DATA_SETS">
+        <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TestCreatorId" Type="int" Nullable="false" />
-          <Property Name="DateOfCreation" Type="datetime" Nullable="false" />
-          <Property Name="NumberOfRuns" Type="int" Nullable="false" />
-          <Property Name="TestDescription" Type="nvarchar(max)" />
-          <Property Name="TestFieldOfUse" Type="nvarchar(max)" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="TEST_RUN_RESULTS">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AlgorithmId" Type="int" Nullable="false" />
-          <Property Name="TruePositiveNumber" Type="int" />
-          <Property Name="FalseNegativeNumber" Type="int" />
-          <Property Name="TrueNegativeNumber" Type="int" />
-          <Property Name="FalsePositiveNumber" Type="int" />
-          <Property Name="NumberOfRuns" Type="int" Nullable="false" />
-          <Property Name="OtherResults" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="TEST_RUNS">
+        <EntityType Name="TestResults">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="AlgorithmId" Type="int" Nullable="false" />
+          <Property Name="TP" Type="int" />
+          <Property Name="FN" Type="int" />
+          <Property Name="TN" Type="int" />
+          <Property Name="FP" Type="int" />
+          <Property Name="Others" Type="nvarchar(max)" />
+          <Property Name="TestRuns" Type="int" />
+        </EntityType>
+        <EntityType Name="TestRuns">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AlgorithmId" Type="int" Nullable="false" />
           <Property Name="TestSetId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="DateOfRun" Type="datetime" Nullable="false" />
-          <Property Name="RunComments" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="USER_DETAILS">
+        <EntityType Name="TestSets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatorId" Type="int" Nullable="false" />
+          <Property Name="DateOfCreation" Type="datetime" Nullable="false" />
+          <Property Name="TotalRuns" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserInfo">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="User_full_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
           <Property Name="Company" Type="nvarchar" MaxLength="50" />
           <Property Name="Other" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="USER_LOGIN_ROLES">
+        <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="USER_SAVED_SETTINGS">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="ObjectName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ObjectValue" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="DateUpdated" Type="datetime" />
-        </EntityType>
-        <EntityType Name="USERS">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Role" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Algorithms_ToAlgTypes">
-          <End Role="ALGORITHM_TYPES" Type="Self.ALGORITHM_TYPES" Multiplicity="1" />
-          <End Role="ALGORITHMS" Type="Self.ALGORITHMS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ALGORITHM_TYPES">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ALGORITHMS">
-              <PropertyRef Name="AlgoritmType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="UserSavedSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="ObjectName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ObjectValue" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Algorithms_ToUsers">
-          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
-          <End Role="ALGORITHMS" Type="Self.ALGORITHMS" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Algorithms" Type="Self.Algorithms" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="USERS">
+            <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ALGORITHMS">
+            <Dependent Role="Algorithms">
               <PropertyRef Name="CreatorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TestResults_ToAlgorithms">
-          <End Role="ALGORITHMS" Type="Self.ALGORITHMS" Multiplicity="1" />
-          <End Role="TEST_RUN_RESULTS" Type="Self.TEST_RUN_RESULTS" Multiplicity="*" />
+          <End Role="Algorithms" Type="Self.Algorithms" Multiplicity="1" />
+          <End Role="TestResults" Type="Self.TestResults" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ALGORITHMS">
+            <Principal Role="Algorithms">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="TEST_RUN_RESULTS">
+            <Dependent Role="TestResults">
               <PropertyRef Name="AlgorithmId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TestResults_ToTestRuns">
-          <End Role="TEST_RUNS" Type="Self.TEST_RUNS" Multiplicity="1" />
-          <End Role="TEST_RUN_RESULTS" Type="Self.TEST_RUN_RESULTS" Multiplicity="0..1" />
+          <End Role="TestRuns" Type="Self.TestRuns" Multiplicity="1" />
+          <End Role="TestResults" Type="Self.TestResults" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="TEST_RUNS">
+            <Principal Role="TestRuns">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="TEST_RUN_RESULTS">
+            <Dependent Role="TestResults">
               <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TestRuns_ToAlgorithms">
-          <End Role="ALGORITHMS" Type="Self.ALGORITHMS" Multiplicity="1" />
-          <End Role="TEST_RUNS" Type="Self.TEST_RUNS" Multiplicity="*" />
+          <End Role="Algorithms" Type="Self.Algorithms" Multiplicity="1" />
+          <End Role="TestRuns" Type="Self.TestRuns" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ALGORITHMS">
+            <Principal Role="Algorithms">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="TEST_RUNS">
+            <Dependent Role="TestRuns">
               <PropertyRef Name="AlgorithmId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TestRuns_ToTestSets">
-          <End Role="TEST_DATA_SETS" Type="Self.TEST_DATA_SETS" Multiplicity="1" />
-          <End Role="TEST_RUNS" Type="Self.TEST_RUNS" Multiplicity="*" />
+          <End Role="TestSets" Type="Self.TestSets" Multiplicity="1" />
+          <End Role="TestRuns" Type="Self.TestRuns" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TEST_DATA_SETS">
+            <Principal Role="TestSets">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="TEST_RUNS">
+            <Dependent Role="TestRuns">
               <PropertyRef Name="TestSetId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TestRuns_ToUsers">
-          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
-          <End Role="TEST_RUNS" Type="Self.TEST_RUNS" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="TestRuns" Type="Self.TestRuns" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="USERS">
+            <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="TEST_RUNS">
+            <Dependent Role="TestRuns">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TestSets_ToUsers">
-          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
-          <End Role="TEST_DATA_SETS" Type="Self.TEST_DATA_SETS" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="TestSets" Type="Self.TestSets" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="USERS">
+            <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="TEST_DATA_SETS">
-              <PropertyRef Name="TestCreatorId" />
+            <Dependent Role="TestSets">
+              <PropertyRef Name="CreatorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserInfo_ToUsers">
-          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
-          <End Role="USER_DETAILS" Type="Self.USER_DETAILS" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="USERS">
+            <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="USER_DETAILS">
+            <Dependent Role="UserInfo">
               <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="Fk_Users_ToRoles">
-          <End Role="USER_LOGIN_ROLES" Type="Self.USER_LOGIN_ROLES" Multiplicity="1" />
-          <End Role="USERS" Type="Self.USERS" Multiplicity="*" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="USER_LOGIN_ROLES">
+            <Principal Role="Roles">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="USERS">
+            <Dependent Role="Users">
               <PropertyRef Name="Role" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserSavedSettings_ToUsers">
-          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
-          <End Role="USER_SAVED_SETTINGS" Type="Self.USER_SAVED_SETTINGS" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserSavedSettings" Type="Self.UserSavedSettings" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="USERS">
+            <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="USER_SAVED_SETTINGS">
+            <Dependent Role="UserSavedSettings">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TestSystemDatabaseModelStoreContainer">
-          <EntitySet Name="ALGORITHM_TYPES" EntityType="Self.ALGORITHM_TYPES" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ALGORITHMS" EntityType="Self.ALGORITHMS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TEST_DATA_SETS" EntityType="Self.TEST_DATA_SETS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TEST_RUN_RESULTS" EntityType="Self.TEST_RUN_RESULTS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TEST_RUNS" EntityType="Self.TEST_RUNS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="USER_DETAILS" EntityType="Self.USER_DETAILS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="USER_LOGIN_ROLES" EntityType="Self.USER_LOGIN_ROLES" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="USER_SAVED_SETTINGS" EntityType="Self.USER_SAVED_SETTINGS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Algorithms_ToAlgTypes" Association="Self.FK_Algorithms_ToAlgTypes">
-            <End Role="ALGORITHM_TYPES" EntitySet="ALGORITHM_TYPES" />
-            <End Role="ALGORITHMS" EntitySet="ALGORITHMS" />
-          </AssociationSet>
+          <EntitySet Name="Algorithms" EntityType="Self.Algorithms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestResults" EntityType="Self.TestResults" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestRuns" EntityType="Self.TestRuns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestSets" EntityType="Self.TestSets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserSavedSettings" EntityType="Self.UserSavedSettings" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Algorithms_ToUsers" Association="Self.FK_Algorithms_ToUsers">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="ALGORITHMS" EntitySet="ALGORITHMS" />
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Algorithms" EntitySet="Algorithms" />
           </AssociationSet>
           <AssociationSet Name="FK_TestResults_ToAlgorithms" Association="Self.FK_TestResults_ToAlgorithms">
-            <End Role="ALGORITHMS" EntitySet="ALGORITHMS" />
-            <End Role="TEST_RUN_RESULTS" EntitySet="TEST_RUN_RESULTS" />
+            <End Role="Algorithms" EntitySet="Algorithms" />
+            <End Role="TestResults" EntitySet="TestResults" />
           </AssociationSet>
           <AssociationSet Name="FK_TestResults_ToTestRuns" Association="Self.FK_TestResults_ToTestRuns">
-            <End Role="TEST_RUNS" EntitySet="TEST_RUNS" />
-            <End Role="TEST_RUN_RESULTS" EntitySet="TEST_RUN_RESULTS" />
+            <End Role="TestRuns" EntitySet="TestRuns" />
+            <End Role="TestResults" EntitySet="TestResults" />
           </AssociationSet>
           <AssociationSet Name="FK_TestRuns_ToAlgorithms" Association="Self.FK_TestRuns_ToAlgorithms">
-            <End Role="ALGORITHMS" EntitySet="ALGORITHMS" />
-            <End Role="TEST_RUNS" EntitySet="TEST_RUNS" />
+            <End Role="Algorithms" EntitySet="Algorithms" />
+            <End Role="TestRuns" EntitySet="TestRuns" />
           </AssociationSet>
           <AssociationSet Name="FK_TestRuns_ToTestSets" Association="Self.FK_TestRuns_ToTestSets">
-            <End Role="TEST_DATA_SETS" EntitySet="TEST_DATA_SETS" />
-            <End Role="TEST_RUNS" EntitySet="TEST_RUNS" />
+            <End Role="TestSets" EntitySet="TestSets" />
+            <End Role="TestRuns" EntitySet="TestRuns" />
           </AssociationSet>
           <AssociationSet Name="FK_TestRuns_ToUsers" Association="Self.FK_TestRuns_ToUsers">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="TEST_RUNS" EntitySet="TEST_RUNS" />
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TestRuns" EntitySet="TestRuns" />
           </AssociationSet>
           <AssociationSet Name="FK_TestSets_ToUsers" Association="Self.FK_TestSets_ToUsers">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="TEST_DATA_SETS" EntitySet="TEST_DATA_SETS" />
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TestSets" EntitySet="TestSets" />
           </AssociationSet>
           <AssociationSet Name="FK_UserInfo_ToUsers" Association="Self.FK_UserInfo_ToUsers">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="USER_DETAILS" EntitySet="USER_DETAILS" />
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserInfo" EntitySet="UserInfo" />
           </AssociationSet>
           <AssociationSet Name="Fk_Users_ToRoles" Association="Self.Fk_Users_ToRoles">
-            <End Role="USER_LOGIN_ROLES" EntitySet="USER_LOGIN_ROLES" />
-            <End Role="USERS" EntitySet="USERS" />
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="FK_UserSavedSettings_ToUsers" Association="Self.FK_UserSavedSettings_ToUsers">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="USER_SAVED_SETTINGS" EntitySet="USER_SAVED_SETTINGS" />
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserSavedSettings" EntitySet="UserSavedSettings" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -286,15 +258,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TestSystem.DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="ALGORITHM_TYPES">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="ALGORITHMS" Relationship="Self.FK_Algorithms_ToAlgTypes" FromRole="ALGORITHM_TYPES" ToRole="ALGORITHMS" />
-        </EntityType>
-        <EntityType Name="ALGORITHMS">
+        <EntityType Name="Algorithms">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -302,286 +266,264 @@
           <Property Name="CreatorId" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SourceCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RunsCount" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="AlgoritmType" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ALGORITHM_TYPES" Relationship="Self.FK_Algorithms_ToAlgTypes" FromRole="ALGORITHMS" ToRole="ALGORITHM_TYPES" />
-          <NavigationProperty Name="USERS" Relationship="Self.FK_Algorithms_ToUsers" FromRole="ALGORITHMS" ToRole="USERS" />
-          <NavigationProperty Name="TEST_RUN_RESULTS" Relationship="Self.FK_TestResults_ToAlgorithms" FromRole="ALGORITHMS" ToRole="TEST_RUN_RESULTS" />
-          <NavigationProperty Name="TEST_RUNS" Relationship="Self.FK_TestRuns_ToAlgorithms" FromRole="ALGORITHMS" ToRole="TEST_RUNS" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Algorithms_ToUsers" FromRole="Algorithms" ToRole="Users" />
+          <NavigationProperty Name="TestResults" Relationship="Self.FK_TestResults_ToAlgorithms" FromRole="Algorithms" ToRole="TestResults" />
+          <NavigationProperty Name="TestRuns" Relationship="Self.FK_TestRuns_ToAlgorithms" FromRole="Algorithms" ToRole="TestRuns" />
         </EntityType>
-        <EntityType Name="TEST_DATA_SETS">
+        <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TestCreatorId" Type="Int32" Nullable="false" />
-          <Property Name="DateOfCreation" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="NumberOfRuns" Type="Int32" Nullable="false" />
-          <Property Name="TestDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TestFieldOfUse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TEST_RUNS" Relationship="Self.FK_TestRuns_ToTestSets" FromRole="TEST_DATA_SETS" ToRole="TEST_RUNS" />
-          <NavigationProperty Name="USERS" Relationship="Self.FK_TestSets_ToUsers" FromRole="TEST_DATA_SETS" ToRole="USERS" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.Fk_Users_ToRoles" FromRole="Roles" ToRole="Users" />
         </EntityType>
-        <EntityType Name="TEST_RUN_RESULTS">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AlgorithmId" Type="Int32" Nullable="false" />
-          <Property Name="TruePositiveNumber" Type="Int32" />
-          <Property Name="FalseNegativeNumber" Type="Int32" />
-          <Property Name="TrueNegativeNumber" Type="Int32" />
-          <Property Name="FalsePositiveNumber" Type="Int32" />
-          <Property Name="NumberOfRuns" Type="Int32" Nullable="false" />
-          <Property Name="OtherResults" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ALGORITHMS" Relationship="Self.FK_TestResults_ToAlgorithms" FromRole="TEST_RUN_RESULTS" ToRole="ALGORITHMS" />
-          <NavigationProperty Name="TEST_RUNS" Relationship="Self.FK_TestResults_ToTestRuns" FromRole="TEST_RUN_RESULTS" ToRole="TEST_RUNS" />
-        </EntityType>
-        <EntityType Name="TEST_RUNS">
+        <EntityType Name="TestResults">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="AlgorithmId" Type="Int32" Nullable="false" />
+          <Property Name="TP" Type="Int32" />
+          <Property Name="FN" Type="Int32" />
+          <Property Name="TN" Type="Int32" />
+          <Property Name="FP" Type="Int32" />
+          <Property Name="Others" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TestRuns" Type="Int32" />
+          <NavigationProperty Name="Algorithms" Relationship="Self.FK_TestResults_ToAlgorithms" FromRole="TestResults" ToRole="Algorithms" />
+          <NavigationProperty Name="TestRuns1" Relationship="Self.FK_TestResults_ToTestRuns" FromRole="TestResults" ToRole="TestRuns" />
+        </EntityType>
+        <EntityType Name="TestRuns">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AlgorithmId" Type="Int32" Nullable="false" />
           <Property Name="TestSetId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="DateOfRun" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RunComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ALGORITHMS" Relationship="Self.FK_TestRuns_ToAlgorithms" FromRole="TEST_RUNS" ToRole="ALGORITHMS" />
-          <NavigationProperty Name="TEST_DATA_SETS" Relationship="Self.FK_TestRuns_ToTestSets" FromRole="TEST_RUNS" ToRole="TEST_DATA_SETS" />
-          <NavigationProperty Name="TEST_RUN_RESULTS" Relationship="Self.FK_TestResults_ToTestRuns" FromRole="TEST_RUNS" ToRole="TEST_RUN_RESULTS" />
-          <NavigationProperty Name="USERS" Relationship="Self.FK_TestRuns_ToUsers" FromRole="TEST_RUNS" ToRole="USERS" />
+          <NavigationProperty Name="Algorithms" Relationship="Self.FK_TestRuns_ToAlgorithms" FromRole="TestRuns" ToRole="Algorithms" />
+          <NavigationProperty Name="TestResults" Relationship="Self.FK_TestResults_ToTestRuns" FromRole="TestRuns" ToRole="TestResults" />
+          <NavigationProperty Name="TestSets" Relationship="Self.FK_TestRuns_ToTestSets" FromRole="TestRuns" ToRole="TestSets" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_TestRuns_ToUsers" FromRole="TestRuns" ToRole="Users" />
         </EntityType>
-        <EntityType Name="USER_DETAILS">
+        <EntityType Name="TestSets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatorId" Type="Int32" Nullable="false" />
+          <Property Name="DateOfCreation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TotalRuns" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TestRuns" Relationship="Self.FK_TestRuns_ToTestSets" FromRole="TestSets" ToRole="TestRuns" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_TestSets_ToUsers" FromRole="TestSets" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserInfo">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="User_full_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Other" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="USERS" Relationship="Self.FK_UserInfo_ToUsers" FromRole="USER_DETAILS" ToRole="USERS" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_UserInfo_ToUsers" FromRole="UserInfo" ToRole="Users" />
         </EntityType>
-        <EntityType Name="USER_LOGIN_ROLES">
+        <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="USERS" Relationship="Self.Fk_Users_ToRoles" FromRole="USER_LOGIN_ROLES" ToRole="USERS" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Algorithms" Relationship="Self.FK_Algorithms_ToUsers" FromRole="Users" ToRole="Algorithms" />
+          <NavigationProperty Name="Roles" Relationship="Self.Fk_Users_ToRoles" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="TestRuns" Relationship="Self.FK_TestRuns_ToUsers" FromRole="Users" ToRole="TestRuns" />
+          <NavigationProperty Name="TestSets" Relationship="Self.FK_TestSets_ToUsers" FromRole="Users" ToRole="TestSets" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK_UserInfo_ToUsers" FromRole="Users" ToRole="UserInfo" />
+          <NavigationProperty Name="UserSavedSettings" Relationship="Self.FK_UserSavedSettings_ToUsers" FromRole="Users" ToRole="UserSavedSettings" />
         </EntityType>
-        <EntityType Name="USER_SAVED_SETTINGS">
+        <EntityType Name="UserSavedSettings">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="ObjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ObjectValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="USERS" Relationship="Self.FK_UserSavedSettings_ToUsers" FromRole="USER_SAVED_SETTINGS" ToRole="USERS" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_UserSavedSettings_ToUsers" FromRole="UserSavedSettings" ToRole="Users" />
         </EntityType>
-        <EntityType Name="USERS">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Role" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="ALGORITHMS" Relationship="Self.FK_Algorithms_ToUsers" FromRole="USERS" ToRole="ALGORITHMS" />
-          <NavigationProperty Name="TEST_DATA_SETS" Relationship="Self.FK_TestSets_ToUsers" FromRole="USERS" ToRole="TEST_DATA_SETS" />
-          <NavigationProperty Name="TEST_RUNS" Relationship="Self.FK_TestRuns_ToUsers" FromRole="USERS" ToRole="TEST_RUNS" />
-          <NavigationProperty Name="USER_DETAILS" Relationship="Self.FK_UserInfo_ToUsers" FromRole="USERS" ToRole="USER_DETAILS" />
-          <NavigationProperty Name="USER_LOGIN_ROLES" Relationship="Self.Fk_Users_ToRoles" FromRole="USERS" ToRole="USER_LOGIN_ROLES" />
-          <NavigationProperty Name="USER_SAVED_SETTINGS" Relationship="Self.FK_UserSavedSettings_ToUsers" FromRole="USERS" ToRole="USER_SAVED_SETTINGS" />
-        </EntityType>
-        <Association Name="FK_Algorithms_ToAlgTypes">
-          <End Role="ALGORITHM_TYPES" Type="Self.ALGORITHM_TYPES" Multiplicity="1" />
-          <End Role="ALGORITHMS" Type="Self.ALGORITHMS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ALGORITHM_TYPES">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ALGORITHMS">
-              <PropertyRef Name="AlgoritmType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Algorithms_ToUsers">
-          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
-          <End Role="ALGORITHMS" Type="Self.ALGORITHMS" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Algorithms" Type="Self.Algorithms" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="USERS">
+            <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ALGORITHMS">
+            <Dependent Role="Algorithms">
               <PropertyRef Name="CreatorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TestResults_ToAlgorithms">
-          <End Role="ALGORITHMS" Type="Self.ALGORITHMS" Multiplicity="1" />
-          <End Role="TEST_RUN_RESULTS" Type="Self.TEST_RUN_RESULTS" Multiplicity="*" />
+          <End Role="Algorithms" Type="Self.Algorithms" Multiplicity="1" />
+          <End Role="TestResults" Type="Self.TestResults" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ALGORITHMS">
+            <Principal Role="Algorithms">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="TEST_RUN_RESULTS">
+            <Dependent Role="TestResults">
               <PropertyRef Name="AlgorithmId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TestRuns_ToAlgorithms">
-          <End Role="ALGORITHMS" Type="Self.ALGORITHMS" Multiplicity="1" />
-          <End Role="TEST_RUNS" Type="Self.TEST_RUNS" Multiplicity="*" />
+          <End Role="Algorithms" Type="Self.Algorithms" Multiplicity="1" />
+          <End Role="TestRuns" Type="Self.TestRuns" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ALGORITHMS">
+            <Principal Role="Algorithms">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="TEST_RUNS">
+            <Dependent Role="TestRuns">
               <PropertyRef Name="AlgorithmId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TestRuns_ToTestSets">
-          <End Role="TEST_DATA_SETS" Type="Self.TEST_DATA_SETS" Multiplicity="1" />
-          <End Role="TEST_RUNS" Type="Self.TEST_RUNS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TEST_DATA_SETS">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TEST_RUNS">
-              <PropertyRef Name="TestSetId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TestSets_ToUsers">
-          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
-          <End Role="TEST_DATA_SETS" Type="Self.TEST_DATA_SETS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TEST_DATA_SETS">
-              <PropertyRef Name="TestCreatorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TestResults_ToTestRuns">
-          <End Role="TEST_RUNS" Type="Self.TEST_RUNS" Multiplicity="1" />
-          <End Role="TEST_RUN_RESULTS" Type="Self.TEST_RUN_RESULTS" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="TEST_RUNS">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TEST_RUN_RESULTS">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TestRuns_ToUsers">
-          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
-          <End Role="TEST_RUNS" Type="Self.TEST_RUNS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TEST_RUNS">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserInfo_ToUsers">
-          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
-          <End Role="USER_DETAILS" Type="Self.USER_DETAILS" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="USER_DETAILS">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="Fk_Users_ToRoles">
-          <End Role="USER_LOGIN_ROLES" Type="Self.USER_LOGIN_ROLES" Multiplicity="1" />
-          <End Role="USERS" Type="Self.USERS" Multiplicity="*" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="USER_LOGIN_ROLES">
+            <Principal Role="Roles">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="USERS">
+            <Dependent Role="Users">
               <PropertyRef Name="Role" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserSavedSettings_ToUsers">
-          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
-          <End Role="USER_SAVED_SETTINGS" Type="Self.USER_SAVED_SETTINGS" Multiplicity="*" />
+        <Association Name="FK_TestResults_ToTestRuns">
+          <End Role="TestRuns" Type="Self.TestRuns" Multiplicity="1" />
+          <End Role="TestResults" Type="Self.TestResults" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="USERS">
+            <Principal Role="TestRuns">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="USER_SAVED_SETTINGS">
+            <Dependent Role="TestResults">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestRuns_ToTestSets">
+          <End Role="TestSets" Type="Self.TestSets" Multiplicity="1" />
+          <End Role="TestRuns" Type="Self.TestRuns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestSets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestRuns">
+              <PropertyRef Name="TestSetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestRuns_ToUsers">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="TestRuns" Type="Self.TestRuns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestRuns">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestSets_ToUsers">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="TestSets" Type="Self.TestSets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestSets">
+              <PropertyRef Name="CreatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserInfo_ToUsers">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserInfo">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSavedSettings_ToUsers">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserSavedSettings" Type="Self.UserSavedSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserSavedSettings">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ALGORITHM_TYPES" EntityType="Self.ALGORITHM_TYPES" />
-          <EntitySet Name="ALGORITHMS" EntityType="Self.ALGORITHMS" />
-          <EntitySet Name="TEST_DATA_SETS" EntityType="Self.TEST_DATA_SETS" />
-          <EntitySet Name="TEST_RUN_RESULTS" EntityType="Self.TEST_RUN_RESULTS" />
-          <EntitySet Name="TEST_RUNS" EntityType="Self.TEST_RUNS" />
-          <EntitySet Name="USER_DETAILS" EntityType="Self.USER_DETAILS" />
-          <EntitySet Name="USER_LOGIN_ROLES" EntityType="Self.USER_LOGIN_ROLES" />
-          <EntitySet Name="USER_SAVED_SETTINGS" EntityType="Self.USER_SAVED_SETTINGS" />
-          <EntitySet Name="USERS" EntityType="Self.USERS" />
-          <AssociationSet Name="FK_Algorithms_ToAlgTypes" Association="Self.FK_Algorithms_ToAlgTypes">
-            <End Role="ALGORITHM_TYPES" EntitySet="ALGORITHM_TYPES" />
-            <End Role="ALGORITHMS" EntitySet="ALGORITHMS" />
-          </AssociationSet>
+          <EntitySet Name="Algorithms" EntityType="Self.Algorithms" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="TestResults" EntityType="Self.TestResults" />
+          <EntitySet Name="TestRuns" EntityType="Self.TestRuns" />
+          <EntitySet Name="TestSets" EntityType="Self.TestSets" />
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="UserSavedSettings" EntityType="Self.UserSavedSettings" />
           <AssociationSet Name="FK_Algorithms_ToUsers" Association="Self.FK_Algorithms_ToUsers">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="ALGORITHMS" EntitySet="ALGORITHMS" />
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Algorithms" EntitySet="Algorithms" />
           </AssociationSet>
           <AssociationSet Name="FK_TestResults_ToAlgorithms" Association="Self.FK_TestResults_ToAlgorithms">
-            <End Role="ALGORITHMS" EntitySet="ALGORITHMS" />
-            <End Role="TEST_RUN_RESULTS" EntitySet="TEST_RUN_RESULTS" />
+            <End Role="Algorithms" EntitySet="Algorithms" />
+            <End Role="TestResults" EntitySet="TestResults" />
           </AssociationSet>
           <AssociationSet Name="FK_TestRuns_ToAlgorithms" Association="Self.FK_TestRuns_ToAlgorithms">
-            <End Role="ALGORITHMS" EntitySet="ALGORITHMS" />
-            <End Role="TEST_RUNS" EntitySet="TEST_RUNS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TestRuns_ToTestSets" Association="Self.FK_TestRuns_ToTestSets">
-            <End Role="TEST_DATA_SETS" EntitySet="TEST_DATA_SETS" />
-            <End Role="TEST_RUNS" EntitySet="TEST_RUNS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TestSets_ToUsers" Association="Self.FK_TestSets_ToUsers">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="TEST_DATA_SETS" EntitySet="TEST_DATA_SETS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TestResults_ToTestRuns" Association="Self.FK_TestResults_ToTestRuns">
-            <End Role="TEST_RUNS" EntitySet="TEST_RUNS" />
-            <End Role="TEST_RUN_RESULTS" EntitySet="TEST_RUN_RESULTS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TestRuns_ToUsers" Association="Self.FK_TestRuns_ToUsers">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="TEST_RUNS" EntitySet="TEST_RUNS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserInfo_ToUsers" Association="Self.FK_UserInfo_ToUsers">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="USER_DETAILS" EntitySet="USER_DETAILS" />
+            <End Role="Algorithms" EntitySet="Algorithms" />
+            <End Role="TestRuns" EntitySet="TestRuns" />
           </AssociationSet>
           <AssociationSet Name="Fk_Users_ToRoles" Association="Self.Fk_Users_ToRoles">
-            <End Role="USER_LOGIN_ROLES" EntitySet="USER_LOGIN_ROLES" />
-            <End Role="USERS" EntitySet="USERS" />
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestResults_ToTestRuns" Association="Self.FK_TestResults_ToTestRuns">
+            <End Role="TestRuns" EntitySet="TestRuns" />
+            <End Role="TestResults" EntitySet="TestResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestRuns_ToTestSets" Association="Self.FK_TestRuns_ToTestSets">
+            <End Role="TestSets" EntitySet="TestSets" />
+            <End Role="TestRuns" EntitySet="TestRuns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestRuns_ToUsers" Association="Self.FK_TestRuns_ToUsers">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TestRuns" EntitySet="TestRuns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestSets_ToUsers" Association="Self.FK_TestSets_ToUsers">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TestSets" EntitySet="TestSets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserInfo_ToUsers" Association="Self.FK_UserInfo_ToUsers">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserInfo" EntitySet="UserInfo" />
           </AssociationSet>
           <AssociationSet Name="FK_UserSavedSettings_ToUsers" Association="Self.FK_UserSavedSettings_ToUsers">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="USER_SAVED_SETTINGS" EntitySet="USER_SAVED_SETTINGS" />
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserSavedSettings" EntitySet="UserSavedSettings" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -590,101 +532,89 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TestSystemDatabaseModelStoreContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="ALGORITHM_TYPES">
-            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.ALGORITHM_TYPES">
-              <MappingFragment StoreEntitySet="ALGORITHM_TYPES">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ALGORITHMS">
-            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.ALGORITHMS">
-              <MappingFragment StoreEntitySet="ALGORITHMS">
+          <EntitySetMapping Name="Algorithms">
+            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.Algorithms">
+              <MappingFragment StoreEntitySet="Algorithms">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="SourceCode" ColumnName="SourceCode" />
-                <ScalarProperty Name="RunsCount" ColumnName="RunsCount" />
-                <ScalarProperty Name="AlgoritmType" ColumnName="AlgoritmType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TEST_DATA_SETS">
-            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.TEST_DATA_SETS">
-              <MappingFragment StoreEntitySet="TEST_DATA_SETS">
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TestCreatorId" ColumnName="TestCreatorId" />
-                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
-                <ScalarProperty Name="NumberOfRuns" ColumnName="NumberOfRuns" />
-                <ScalarProperty Name="TestDescription" ColumnName="TestDescription" />
-                <ScalarProperty Name="TestFieldOfUse" ColumnName="TestFieldOfUse" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TEST_RUN_RESULTS">
-            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.TEST_RUN_RESULTS">
-              <MappingFragment StoreEntitySet="TEST_RUN_RESULTS">
+          <EntitySetMapping Name="TestResults">
+            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.TestResults">
+              <MappingFragment StoreEntitySet="TestResults">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="AlgorithmId" ColumnName="AlgorithmId" />
-                <ScalarProperty Name="TruePositiveNumber" ColumnName="TruePositiveNumber" />
-                <ScalarProperty Name="FalseNegativeNumber" ColumnName="FalseNegativeNumber" />
-                <ScalarProperty Name="TrueNegativeNumber" ColumnName="TrueNegativeNumber" />
-                <ScalarProperty Name="FalsePositiveNumber" ColumnName="FalsePositiveNumber" />
-                <ScalarProperty Name="NumberOfRuns" ColumnName="NumberOfRuns" />
-                <ScalarProperty Name="OtherResults" ColumnName="OtherResults" />
+                <ScalarProperty Name="TP" ColumnName="TP" />
+                <ScalarProperty Name="FN" ColumnName="FN" />
+                <ScalarProperty Name="TN" ColumnName="TN" />
+                <ScalarProperty Name="FP" ColumnName="FP" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="TestRuns" ColumnName="TestRuns" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TEST_RUNS">
-            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.TEST_RUNS">
-              <MappingFragment StoreEntitySet="TEST_RUNS">
+          <EntitySetMapping Name="TestRuns">
+            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.TestRuns">
+              <MappingFragment StoreEntitySet="TestRuns">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="AlgorithmId" ColumnName="AlgorithmId" />
                 <ScalarProperty Name="TestSetId" ColumnName="TestSetId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="DateOfRun" ColumnName="DateOfRun" />
-                <ScalarProperty Name="RunComments" ColumnName="RunComments" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="USER_DETAILS">
-            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.USER_DETAILS">
-              <MappingFragment StoreEntitySet="USER_DETAILS">
+          <EntitySetMapping Name="TestSets">
+            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.TestSets">
+              <MappingFragment StoreEntitySet="TestSets">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="TotalRuns" ColumnName="TotalRuns" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInfo">
+            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.UserInfo">
+              <MappingFragment StoreEntitySet="UserInfo">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="User_full_name" ColumnName="User_full_name" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Company" ColumnName="Company" />
                 <ScalarProperty Name="Other" ColumnName="Other" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="USER_LOGIN_ROLES">
-            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.USER_LOGIN_ROLES">
-              <MappingFragment StoreEntitySet="USER_LOGIN_ROLES">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="USER_SAVED_SETTINGS">
-            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.USER_SAVED_SETTINGS">
-              <MappingFragment StoreEntitySet="USER_SAVED_SETTINGS">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ObjectName" ColumnName="ObjectName" />
-                <ScalarProperty Name="ObjectValue" ColumnName="ObjectValue" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="USERS">
-            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.USERS">
-              <MappingFragment StoreEntitySet="USERS">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.Users">
+              <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSavedSettings">
+            <EntityTypeMapping TypeName="TestSystem.DatabaseModel.UserSavedSettings">
+              <MappingFragment StoreEntitySet="UserSavedSettings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ObjectName" ColumnName="ObjectName" />
+                <ScalarProperty Name="ObjectValue" ColumnName="ObjectValue" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

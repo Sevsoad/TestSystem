@@ -12,14 +12,16 @@ namespace TestSystem.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class USER_DETAILS
+    public partial class Roles
     {
-        public int Id { get; set; }
-        public string Email { get; set; }
-        public string User_full_name { get; set; }
-        public string Company { get; set; }
-        public string Other { get; set; }
+        public Roles()
+        {
+            this.Users = new HashSet<Users>();
+        }
     
-        public virtual USERS USERS { get; set; }
+        public int Id { get; set; }
+        public string RoleName { get; set; }
+    
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

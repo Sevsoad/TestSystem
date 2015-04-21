@@ -4,26 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="df8f87cf45294530a87ff0c947061275" Name="Diagram1" ZoomLevel="73">
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.ALGORITHM_TYPES" Width="1.5" PointX="7.125" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.ALGORITHMS" Width="1.5" PointX="9.375" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.TEST_DATA_SETS" Width="1.5" PointX="9.375" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.TEST_RUN_RESULTS" Width="1.5" PointX="11.625" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.TEST_RUNS" Width="1.5" PointX="11.625" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.USER_DETAILS" Width="1.5" PointX="4.875" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.USER_LOGIN_ROLES" Width="1.5" PointX="4.875" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.USER_SAVED_SETTINGS" Width="1.5" PointX="5" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.USERS" Width="1.5" PointX="7.125" PointY="7.875" IsExpanded="true" />
-        <AssociationConnector Association="TestSystem.DatabaseModel.FK_Algorithms_ToAlgTypes" ManuallyRouted="false" />
+      <Diagram DiagramId="8d1b391912804436bb971ca2b2f16232" Name="Diagram1">
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.Algorithms" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.Roles" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.TestResults" Width="1.5" PointX="7.5" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.TestRuns" Width="1.5" PointX="7.5" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.TestSets" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.UserInfo" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.Users" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.UserSavedSettings" Width="1.5" PointX="5.25" PointY="13" IsExpanded="true" />
         <AssociationConnector Association="TestSystem.DatabaseModel.FK_Algorithms_ToUsers" ManuallyRouted="false" />
         <AssociationConnector Association="TestSystem.DatabaseModel.FK_TestResults_ToAlgorithms" ManuallyRouted="false" />
         <AssociationConnector Association="TestSystem.DatabaseModel.FK_TestRuns_ToAlgorithms" ManuallyRouted="false" />
-        <AssociationConnector Association="TestSystem.DatabaseModel.FK_TestRuns_ToTestSets" ManuallyRouted="false" />
-        <AssociationConnector Association="TestSystem.DatabaseModel.FK_TestSets_ToUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="TestSystem.DatabaseModel.FK_TestResults_ToTestRuns" ManuallyRouted="false" />
-        <AssociationConnector Association="TestSystem.DatabaseModel.FK_TestRuns_ToUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="TestSystem.DatabaseModel.FK_UserInfo_ToUsers" ManuallyRouted="false" />
         <AssociationConnector Association="TestSystem.DatabaseModel.Fk_Users_ToRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="TestSystem.DatabaseModel.FK_TestResults_ToTestRuns" ManuallyRouted="false" />
+        <AssociationConnector Association="TestSystem.DatabaseModel.FK_TestRuns_ToTestSets" ManuallyRouted="false" />
+        <AssociationConnector Association="TestSystem.DatabaseModel.FK_TestRuns_ToUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="TestSystem.DatabaseModel.FK_TestSets_ToUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="TestSystem.DatabaseModel.FK_UserInfo_ToUsers" ManuallyRouted="false" />
         <AssociationConnector Association="TestSystem.DatabaseModel.FK_UserSavedSettings_ToUsers" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

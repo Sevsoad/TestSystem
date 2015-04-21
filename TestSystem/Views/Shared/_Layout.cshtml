@@ -6,13 +6,13 @@
     <title>@ViewBag.Title </title>
     @using System.Web.Optimization
     @Scripts.Render("~/bundles/jsScripts")
-    @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jquery.unobtrusive")
+    @Styles.Render("~/Content/css")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -22,15 +22,41 @@
                 </button>
                 @Html.ActionLink("Test sys", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Algorithms", "Index", "Login")</li>
-                </ul>
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "Index", "Login")</li>
-                </ul>
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Login", "Login", "Login")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Algorithms <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Algorithms", "Algorithms", "Tests")</li>
+                            <li>@Html.ActionLink("Runs", "Algorithms", "Tests")</li>
+                            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                            {
+                                <li>@Html.ActionLink("Add algoritm", "Algorithms", "Tests")</li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">TestSets <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Test sets", "Algorithms", "Tests")</li>
+                            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                            {
+                                <li>@Html.ActionLink("Add test set", "Algorithms", "Tests")</li>
+                            }
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Help", "Help", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    @if (!HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Login")</li>
+                    }
+                    @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Logout", "Logout", "Login")</li>
+                    }
                 </ul>
             </div>
         </div>

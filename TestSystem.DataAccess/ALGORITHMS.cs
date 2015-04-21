@@ -12,24 +12,21 @@ namespace TestSystem.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class ALGORITHMS
+    public partial class Algorithms
     {
-        public ALGORITHMS()
+        public Algorithms()
         {
-            this.TEST_RUN_RESULTS = new HashSet<TEST_RUN_RESULTS>();
-            this.TEST_RUNS = new HashSet<TEST_RUNS>();
+            this.TestResults = new HashSet<TestResults>();
+            this.TestRuns = new HashSet<TestRuns>();
         }
     
         public int Id { get; set; }
         public int CreatorId { get; set; }
         public string Description { get; set; }
         public string SourceCode { get; set; }
-        public string RunsCount { get; set; }
-        public int AlgoritmType { get; set; }
     
-        public virtual ALGORITHM_TYPES ALGORITHM_TYPES { get; set; }
-        public virtual USERS USERS { get; set; }
-        public virtual ICollection<TEST_RUN_RESULTS> TEST_RUN_RESULTS { get; set; }
-        public virtual ICollection<TEST_RUNS> TEST_RUNS { get; set; }
+        public virtual Users Users { get; set; }
+        public virtual ICollection<TestResults> TestResults { get; set; }
+        public virtual ICollection<TestRuns> TestRuns { get; set; }
     }
 }

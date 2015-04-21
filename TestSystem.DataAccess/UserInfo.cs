@@ -12,14 +12,14 @@ namespace TestSystem.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class USER_SAVED_SETTINGS
+    public partial class UserInfo
     {
         public int Id { get; set; }
-        public int UserID { get; set; }
-        public string ObjectName { get; set; }
-        public string ObjectValue { get; set; }
-        public Nullable<System.DateTime> DateUpdated { get; set; }
+        public string Email { get; set; }
+        public string FullName { get; set; }
+        public string Company { get; set; }
+        public string Other { get; set; }
     
-        public virtual USERS USERS { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

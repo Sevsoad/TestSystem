@@ -12,16 +12,18 @@ namespace TestSystem.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class ALGORITHM_TYPES
+    public partial class TestResults
     {
-        public ALGORITHM_TYPES()
-        {
-            this.ALGORITHMS = new HashSet<ALGORITHMS>();
-        }
-    
         public int Id { get; set; }
-        public string Name { get; set; }
+        public int AlgorithmId { get; set; }
+        public Nullable<int> TP { get; set; }
+        public Nullable<int> FN { get; set; }
+        public Nullable<int> TN { get; set; }
+        public Nullable<int> FP { get; set; }
+        public string Others { get; set; }
+        public Nullable<int> TestRuns { get; set; }
     
-        public virtual ICollection<ALGORITHMS> ALGORITHMS { get; set; }
+        public virtual Algorithms Algorithms { get; set; }
+        public virtual TestRuns TestRuns1 { get; set; }
     }
 }
