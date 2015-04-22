@@ -44,13 +44,18 @@ namespace TestSystem.Controllers
 
         }
 
-        [Authorize] //[Authorize(Roles = "admins, developers")]
+        [Authorize] 
         public ActionResult About()
         {
             return View();
         }
 
-        //admin's page
+        [Authorize(Roles = "Admins")]
+        public ActionResult Admin()
+        {
+            return View();
+        }
+
         public ActionResult Help()
         {
             return View();

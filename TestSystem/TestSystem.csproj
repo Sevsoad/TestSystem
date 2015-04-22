@@ -159,6 +159,7 @@
     <Content Include="Views\Tests\Algorithms.cshtml" />
     <Content Include="Views\Home\Help.cshtml" />
     <Content Include="Views\Tests\TestSets.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -18,6 +18,11 @@ namespace TestSystem
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            if (!System.Web.Security.Roles.RoleExists("Admins"))
+            {
+                System.Web.Security.Roles.CreateRole("Admins");
+            }            
         }
 
         protected void Application_AcquireRequestState(Object sender, EventArgs e)

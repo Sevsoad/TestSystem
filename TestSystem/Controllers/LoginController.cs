@@ -85,7 +85,11 @@ namespace TestSystem.Controllers
                     return View(input);
                 }
                 FormsAuthentication.SetAuthCookie(input.UserName, true);
-                //HttpContext.Cache.Remove(cacheKey);
+
+                //if (!System.Web.Security.Roles.IsUserInRole(input.UserName, "Users"))
+                //{
+                //    System.Web.Security.Roles.AddUserToRole(input.UserName, "Users");
+                //}                 
             }
 
             return RedirectToAction("Index", "Home");
@@ -95,7 +99,6 @@ namespace TestSystem.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            //HttpContext.Cache.Remove(cacheKey);
             return RedirectToAction("Index", "Home");
         }
     }

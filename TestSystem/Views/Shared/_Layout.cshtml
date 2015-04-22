@@ -47,6 +47,10 @@
                             }
                         </ul>
                     </li>
+                    @if (HttpContext.Current.User.IsInRole("Admins"))
+                    {
+                        <li>@Html.ActionLink("Admin", "Admin", "Home")</li>
+                    }
                     <li>@Html.ActionLink("Help", "Help", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     @if (!HttpContext.Current.User.Identity.IsAuthenticated)
