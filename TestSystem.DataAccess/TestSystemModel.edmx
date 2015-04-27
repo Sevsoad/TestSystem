@@ -54,6 +54,7 @@
           <Property Name="TotalRuns" Type="int" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Data" Type="varbinary(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="UserInfo">
           <Key>
@@ -317,6 +318,7 @@
           <Property Name="TotalRuns" Type="Int32" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <NavigationProperty Name="TestRuns" Relationship="Self.FK_TestRuns_ToTestSets" FromRole="TestSets" ToRole="TestRuns" />
           <NavigationProperty Name="Users" Relationship="Self.FK_TestSets_ToUsers" FromRole="TestSets" ToRole="Users" />
         </EntityType>
@@ -584,6 +586,7 @@
                 <ScalarProperty Name="TotalRuns" ColumnName="TotalRuns" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

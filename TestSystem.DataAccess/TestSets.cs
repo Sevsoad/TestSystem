@@ -25,6 +25,7 @@ namespace TestSystem.DataAccess
         public int TotalRuns { get; set; }
         public string Type { get; set; }
         public string Description { get; set; }
+        public byte[] Data { get; set; }
     
         public virtual ICollection<TestRuns> TestRuns { get; set; }
         public virtual Users Users { get; set; }

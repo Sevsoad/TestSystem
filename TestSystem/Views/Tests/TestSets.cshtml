@@ -5,4 +5,12 @@
 }
 
 <h2>TestSets</h2>
+<h3>Upload file</h3>
 
+@using (Html.BeginForm("UploadTestFile", "Tests", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="file" value="Choose file"/>
+    <input type="submit" value="Upload" />
+}
+
+<a href="/Tests/DownloadTestFile" download>download</a>

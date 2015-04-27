@@ -6,5 +6,7 @@
     [TotalRuns] INT NOT NULL, 
     [Type] NVARCHAR(50) NULL, 
     [Description] NVARCHAR(MAX) NULL,
-	CONSTRAINT [FK_TestSets_ToUsers] FOREIGN KEY (CreatorId) REFERENCES Users(Id)
+	[Data] VARBINARY(MAX) NOT NULL, 
+    [Name] NVARCHAR(50) NOT NULL, 
+    CONSTRAINT [FK_TestSets_ToUsers] FOREIGN KEY (CreatorId) REFERENCES Users(Id)
 )

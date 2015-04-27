@@ -40,10 +40,10 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">TestSets <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li>@Html.ActionLink("Test sets", "Algorithms", "Tests")</li>
+                            <li>@Html.ActionLink("Test sets", "TestSets", "Tests")</li>
                             @if (HttpContext.Current.User.Identity.IsAuthenticated)
                             {
-                                <li>@Html.ActionLink("Add test set", "Algorithms", "Tests")</li>
+                                <li>@Html.ActionLink("Add test set", "TestSets", "Tests")</li>
                             }
                         </ul>
                     </li>
