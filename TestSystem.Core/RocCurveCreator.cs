@@ -15,34 +15,34 @@ namespace TestSystem.Core
             var analyzedResults = new AnalyzedResults();
             var dbacc = new DataAccess.Users();
             dbacc.Password = "12345678";
-            
+            var analyzer = new TestResultsAnalyzer();
 
-            //foreach(var testResult in testingResults)
-            //{
-            //    var result = CalcTrueFalseNumbers(expectedResults, testResult, trueClassNumber);
-            //    analyzedResults.faultsNumbers.Add(result);
-            //    var sensivityItem = result[0] / (result[0] + result[2]);
-            //    var specifityItem = (result[1] / (result[1] + result[3]));
-            //    analyzedResults.sensivityNumbers.Add(sensivityItem);
-            //    analyzedResults.specifityNumbers.Add(specifityItem);
-            //}
+            foreach (var testResult in testingResults)
+            {
+                var result = analyzer.CalcTrueFalseNumbers(expectedResults, testResult, trueClassNumber);
+                analyzedResults.faultsNumbers.Add(result);
+                var sensivityItem = result[0] / (result[0] + result[2]);
+                var specifityItem = (result[1] / (result[1] + result[3]));
+                analyzedResults.sensivityNumbers.Add(sensivityItem);
+                analyzedResults.specifityNumbers.Add(specifityItem);
+            }
 
-            //var sumTpr = analyzedResults.sensivityNumbers.Sum();
-            //var sumFpr = analyzedResults.specifityNumbers.Sum();
-            //var previousTPR = 0f;
-            //var previousFPR = 0f;
+            var sumTpr = analyzedResults.sensivityNumbers.Sum();
+            var sumFpr = analyzedResults.specifityNumbers.Sum();
+            var previousTPR = 0f;
+            var previousFPR = 0f;
 
-            //foreach (var i in analyzedResults.sensivityNumbers)
-            //{
-            //    previousTPR += i / sumTpr;
-            //    analyzedResults.rocCoordinatesSensivity.Add(previousTPR);
-            //}
+            foreach (var i in analyzedResults.sensivityNumbers)
+            {
+                previousTPR += i / sumTpr;
+                analyzedResults.rocCoordinatesSensivity.Add(previousTPR);
+            }
 
-            //foreach (var i in analyzedResults.specifityNumbers)
-            //{
-            //    previousFPR += i / sumFpr;
-            //    analyzedResults.rocCoordinatesSpecifity.Add(previousFPR);
-            //}
+            foreach (var i in analyzedResults.specifityNumbers)
+            {
+                previousFPR += i / sumFpr;
+                analyzedResults.rocCoordinatesSpecifity.Add(previousFPR);
+            }
 
             return analyzedResults;
         }

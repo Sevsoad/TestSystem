@@ -30,7 +30,8 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Algorithms <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li>@Html.ActionLink("Algorithms", "Algorithms", "Tests")</li>
-                            <li>@Html.ActionLink("Runs", "Algorithms", "Tests")</li>
+                            <li>@Html.ActionLink("All runs", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Run Test", "CreateTestRun", "Tests")</li>
                             @if (HttpContext.Current.User.Identity.IsAuthenticated)
                             {
                                 <li>@Html.ActionLink("Add algoritm", "Algorithms", "Tests")</li>
@@ -43,7 +44,7 @@
                             <li>@Html.ActionLink("Test sets", "TestSets", "Tests")</li>
                             @if (HttpContext.Current.User.Identity.IsAuthenticated)
                             {
-                                <li>@Html.ActionLink("Add test set", "TestSets", "Tests")</li>
+                                <li>@Html.ActionLink("Upload test", "UploadTest", "Tests")</li>
                             }
                         </ul>
                     </li>
@@ -69,7 +70,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year</p>
         </footer>
     </div>
 

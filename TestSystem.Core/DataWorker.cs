@@ -25,7 +25,7 @@ namespace TestSystem.Core
             var testPath20percent = @"D:\DPtests\test10percNoise.txt";
             var outputPath = @"D:\DPtests\alphaChangeTestingResults.txt";
             var testingResults = new List<string>();
-            for (var i = 0.00f; i < 0.2; i += 0.01f)
+            for (var i = 0.10f; i < 0.20; i += 0.01f)
             {
                 testingResults.Add(BiTestHelper.RunAlgorithmAnalyze(testPath20percent, outputPath, i));
             }

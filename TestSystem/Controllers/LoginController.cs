@@ -40,14 +40,14 @@ namespace TestSystem.Controllers
                     UserName = input.UserName.ToLower(),
                     Password = input.Password,
                     Roles = context.Roles.Find(2)
-                };
+                };//hardcode role
 
                 context.Users.Add(user);
                 context.SaveChanges();
 
                 var userDetails = new UserInfo
                 {
-                    Id = context.Users.First<Users>(x => x.UserName == input.UserName.ToLower()).Id,
+                    Id = context.Users.FirstOrDefault<Users>(x => x.UserName == input.UserName.ToLower()).Id,
                     Company = input.Company,
                     Email = input.Email,
                     FullName = input.FullName,
@@ -58,7 +58,7 @@ namespace TestSystem.Controllers
                 context.SaveChanges();
             }
             //redirect to login + message
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Login");
         }
 
         [HttpGet]

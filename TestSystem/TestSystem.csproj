@@ -139,11 +139,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RunsController.cs" />
     <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CreateTestRunViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\RunsModels\RunResultsViewModel.cs" />
+    <Compile Include="Models\TestDescriptionViewModel.cs" />
+    <Compile Include="Models\UploadTestViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -158,8 +163,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Tests\Algorithms.cshtml" />
     <Content Include="Views\Home\Help.cshtml" />
-    <Content Include="Views\Tests\TestSets.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Tests\UploadTest.cshtml" />
+    <Content Include="Views\Tests\TestSets.cshtml" />
+    <Content Include="Views\Tests\CreateTestRun.cshtml" />
+    <Content Include="Views\Runs\RunResults.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
