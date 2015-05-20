@@ -61,5 +61,9 @@ namespace TestSystem.Controllers
             return View();
         }
 
+        public ActionResult ErrorPage()
+        {
+            return View();
+        }
     }
 }

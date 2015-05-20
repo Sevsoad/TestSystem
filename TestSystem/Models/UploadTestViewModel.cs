@@ -10,12 +10,12 @@ namespace TestSystem.Models
     {
 
         [Required]
-        [Display(Name = "Test name")]
+        [Display(Name = "Test file name")]
         [StringLength(50, MinimumLength = 3)]
         public string TestName { get; set; }
 
         [Display(Name = "Description")]
-        [StringLength(500)]
+        [StringLength(300)]
         public string Description { get; set; }
 
         [Required (ErrorMessage = "Please, attach test file.")]

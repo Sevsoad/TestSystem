@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,9 @@ namespace TestSystem.Core
         {
             
 
-            TestFormatConverter formatConverter = new TestFormatConverter();
+            FormatChecker formatConverter = new FormatChecker();
             var testPath20percent = @"D:\DPtests\test10percNoise.txt";
-            var expectedResults = formatConverter.GetResultsFromTestSet(testPath20percent);
+            var expectedResults = GetResultsFromTestSet(testPath20percent);
 
             return expectedResults;
         }
@@ -33,5 +34,21 @@ namespace TestSystem.Core
             return testingResults;
         }
 
+        public string GetResultsFromTestSet(string testPath)
+        {
+            var expectedResults = string.Empty;
+
+            using (StreamReader file = new System.IO.StreamReader(testPath, true))
+            {
+
+                while (!file.EndOfStream)
+                {
+                    var testLine = file.ReadLine();
+                    expectedResults += testLine.ToCharArray()[0] + " ";
+                }
+            }
+
+            return expectedResults;
+        }    
     }
 }

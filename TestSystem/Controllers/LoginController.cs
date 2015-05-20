@@ -11,8 +11,6 @@ namespace TestSystem.Controllers
 {
     public class LoginController : Controller
     {
-        private string cacheKey = "tetsSys";
-
         [HttpGet]
         public ActionResult Register()
         {
@@ -26,7 +24,7 @@ namespace TestSystem.Controllers
             {
                 return View(input);
             }
-
+            
             using (var context = new Entities())
             {
                 if (context.Users.FirstOrDefault<Users>(x => x.UserName.ToLower() == input.UserName) != null)
@@ -38,7 +36,7 @@ namespace TestSystem.Controllers
                 var user = new Users
                 {
                     UserName = input.UserName.ToLower(),
-                    Password = input.Password,
+                    Password = input.Password, //pass gen
                     Roles = context.Roles.Find(2)
                 };//hardcode role
 
@@ -69,7 +67,7 @@ namespace TestSystem.Controllers
 
         [HttpPost]
         public ActionResult Login(LoginViewModel input)
-        {
+        {            
             if (!ModelState.IsValid)
             {
                 return View(input);
@@ -84,12 +82,7 @@ namespace TestSystem.Controllers
                     ModelState.AddModelError("UserName", "Username - password combination don't match.");
                     return View(input);
                 }
-                FormsAuthentication.SetAuthCookie(input.UserName, true);
-
-                //if (!System.Web.Security.Roles.IsUserInRole(input.UserName, "Users"))
-                //{
-                //    System.Web.Security.Roles.AddUserToRole(input.UserName, "Users");
-                //}                 
+                FormsAuthentication.SetAuthCookie(input.UserName, true);               
             }
 
             return RedirectToAction("Index", "Home");

@@ -1,0 +1,105 @@
+﻿@model TestSystem.Models.RunsModels.RunResultsViewModel
+
+@{
+    ViewBag.Title = "RunResults";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>RunResults</h2>
+
+<div>
+    <h4>RunResultsViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TruePositivesNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TruePositivesNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrueNegativesNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrueNegativesNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FalsePositivesNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FalsePositivesNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FalseNegativesNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FalseNegativesNumber)
+        </dd>
+
+    </dl>
+</div>
+
+<p>Results for ROC-curve calculation:</p>
+<p>AUC - 0,66</p>
+
+<div id="chart2" style="height:400px;width:600px; "></div>
+
+<script>
+        $(document).ready(
+            function () {
+                var graph2 = [[0.06071429, 0.1955604], [0.1, 0.2080358], [0.1392857, 0.262852], [0.1928571, 0.4011823], [0.2392857, 0.4413808], [0.2892857, 0.4685148], [0.3428572, 0.4978489], [0.4035714, 0.5760731], [0.45, 0.6141559], [0.4928571, 0.6327091], [0.5535714, 0.6930069], [0.6142857, 0.7120483], [0.65, 0.7120483], [0.7035714, 0.7406104], [0.7535714, 0.7922943], [0.7928571, 0.801815], [0.8392857, 0.8800392], [0.8928571, 0.9213862], [0.9428571, 0.9523965], [0.9999999, 1]];
+                var title = "Roc-curves";
+                var jsonurl = "/Home/GetCurveCoordinates"; 
+                var graphInfo = ajaxDataRenderer(jsonurl);//[[[0.04301075, 0], [0.09408602, 0.1017417], [0.1478495, 0.1356555], [0.1989247, 0.1356555], [0.25, 0.1678737], [0.2983871, 0.2000919], [0.3521505, 0.2331362], [0.4032258, 0.3297908], [0.4543011, 0.3942271], [0.5026882, 0.4908817], [0.5483871, 0.6381649], [0.6021506, 0.7703421], [0.6505377, 0.7703421], [0.6962366, 0.7703421], [0.7446237, 0.7703421], [0.7930108, 0.7703421], [0.8467743, 0.8347784], [0.9005377, 0.9339113], [0.9489248, 0.9999999], [1, 0.9999999]]];//
+                var graph2Infro = [[[0, 0], [1, 1]], [[0, 0], [0.09408602, 0.2017417], [0.1478495, 0.3356555], [0.1989247, 0.4356555], [0.25, 0.4678737], [0.2983871, 0.6000919], [0.3521505, 0.6731362], [0.4032258, 0.7297908], [0.4543011, 0.7942271], [0.5026882, 0.8208817], [0.5483871, 0.8381649], [0.6021506, 0.8703421], [0.6505377, 0.8703421], [0.6962366, 0.8703421], [0.7446237, 0.8703421], [0.7930108, 0.8703421], [0.8467743, 0.9347784], [0.9005377, 0.9339113], [0.9489248, 0.9999999], [1, 0.9999999]]];
+               
+                var plot2 = $.jqplot('chart2', graph2Infro,
+                    {
+                        title: 'Roc-curve',
+                        axes: {
+                            yaxis: { min: 0, max: 1, label: "TPR" },
+                            xaxis: { min: 0, max: 1, label: "FPR" }
+                        },
+                        series: [{ color: '#5FAB78' }]
+                    });
+
+                //var plot2 = $.jqplot('chart2', jsonurl, {
+                //    title: title,
+                //    axesDefaults: {
+                //        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                //    },
+                //    dataRenderer: ajaxDataRenderer,
+                //    axes: {
+                //        xaxis: {
+                //            label: "FPR",
+                //            pad: 1
+                //        },
+                //        yaxis: {
+                //            label: "TPR"
+                //        }
+                //    }
+                //});
+            });
+
+        var ajaxDataRenderer = function (url) {
+            var ret = null;
+
+            $.ajax({
+                async: false,
+                url: url,
+                dataType: "json",
+                success: function (data) {
+                    ret = data;
+
+                }
+            });
+            return ret;
+        };
+</script>

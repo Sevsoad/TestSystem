@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TestSystem.Core
 {
-    class TestResultsAnalyzer
+    public class TestResultsAnalyzer
     {
         /// <summary>
         /// Calculates number of items that was right classified
@@ -22,6 +22,12 @@ namespace TestSystem.Core
 
             var expectedCollection = Regex.Matches(expectedIn, @"[\S]+");
             var actualCollection = Regex.Matches(actualIn, @"[\S]+");
+            var checker = new FormatChecker();
+            if (!checker.CheckTestFormat(expectedIn)
+                || checker.CheckTestFormat(actualIn))
+            {
+                throw new ArgumentException();
+            }
 
             for (var i = 0; i < expectedCollection.Count; i++)
             {

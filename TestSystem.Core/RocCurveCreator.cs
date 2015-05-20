@@ -13,8 +13,6 @@ namespace TestSystem.Core
         public AnalyzedResults GenerateRocCurveCoordinates(string expectedResults, List<string> testingResults, string trueClassNumber)
         {           
             var analyzedResults = new AnalyzedResults();
-            var dbacc = new DataAccess.Users();
-            dbacc.Password = "12345678";
             var analyzer = new TestResultsAnalyzer();
 
             foreach (var testResult in testingResults)
@@ -45,13 +43,6 @@ namespace TestSystem.Core
             }
 
             return analyzedResults;
-        }
-          
-
-        private int GetTotalClassifiedItemsNumber(string expected)
-        {
-	        MatchCollection collection = Regex.Matches(expected, @"[\S]+");
-            return collection.Count;
         }
 
     }

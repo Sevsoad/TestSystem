@@ -23,7 +23,8 @@ namespace TestSystem.DataAccess
         public int Id { get; set; }
         public int CreatorId { get; set; }
         public string Description { get; set; }
-        public string SourceCode { get; set; }
+        public string Name { get; set; }
+        public System.DateTime DateOfCreation { get; set; }
     
         public virtual Users Users { get; set; }
         public virtual ICollection<TestResults> TestResults { get; set; }

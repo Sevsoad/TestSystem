@@ -1,11 +1,11 @@
-﻿@model IEnumerable<TestSystem.Models.TestDescriptionViewModel>
+﻿@model IEnumerable<TestSystem.Models.AlgorithmDescriptionViewModel>
 
 @{
-    ViewBag.Title = "TestSets";
+    ViewBag.Title = "Algorithms";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>TestSets</h2>
+<h2>Algorithms</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -13,7 +13,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.TestName)
+            @Html.DisplayNameFor(model => model.AlgorithmName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
@@ -23,9 +23,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FileSize)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LastRun)
@@ -39,7 +36,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.TestName)
+            @Html.DisplayFor(modelItem => item.AlgorithmName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
@@ -51,17 +48,14 @@
             @Html.DisplayFor(modelItem => item.DateCreated)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FileSize)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.LastRun)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Runs)
         </td>
-        <td>
+        @*<td>
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) 
-        </td>
+        </td>*@
     </tr>
 }
 

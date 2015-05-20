@@ -11,8 +11,9 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreatorId" Type="int" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="SourceCode" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="DateOfCreation" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -55,6 +56,8 @@
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Data" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Size" Type="int" />
         </EntityType>
         <EntityType Name="UserInfo">
           <Key>
@@ -265,8 +268,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreatorId" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SourceCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOfCreation" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Algorithms_ToUsers" FromRole="Algorithms" ToRole="Users" />
           <NavigationProperty Name="TestResults" Relationship="Self.FK_TestResults_ToAlgorithms" FromRole="Algorithms" ToRole="TestResults" />
           <NavigationProperty Name="TestRuns" Relationship="Self.FK_TestRuns_ToAlgorithms" FromRole="Algorithms" ToRole="TestRuns" />
@@ -319,6 +323,8 @@
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Size" Type="Int32" />
           <NavigationProperty Name="TestRuns" Relationship="Self.FK_TestRuns_ToTestSets" FromRole="TestSets" ToRole="TestRuns" />
           <NavigationProperty Name="Users" Relationship="Self.FK_TestSets_ToUsers" FromRole="TestSets" ToRole="Users" />
         </EntityType>
@@ -540,7 +546,8 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="SourceCode" ColumnName="SourceCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -587,6 +594,8 @@
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
