@@ -124,12 +124,25 @@ namespace TestSystem.Controllers
                         lastTestRun = "never";
                     }
 
+                    var shortDescription = string.Empty;
+                    if (test.Description.Length > 25)
+                    {
+                        shortDescription = test.Description.Substring(0, 12) + "...";
+                    }
+                    else
+                    {
+                        shortDescription = test.Description;
+                    }
+
+                    var fileSize = string.Empty;
+                    fileSize = test.Size == 0 ? "< 1" : test.Size.ToString();
+
                     testList.Add(new TestDescriptionViewModel
                     {
                         CreatedBy = context.Users.FirstOrDefault<Users>(x => x.Id == test.CreatorId).UserName,
                         DateCreated = test.DateOfCreation.ToString(),
-                        Description = test.Description, //change description
-                        FileSize = test.Size + " kb",
+                        Description = shortDescription,
+                        FileSize = fileSize + " kb",
                         LastRun = lastTestRun,
                         Runs = context.TestRuns.Count(x => x.TestSetId == test.Id).ToString(),
                         TestName = test.Name
@@ -138,32 +151,7 @@ namespace TestSystem.Controllers
             }
 
             return View(testList);
-        }
-
-        [Authorize]
-        public ActionResult DownloadTestFile()
-        {
-            TestSets testSet;
-
-            using (var context = new Entities())
-            {
-
-                testSet = context.TestSets.Find(4);
-            }
-
-
-            var cd = new System.Net.Mime.ContentDisposition
-            {
-                FileName = "test set number 3.txt",
-                Inline = false
-            };
-
-            Response.AppendHeader("Content-Disposition", cd.ToString());
-
-
-            // View document
-            return File(testSet.Data, "text/plain");
-        }
+        }      
 
         [Authorize]
         [HttpGet]
@@ -175,23 +163,31 @@ namespace TestSystem.Controllers
         [Authorize]
         [HttpPost]
         public ActionResult UploadTest(UploadTestViewModel model)
-        {
+        { 
             if (!ModelState.IsValid)
             {
                 return View(model);
-            }
-
-            byte[] array;
-            var contentType = model.file.ContentType;
-            
-            using (MemoryStream ms = new MemoryStream())
-            {
-                model.file.InputStream.CopyTo(ms);
-                array = ms.GetBuffer();
-            }
+            }           
 
             using (var context = new Entities())
             {
+                if (context.TestSets.FirstOrDefault(x => x.Name.ToLower()
+                    == model.TestName) != null)
+                {
+                    ModelState.AddModelError("TestName",
+                        "This test set name is already taken.");
+                    return View(model);
+                }
+
+                byte[] array;
+                var contentType = model.file.ContentType;
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    model.file.InputStream.CopyTo(ms);
+                    array = ms.GetBuffer();
+                }
+
                 var fileSize = model.file.ContentLength/1024;
                 var testSet = new TestSets
                 {

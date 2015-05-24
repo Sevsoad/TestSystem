@@ -36,9 +36,8 @@ namespace TestSystem.Controllers
                 var user = new Users
                 {
                     UserName = input.UserName.ToLower(),
-                    Password = input.Password, //pass gen
-                    Roles = context.Roles.Find(2)
-                };//hardcode role
+                    Roles = context.Roles.Find(2)//fix role
+                };
 
                 context.Users.Add(user);
                 context.SaveChanges();

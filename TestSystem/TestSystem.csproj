@@ -152,6 +152,7 @@
     <Compile Include="Models\AlgorithmViewModel.cs" />
     <Compile Include="Models\CreateTestRunViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\RunsModels\RunDetailsViewModel.cs" />
     <Compile Include="Models\RunsModels\RunResultsViewModel.cs" />
     <Compile Include="Models\TestDescriptionViewModel.cs" />
     <Compile Include="Models\UploadTestViewModel.cs" />
@@ -171,7 +172,7 @@
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Testing\UploadTest.cshtml" />
     <Content Include="Views\Testing\TestSets.cshtml" />
-    <Content Include="Views\Testing\CreateTestRun.cshtml" />
+    <Content Include="Views\Runs\StartTestRun.cshtml" />
     <Content Include="Views\Runs\RunResults.cshtml" />
     <Content Include="Views\Testing\CreateAlgorithm.cshtml" />
     <Content Include="Views\Testing\Algorithms.cshtml" />

@@ -35,8 +35,11 @@
                                 <li>@Html.ActionLink("Add algoritm", "CreateAlgorithm", "Testing")</li>
                             }
                             <li>@Html.ActionLink("Test runs", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Start test run", "RunResults", "Runs")</li>
-                            
+                            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                            {
+                                <li>@Html.ActionLink("Start test run", "StartTestRun", "Runs")</li>
+                            }
+
                         </ul>
                     </li>
                     <li class="dropdown">

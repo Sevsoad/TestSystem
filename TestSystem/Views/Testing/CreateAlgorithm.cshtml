@@ -26,8 +26,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AlgorithmDescription, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <textarea class="form-control" rows="3" id="AlgorithmDescription" name="AlgorithmDescription"
-                          maxlength="300" style="margin: 0px -6.84375px 0px 0px; height: 183px; width: 430px;"></textarea>
+                @Html.EditorFor(model => model.AlgorithmDescription,
+                new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control",
+                        @style = "margin: 0px -6.84375px 0px 0px; height: 183px; width: 430px;",
+                        @maxlength = "300",
+                        @rows = "3"
+                    }
+                })
                 @Html.ValidationMessageFor(model => model.AlgorithmDescription, "", new { @class = "text-danger", maxlength = "20" })
             </div>
         </div>

@@ -14,6 +14,8 @@ namespace TestSystem.Models
         [StringLength(50, MinimumLength = 3)]
         public string TestName { get; set; }
 
+        [Required]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "Description")]
         [StringLength(300)]
         public string Description { get; set; }

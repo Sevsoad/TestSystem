@@ -14,6 +14,7 @@ namespace TestSystem.Models
         public string AlgorithmName { get; set; }
 
         [Required]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "Algorithm description")]
         [StringLength(300, MinimumLength = 5)]
         public string AlgorithmDescription { get; set; }
