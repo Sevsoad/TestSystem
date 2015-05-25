@@ -26,15 +26,13 @@ namespace TestSystem.Controllers
                 return View(runDetails);
             }
 
-            byte[] testFile = null;
-
             using (var context = new Entities())
             {
                 if (context.Algorithms.Where
                     (x => x.Name == runDetails.AlgorithmName).Count() == 0)
                 {
                     ModelState.AddModelError("AlgorithmName",
-                   "Can't find such algorithm name.");
+                   "Can't find this algorithm.");
                     return View(runDetails);
                 }
                 var testSet = context.TestSets.Where
@@ -43,17 +41,18 @@ namespace TestSystem.Controllers
                 if (testSet.Count() == 0)
                 {
                     ModelState.AddModelError("TestName",
-                       "Can't find such test set name.");
+                       "Can't find this test set.");
                     return View(runDetails);
                 }
                 else
                 {
-                    testFile = testSet.ToArray()[0].Data;
+                    var date = DateTime.Now;
+                    var userId = context.Users.FirstOrDefault<Users>
+                    (x => x.UserName.ToLower() == User.Identity.Name.ToLower()).Id;
                     var testRun = new TestRuns()
                     {
-                        DateOfRun = DateTime.Now,
-                        UserId = context.Users.FirstOrDefault<Users>
-                    (x => x.UserName.ToLower() == User.Identity.Name.ToLower()).Id,
+                        DateOfRun = date,
+                        UserId = userId,
                         AlgorithmId = context.Algorithms.FirstOrDefault
                         (x => x.Name.ToLower() == runDetails.AlgorithmName).Id,
                         TestSetId = context.TestSets.FirstOrDefault
@@ -62,23 +61,69 @@ namespace TestSystem.Controllers
 
                     context.TestRuns.Add(testRun);
                     context.SaveChanges();
+
+                    var currentRun = context.TestRuns.Where(x => (x.UserId == userId)).OrderByDescending(x=> x.Id).ToArray()[0];
+                    if (currentRun != null)
+                    {
+                        runDetails.Status = "In progress";
+                        runDetails.RunNumber = currentRun.Id;
+                    }
+                    else
+                    {                        
+                        return RedirectToAction("ErrorPage", "Home");
+                    }       
+                }
+            }
+
+            return RedirectToAction("DownloadTestFileGet", runDetails);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult DownloadTestFileGet(RunDetailsViewModel details)
+        {
+            return View(details);
+        }
+        
+        [Authorize]
+        [HttpGet]
+        public ActionResult UploadTestResults()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult DownloadTestFile(string testName)
+        {
+            byte[] testFile = null;
+            using (var context = new Entities())
+            {                
+                var testSet = context.TestSets.Where
+                    (x => x.Name == testName);
+
+                if (testSet.Count() == 0)
+                {                    
+                    return View();
+                }
+                else
+                {
+                    testFile = testSet.ToArray()[0].Data;
                 }
             }
 
             var cd = new System.Net.Mime.ContentDisposition
             {
-                FileName = "TestRun-" + runDetails.AlgorithmName
-                + "-" + runDetails.TestName + ".txt",
+                FileName = "TestSet-" + testName + ".txt",
                 Inline = false
             };
 
             Response.AppendHeader("Content-Disposition", cd.ToString());
 
-            //redirect to page for waiting results????
-            return File(testFile, "text/plain");
+            return File(testFile, "text/plain"); 
         }
 
-        public ActionResult TestRunResults()
+        public ActionResult RunResults()
         {
             return View();
         }

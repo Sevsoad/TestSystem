@@ -177,6 +177,8 @@
     <Content Include="Views\Testing\CreateAlgorithm.cshtml" />
     <Content Include="Views\Testing\Algorithms.cshtml" />
     <Content Include="Views\Home\ErrorPage.cshtml" />
+    <Content Include="Views\Runs\DownloadTestFileGet.cshtml" />
+    <Content Include="Views\Runs\UploadTestResults.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
