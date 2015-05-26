@@ -65,7 +65,6 @@ namespace TestSystem.Controllers
                     var currentRun = context.TestRuns.Where(x => (x.UserId == userId)).OrderByDescending(x=> x.Id).ToArray()[0];
                     if (currentRun != null)
                     {
-                        runDetails.Status = "In progress";
                         runDetails.RunNumber = currentRun.Id;
                     }
                     else
@@ -75,22 +74,40 @@ namespace TestSystem.Controllers
                 }
             }
 
-            return RedirectToAction("DownloadTestFileGet", runDetails);
+            return RedirectToAction("UploadResultsFile", "Runs", new { runId = runDetails.RunNumber});
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult DownloadTestFileGet(RunDetailsViewModel details)
+        public ActionResult UploadResultsFile(int runId)
         {
-            return View(details);
+            var model = new RunDetailsViewModel();
+
+            using (var context = new Entities())
+            {
+                var run = context.TestRuns.Find(runId);
+                model.RunNumber = runId;
+                model.Status = "In progress";
+                model.TestName = context.TestSets.Find(run.TestSetId).Name;
+                model.AlgorithmName = context.Algorithms.Find(run.AlgorithmId).Name;
+            }
+
+            return View(model);
         }
-        
+
         [Authorize]
-        [HttpGet]
-        public ActionResult UploadTestResults()
+        [HttpPost]
+        public ActionResult UploadResultsFile(RunDetailsViewModel model)
         {
+            if (model.file == null)
+            {
+                ModelState.AddModelError("CustomError", "Please, attach test results file.");
+                return View(model);
+            }
+
             return View();
         }
+        
 
         [Authorize]
         [HttpGet]

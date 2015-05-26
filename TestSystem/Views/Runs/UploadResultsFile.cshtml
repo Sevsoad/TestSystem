@@ -1,0 +1,92 @@
+﻿@model TestSystem.Models.RunsModels.RunDetailsViewModel
+
+@{
+    ViewBag.Title = "Test run status";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Test run status</h2>
+@using (Html.BeginForm("UploadResultsFile", "Runs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.RunNumber)
+                @Html.HiddenFor(model => model.RunNumber)
+            </dt>
+
+            <dd>
+                <p>@Html.DisplayFor(model => model.RunNumber)</p>
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TestName)
+                @Html.HiddenFor(model => model.TestName)
+            </dt>
+
+            <dd>
+                <p id="testName">@Html.DisplayFor(model => model.TestName)</p>
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AlgorithmName)
+                @Html.HiddenFor(model => model.AlgorithmName)
+            </dt>
+
+            <dd>
+                <p>@Html.DisplayFor(model => model.AlgorithmName)</p>
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+                @Html.HiddenFor(model => model.Status)
+            </dt>
+
+            <dd>
+                <p>@Html.DisplayFor(model => model.Status)</p>
+            </dd>
+
+        </dl>
+
+        <div style="margin-left : 10%">
+            <a id="download" class="btn btn-primary"
+               href="DownloadTestFile?testName=" download>Download test file</a>
+        </div>
+
+        <div class="panel panel-success" style="margin-top : 20px">
+            <div class="panel-heading">
+                <h3 class="panel-title">Upload test results</h3>
+            </div>
+            <div class="panel-body">
+                <label class="checkbox col-md-10" style="margin-left : 10px">
+                    @Html.CheckBoxFor(model => model.RocCurveRequired) Results include data for roc-curve calculation
+                </label>                
+                
+                <div class="col-md-10">
+                    <input type="file" name="file"
+                           id="file" value="Upload results" />
+                    <p>@Html.ValidationMessage("CustomError")</p>
+                </div>
+                <div class="col-md-10" style="margin-top: 10px">
+                    <input type="submit" value="Upload" id="upload" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    //function checkboxChecked() {
+    //    //onchnage="checkboxChecked()"
+    //}
+    $(document).ready(function () {
+        debugger;
+        var testName = $("#testName").text();
+        var newValue = $("#download").attr("href") + testName;
+        $("#download").attr("href", newValue)
+    });
+</script>
+
+
