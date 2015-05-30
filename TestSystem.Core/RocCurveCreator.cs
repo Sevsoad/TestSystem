@@ -31,6 +31,8 @@ namespace TestSystem.Core
                 }
             }
 
+            var classesInLine = numbersActual[0].Split(' ').Count();
+
             testingResults = numbersActual.ToList();
 
             if (testingResults.Count < 20 || testingResults.Count > 40)
@@ -46,10 +48,10 @@ namespace TestSystem.Core
                 var specifityItem = result[1] == 0 ? 0 : (result[1] / (result[1] + result[3]));
                 analyzedResults.sensivityNumbers.Add(sensivityItem);
                 analyzedResults.specifityNumbers.Add(specifityItem);
-                analyzedResults.TruePositiveNumber.Add(result[0]);
-                analyzedResults.FalsePositiveNumber.Add(result[1]);
-                analyzedResults.FalseNegativeNumber.Add(result[2]);
-                analyzedResults.TrueNegativeNumber.Add(result[3]);
+                analyzedResults.TruePositiveNumber.Add(result[0] / (float)classesInLine);
+                analyzedResults.FalsePositiveNumber.Add(result[1] / (float)classesInLine);
+                analyzedResults.FalseNegativeNumber.Add(result[2] / (float)classesInLine);
+                analyzedResults.TrueNegativeNumber.Add(result[3] / (float)classesInLine);
             }
 
             var sumTpr = analyzedResults.sensivityNumbers.Sum();
