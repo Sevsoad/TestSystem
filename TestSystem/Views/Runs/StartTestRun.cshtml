@@ -7,10 +7,10 @@
 
 <h2>Create test run</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Please, choose algorithm and test set</h4>
         <hr />
@@ -29,6 +29,23 @@
                 @Html.EditorFor(model => model.AlgorithmName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AlgorithmName, "", new { @class = "text-danger" })
             </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RocCurveRequired, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class=" col-md-10">
+                <input id="checkbox1" type="checkbox"
+                       class="checkbox" name="checkbox1" onclick="checkboxChanged()">                 
+                <input id="RocCurveRequired" name="RocCurveRequired" hidden />
+                <p class="text-info">(Require from 20 to 40 runs with variation of threshold value.)</p>
+            </div>
+        </div>
+        <div class="form-group" id="rerunsInfo">
+            <b class="control-label col-md-2">Number of re-runs</b>
+            <div class="col-md-10">                
+                <input id="RepeatNumber" name="RepeatNumber" class="form-control" /> 
+                <p class="text-danger">@ViewBag.Rerun</p>                
+                <p class="text-info">(Times of re-teaching and runing test from the beggining. Maximum allowed 40.)</p>
+               </div>
         </div>        
 
         <div class="form-group">
@@ -38,5 +55,21 @@
         </div>
     </div>
 }
+
+<script>
+    function checkboxChanged() {
+        if ($("#checkbox1")[0].checked == true) {
+            document.getElementById("rerunsInfo").style.display = 'none';
+            $("#RepeatNumber").val("0");
+            $("#RocCurveRequired").val("true");
+        }
+        else {
+            document.getElementById("rerunsInfo").style.display = 'block';
+            $("#RepeatNumber").val("");
+            $("#RocCurveRequired").val("false");
+        }
+    }
+
+</script>
 
 

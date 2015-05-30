@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -33,10 +35,22 @@ namespace TestSystem.Controllers
                     return View(input);
                 }
 
+                MD5 md5 = System.Security.Cryptography.MD5.Create();
+                var hash = md5.ComputeHash(
+                        System.Text.Encoding.ASCII.GetBytes(input.Password));
+
+                StringBuilder sb = new StringBuilder();
+
+                for (int i = 0; i < hash.Length; i++)
+                {
+                    sb.Append(hash[i].ToString("X2"));
+                }
+
                 var user = new Users
                 {
                     UserName = input.UserName.ToLower(),
-                    Roles = context.Roles.Find(2)//fix role
+                    Password = sb.ToString(),
+                    Role = 2
                 };
 
                 context.Users.Add(user);
@@ -72,11 +86,22 @@ namespace TestSystem.Controllers
                 return View(input);
             }
 
+            MD5 md5 = System.Security.Cryptography.MD5.Create();
+            var hash = md5.ComputeHash(
+                    System.Text.Encoding.ASCII.GetBytes(input.Password));
+
+            StringBuilder password = new StringBuilder();
+
+            for (int i = 0; i < hash.Length; i++)
+            {
+                password.Append(hash[i].ToString("X2"));
+            }
+
             using (var context = new Entities())
             {
                 if (context.Users.FirstOrDefault<Users>(x => x.UserName.ToLower() == input.UserName) == null
                    || context.Users.FirstOrDefault<Users>(x => x.UserName.ToLower() == input.UserName)
-                   .Password != input.Password)
+                   .Password != password.ToString())
                 {
                     ModelState.AddModelError("UserName", "Username - password combination don't match.");
                     return View(input);

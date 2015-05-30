@@ -5,24 +5,51 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Data.Entity;
 using TestSystem.DataAccess;
+using System.IO;
+using System.Text;
 
 namespace TestSystem.Core
 {
-    public class RocCurveCreator 
+    public class RocCurveCreator
     {
-        public AnalyzedResults GenerateRocCurveCoordinates(string expectedResults, List<string> testingResults, string trueClassNumber)
-        {           
+        public AnalyzedResults GenerateRocCurveCoordinates(string expectedResults, MemoryStream msActual, string trueClassNumber)
+        {
             var analyzedResults = new AnalyzedResults();
             var analyzer = new TestResultsAnalyzer();
+            var testingResults = new List<string>();
+
+            string[] numbersActual = null;
+            string[] numbersExpected = expectedResults.Split(' ');
+            var sb = new StringBuilder();
+
+            using (StreamReader file = new System.IO.StreamReader(msActual, true))
+            {
+                numbersActual = file.ReadToEnd().Split(new [] {'\r'});
+                for (var i = 0; i < numbersActual.Count(); i++)
+                {
+                    numbersActual[i] = Regex.Replace(numbersActual[i], "\n", string.Empty);
+                }
+            }
+
+            testingResults = numbersActual.ToList();
+
+            if (testingResults.Count < 20 || testingResults.Count > 40)
+            {
+                throw new FormatException();
+            }
 
             foreach (var testResult in testingResults)
             {
                 var result = analyzer.CalcTrueFalseNumbers(expectedResults, testResult, trueClassNumber);
                 analyzedResults.faultsNumbers.Add(result);
-                var sensivityItem = result[0] / (result[0] + result[2]);
-                var specifityItem = (result[1] / (result[1] + result[3]));
+                var sensivityItem = result[0] == 0 ? 0 : (result[0] / (result[0] + result[2]));
+                var specifityItem = result[1] == 0 ? 0 : (result[1] / (result[1] + result[3]));
                 analyzedResults.sensivityNumbers.Add(sensivityItem);
                 analyzedResults.specifityNumbers.Add(specifityItem);
+                analyzedResults.TruePositiveNumber.Add(result[0]);
+                analyzedResults.FalsePositiveNumber.Add(result[1]);
+                analyzedResults.FalseNegativeNumber.Add(result[2]);
+                analyzedResults.TrueNegativeNumber.Add(result[3]);
             }
 
             var sumTpr = analyzedResults.sensivityNumbers.Sum();
@@ -32,13 +59,13 @@ namespace TestSystem.Core
 
             foreach (var i in analyzedResults.sensivityNumbers)
             {
-                previousTPR += i / sumTpr;
+                previousTPR += (sumTpr == 0 ? 0 : i / sumTpr);
                 analyzedResults.rocCoordinatesSensivity.Add(previousTPR);
             }
 
             foreach (var i in analyzedResults.specifityNumbers)
             {
-                previousFPR += i / sumFpr;
+                previousFPR += (sumFpr == 0 ? 0 : i / sumFpr);
                 analyzedResults.rocCoordinatesSpecifity.Add(previousFPR);
             }
 

@@ -11,10 +11,10 @@ namespace TestSystem.Core
         public List<float> sensivityNumbers = new List<float>();
         public List<float> specifityNumbers = new List<float>();
 
-        public List<int> TruePositiveNumber = new List<int>();
-        public List<int> TrueNegativeNumber = new List<int>();
-        public List<int> FalsePositiveNumber = new List<int>();
-        public List<int> FalseNegativeNumber = new List<int>();
+        public List<float> TruePositiveNumber = new List<float>();
+        public List<float> TrueNegativeNumber = new List<float>();
+        public List<float> FalsePositiveNumber = new List<float>();
+        public List<float> FalseNegativeNumber = new List<float>();
 
         public List<float[]> faultsNumbers = new List<float[]>();
 

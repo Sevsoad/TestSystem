@@ -5,7 +5,11 @@
     [TestSetId] INT NOT NULL, 
     [UserId] INT NOT NULL, 
     [DateOfRun] DATETIME NOT NULL, 
-	CONSTRAINT [FK_TestRuns_ToUsers] FOREIGN KEY (UserId) REFERENCES Users(Id),
+	[RocCurveCalc] BIT NOT NULL, 
+    [Status] NCHAR(25) NOT NULL, 
+    [ReTeachNum] INT NULL,  
+    [RocClassNumber] NVARCHAR(10) NULL, 
+    CONSTRAINT [FK_TestRuns_ToUsers] FOREIGN KEY (UserId) REFERENCES Users(Id),
 	CONSTRAINT [FK_TestRuns_ToTestSets] FOREIGN KEY (TestSetId) REFERENCES TestSets(Id),
 	CONSTRAINT [FK_TestRuns_ToAlgorithms] FOREIGN KEY (AlgorithmId) REFERENCES Algorithms(Id)
 )

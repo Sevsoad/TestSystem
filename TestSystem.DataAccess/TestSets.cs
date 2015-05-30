@@ -28,6 +28,7 @@ namespace TestSystem.DataAccess
         public byte[] Data { get; set; }
         public string Name { get; set; }
         public Nullable<int> Size { get; set; }
+        public string ExpectedResults { get; set; }
     
         public virtual ICollection<TestRuns> TestRuns { get; set; }
         public virtual Users Users { get; set; }

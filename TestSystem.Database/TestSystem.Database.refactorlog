@@ -21,4 +21,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="UserId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="b91f375f-fc3e-422f-810f-82ea6072a8c0" ChangeDateTime="05/26/2015 21:37:49">
+    <Property Name="ElementName" Value="[dbo].[TestResults].[Others]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TestResults]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RocCoordinates" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b10472bf-3ca7-4d1e-983a-c37cf9de0297" ChangeDateTime="05/26/2015 21:38:13">
+    <Property Name="ElementName" Value="[dbo].[TestResults].[TestRuns]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TestResults]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TestRunId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="82ab3b32-50ca-45bb-adc0-f691206db78d" ChangeDateTime="05/26/2015 22:14:07">
+    <Property Name="ElementName" Value="[dbo].[TestRuns].[TestRunsNumber]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TestRuns]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReTeachNum" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d1f1591e-39c5-4f00-89f5-dd168454f2e0" ChangeDateTime="05/29/2015 23:52:14">
+    <Property Name="ElementName" Value="[dbo].[TestResults].[OtherNotes]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TestResults]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ErrorRate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5b5186b5-250b-48c3-9dc3-ab497794a71d" ChangeDateTime="05/30/2015 00:57:38">
+    <Property Name="ElementName" Value="[dbo].[TestResults].[RocCoordinates]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TestResults]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RocCoordinatesSensiv" />
+  </Operation>
 </Operations>

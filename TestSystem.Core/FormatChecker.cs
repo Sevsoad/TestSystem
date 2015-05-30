@@ -14,8 +14,22 @@ namespace TestSystem.Core
 
             return true;
         }
-          
 
+        public StringBuilder GetExpectedValuesFromTestSet(MemoryStream ms)
+        {
+            var expectedResults = new StringBuilder();
+
+            using (StreamReader file = new System.IO.StreamReader(ms, true))
+            {
+                while (!file.EndOfStream)
+                {
+                    var testLine = file.ReadLine();
+                    expectedResults.Append(testLine.ToCharArray()[0] + " ");
+                }
+            }
+
+            return expectedResults;
+        }  
        
 
     }

@@ -1,4 +1,4 @@
-﻿@model TestSystem.Models.RunsModels.RunDetailsViewModel
+﻿@model TestSystem.Models.RunsModels.UploadResultViewModel
 
 @{
     ViewBag.Title = "Test run status";
@@ -40,12 +40,21 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Status)
-                @Html.HiddenFor(model => model.Status)
+                @Html.DisplayNameFor(model => model.RocCalc)
+                @Html.HiddenFor(model => model.RocCalc)
             </dt>
 
             <dd>
-                <p>@Html.DisplayFor(model => model.Status)</p>
+                <p>@Html.DisplayFor(model => model.RocCalc)</p>
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.RepeatNumber)
+                @Html.HiddenFor(model => model.RepeatNumber)
+            </dt>
+
+            <dd>
+                <p>@Html.DisplayFor(model => model.RepeatNumber)</p>
             </dd>
 
         </dl>
@@ -59,15 +68,18 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Upload test results</h3>
             </div>
-            <div class="panel-body">
-                <label class="checkbox col-md-10" style="margin-left : 10px">
-                    @Html.CheckBoxFor(model => model.RocCurveRequired) Results include data for roc-curve calculation
-                </label>                
-                
+            <div class="panel-body">               
                 <div class="col-md-10">
+                    <p>@Html.ValidationMessage("FileFormatException")</p>
                     <input type="file" name="file"
                            id="file" value="Upload results" />
                     <p>@Html.ValidationMessage("CustomError")</p>
+                </div>
+                <div class="col-md-10" id="rocDiv">
+                    <p>Roc-curve class number</p>
+                    <input name="RocClassNumber" id="RocClassNumber" />
+                    <p>@Html.ValidationMessage("CustomErrorRoc")</p>
+                    <p class="text-warning">For roc-curve calculation you should specify class number that will be used to set positive hit. </p>
                 </div>
                 <div class="col-md-10" style="margin-top: 10px">
                     <input type="submit" value="Upload" id="upload" class="btn btn-success" />
@@ -78,11 +90,10 @@
 }
 
 <script>
-    //function checkboxChecked() {
-    //    //onchnage="checkboxChecked()"
-    //}
     $(document).ready(function () {
-        debugger;
+        if ($("#RocCalc").val() != "yes") {
+            document.getElementById("rocDiv").style.display = 'none';
+        }
         var testName = $("#testName").text();
         var newValue = $("#download").attr("href") + testName;
         $("#download").attr("href", newValue)

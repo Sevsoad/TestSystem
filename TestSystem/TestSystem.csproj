@@ -154,6 +154,7 @@
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RunsModels\RunDetailsViewModel.cs" />
     <Compile Include="Models\RunsModels\RunResultsViewModel.cs" />
+    <Compile Include="Models\RunsModels\UploadResultViewModel.cs" />
     <Compile Include="Models\TestDescriptionViewModel.cs" />
     <Compile Include="Models\UploadTestViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />

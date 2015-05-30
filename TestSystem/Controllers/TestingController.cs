@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using TestSystem.Core;
 using TestSystem.DataAccess;
 using TestSystem.Models;
 
@@ -181,12 +183,17 @@ namespace TestSystem.Controllers
 
                 byte[] array;
                 var contentType = model.file.ContentType;
+                var expectedResults = new StringBuilder();
 
                 using (MemoryStream ms = new MemoryStream())
-                {
+                { //todo check if can extract expected results
                     model.file.InputStream.CopyTo(ms);
                     array = ms.GetBuffer();
-                }
+                    ms.Seek(0, SeekOrigin.Begin);
+                
+                    var formatChecker = new FormatChecker();
+                    expectedResults = formatChecker.GetExpectedValuesFromTestSet(ms);
+                }                
 
                 var fileSize = model.file.ContentLength/1024;
                 var testSet = new TestSets
@@ -198,7 +205,8 @@ namespace TestSystem.Controllers
                     Description = model.Description,
                     Data = array,
                     Name = model.TestName,
-                    Size = fileSize
+                    Size = fileSize,
+                    ExpectedResults = expectedResults.ToString()
                 };
 
                 context.TestSets.Add(testSet);

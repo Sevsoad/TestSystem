@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f8abfa717a14485f94b1008ce4542ba5" Name="Diagram1">
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.Algorithms" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.Roles" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.TestResults" Width="1.5" PointX="7.5" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.TestRuns" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.TestSets" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.UserInfo" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.Users" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestSystem.DatabaseModel.UserSavedSettings" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
+      <Diagram DiagramId="00426c6144bd441e9e39f1dedaadd10b" Name="Diagram1">
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.Algorithms" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.Roles" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.TestResults" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.TestRuns" Width="1.5" PointX="7.5" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.TestSets" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.UserInfo" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.Users" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestSystem.DatabaseModel.UserSavedSettings" Width="1.5" PointX="5.25" PointY="14.625" IsExpanded="true" />
         <AssociationConnector Association="TestSystem.DatabaseModel.FK_Algorithms_ToUsers" ManuallyRouted="false" />
         <AssociationConnector Association="TestSystem.DatabaseModel.FK_TestResults_ToAlgorithms" ManuallyRouted="false" />
         <AssociationConnector Association="TestSystem.DatabaseModel.FK_TestRuns_ToAlgorithms" ManuallyRouted="false" />

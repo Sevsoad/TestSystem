@@ -16,14 +16,17 @@ namespace TestSystem.DataAccess
     {
         public int Id { get; set; }
         public int AlgorithmId { get; set; }
-        public Nullable<int> TP { get; set; }
-        public Nullable<int> FN { get; set; }
-        public Nullable<int> TN { get; set; }
-        public Nullable<int> FP { get; set; }
-        public string Others { get; set; }
-        public Nullable<int> TestRuns { get; set; }
+        public string TP { get; set; }
+        public string FN { get; set; }
+        public string TN { get; set; }
+        public string FP { get; set; }
+        public string RocCoordinatesSensiv { get; set; }
+        public int TestRunId { get; set; }
+        public string ErrorRate { get; set; }
+        public string OtherInfo { get; set; }
+        public string RocCoordinatesSpecif { get; set; }
     
         public virtual Algorithms Algorithms { get; set; }
-        public virtual TestRuns TestRuns1 { get; set; }
+        public virtual TestRuns TestRuns { get; set; }
     }
 }

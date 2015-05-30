@@ -10,16 +10,16 @@ namespace TestSystem.Core
 {
     public class DataWorker
     {
-        public string GetExpectedResults()
-        {
+        //public string GetExpectedResults()
+        //{
             
 
-            FormatChecker formatConverter = new FormatChecker();
-            var testPath20percent = @"D:\DPtests\test10percNoise.txt";
-            var expectedResults = GetResultsFromTestSet(testPath20percent);
+        //    FormatChecker formatConverter = new FormatChecker();
+        //    var testPath20percent = @"D:\DPtests\test10percNoise.txt";
+        //    var expectedResults = GetResultsFromTestSet(testPath20percent);
 
-            return expectedResults;
-        }
+        //    return expectedResults;
+        //}
 
         public List<string> GetTestingResults()
         {
@@ -34,21 +34,6 @@ namespace TestSystem.Core
             return testingResults;
         }
 
-        public string GetResultsFromTestSet(string testPath)
-        {
-            var expectedResults = string.Empty;
-
-            using (StreamReader file = new System.IO.StreamReader(testPath, true))
-            {
-
-                while (!file.EndOfStream)
-                {
-                    var testLine = file.ReadLine();
-                    expectedResults += testLine.ToCharArray()[0] + " ";
-                }
-            }
-
-            return expectedResults;
-        }    
+          
     }
 }
