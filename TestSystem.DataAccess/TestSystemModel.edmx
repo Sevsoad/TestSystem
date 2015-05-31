@@ -34,7 +34,7 @@
           <Property Name="FP" Type="nvarchar" MaxLength="10" />
           <Property Name="RocCoordinatesSensiv" Type="nvarchar(max)" />
           <Property Name="TestRunId" Type="int" Nullable="false" />
-          <Property Name="ErrorRate" Type="nvarchar" MaxLength="10" />
+          <Property Name="CorrectRate" Type="nvarchar" MaxLength="10" />
           <Property Name="OtherInfo" Type="nvarchar" MaxLength="50" />
           <Property Name="RocCoordinatesSpecif" Type="nvarchar(max)" />
         </EntityType>
@@ -48,7 +48,7 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="DateOfRun" Type="datetime" Nullable="false" />
           <Property Name="RocCurveCalc" Type="bit" Nullable="false" />
-          <Property Name="Status" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="ReTeachNum" Type="int" />
           <Property Name="RocClassNumber" Type="nvarchar" MaxLength="10" />
         </EntityType>
@@ -303,7 +303,7 @@
           <Property Name="FP" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="RocCoordinatesSensiv" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TestRunId" Type="Int32" Nullable="false" />
-          <Property Name="ErrorRate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CorrectRate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="OtherInfo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RocCoordinatesSpecif" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Algorithms" Relationship="Self.FK_TestResults_ToAlgorithms" FromRole="TestResults" ToRole="Algorithms" />
@@ -319,7 +319,7 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="DateOfRun" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RocCurveCalc" Type="Boolean" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ReTeachNum" Type="Int32" />
           <Property Name="RocClassNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Algorithms" Relationship="Self.FK_TestRuns_ToAlgorithms" FromRole="TestRuns" ToRole="Algorithms" />
@@ -586,7 +586,7 @@
                 <ScalarProperty Name="FP" ColumnName="FP" />
                 <ScalarProperty Name="RocCoordinatesSensiv" ColumnName="RocCoordinatesSensiv" />
                 <ScalarProperty Name="TestRunId" ColumnName="TestRunId" />
-                <ScalarProperty Name="ErrorRate" ColumnName="ErrorRate" />
+                <ScalarProperty Name="CorrectRate" ColumnName="CorrectRate" />
                 <ScalarProperty Name="OtherInfo" ColumnName="OtherInfo" />
                 <ScalarProperty Name="RocCoordinatesSpecif" ColumnName="RocCoordinatesSpecif" />
               </MappingFragment>

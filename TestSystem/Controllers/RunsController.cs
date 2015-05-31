@@ -100,6 +100,10 @@ namespace TestSystem.Controllers
             using (var context = new Entities())
             {
                 var run = context.TestRuns.Find(runId);
+                if (run.Status != "In progress")
+                {
+                    throw new UnauthorizedAccessException();
+                }
                 model.RunNumber = runId;
                 model.TestName = context.TestSets.Find(run.TestSetId).Name;
                 model.AlgorithmName = context.Algorithms.Find(run.AlgorithmId).Name;
@@ -149,13 +153,14 @@ namespace TestSystem.Controllers
                         if (model.RocCalc == "no")
                         {
                             using (MemoryStream ms = new MemoryStream())
-                            { //todo check format
+                            {
                                 model.file.InputStream.CopyTo(ms);
                                 ms.Seek(0, SeekOrigin.Begin);
 
-                                var statistics = analyzer.CalcErrorPercentage(test.ExpectedResults, ms);
+                                var statistics = analyzer.CalcErrorPercentage
+                                    (test.ExpectedResults, ms, Convert.ToInt32(model.RepeatNumber) + 1);
 
-                                results.ErrorRate = statistics.ToString("0.00");
+                                results.CorrectRate = statistics.ToString("0.000");
                                 context.TestResults.Add(results);
 
                                 context.SaveChanges();
@@ -170,7 +175,7 @@ namespace TestSystem.Controllers
                         else if (model.RocCalc == "yes")
                         {
                             using (MemoryStream ms = new MemoryStream())
-                            { //todo check format
+                            {
                                 model.file.InputStream.CopyTo(ms);
                                 ms.Seek(0, SeekOrigin.Begin);
                                 var rocCreator = new RocCurveCreator();
@@ -181,16 +186,17 @@ namespace TestSystem.Controllers
 
                                 for (var i = 0; i < statistics.rocCoordinatesSensivity.Count(); i++)
                                 {
-                                    sbSensivity.Append(statistics.rocCoordinatesSensivity[i].ToString("0.00") + " ");
-                                    sbSpecifity.Append(statistics.rocCoordinatesSpecifity[i].ToString("0.00") + " ");
+                                    sbSensivity.Append(statistics.rocCoordinatesSensivity[i].ToString("0.000") + " ");
+                                    sbSpecifity.Append(statistics.rocCoordinatesSpecifity[i].ToString("0.000") + " ");
                                 }
 
                                 results.RocCoordinatesSensiv = sbSensivity.ToString();
                                 results.RocCoordinatesSpecif = sbSpecifity.ToString();
-                                results.FN = statistics.FalseNegativeNumber.Average().ToString("0.00");
-                                results.FP = statistics.FalsePositiveNumber.Average().ToString("0.00");
-                                results.TN = statistics.TrueNegativeNumber.Average().ToString("0.00");
-                                results.TP = statistics.TruePositiveNumber.Average().ToString("0.00");
+                                results.FN = statistics.FalseNegativeNumber.Average().ToString("0.000");
+                                results.FP = statistics.FalsePositiveNumber.Average().ToString("0.000");
+                                results.TN = statistics.TrueNegativeNumber.Average().ToString("0.000");
+                                results.TP = statistics.TruePositiveNumber.Average().ToString("0.000");
+                                results.CorrectRate = statistics.ErrorRate.ToString("0.000");
 
                                 context.TestResults.Add(results);
 
@@ -200,14 +206,13 @@ namespace TestSystem.Controllers
 
                                 context.SaveChanges();
 
-                                return RedirectToAction("RunResults", new { resultsId = results.Id });
+                                return RedirectToAction("RunResultsRoc", new { resultsId = results.Id });
                             }
 
                             run.Status = "Results saved";
                             run.RocClassNumber = model.RocClassNumber;
                             context.SaveChanges();
                         }
-
                     }
                     catch (Exception ex)
                     {
@@ -253,9 +258,94 @@ namespace TestSystem.Controllers
         }
 
         [Authorize]
+        public ActionResult RunResultsRoc(int resultsID)
+        {
+            var model = new RunResultsRocViewModel();
+
+            using (var context = new Entities())
+            {
+                var results = context.TestResults.Find(resultsID);
+                var run = context.TestRuns.Find(results.TestRunId);
+
+                if (!run.RocCurveCalc)
+                {
+                    throw new UnauthorizedAccessException();
+                }
+
+                model.CorrectRate = (Convert.ToSingle(results.CorrectRate) * 100).ToString() + "%";
+                model.RunNumber = results.TestRunId.ToString();
+                var testID = run.TestSetId;
+                model.TestName = context.TestSets.Find(testID).Name;
+                model.AlgorithmName = context.Algorithms.Find(results.AlgorithmId).Name;
+                model.TrueNegativesNumber = Convert.ToSingle(results.TN) * 100 + "%";
+                model.TruePositivesNumber = Convert.ToSingle(results.TP) * 100 + "%";
+                model.FalseNegativesNumber = Convert.ToSingle(results.FN) * 100 + "%";
+                model.FalsePositivesNumber = Convert.ToSingle(results.FP) * 100 + "%";
+            }
+
+            return View(model);
+        }
+
+        [Authorize]
         public ActionResult RunResults(int resultsID)
         {
-            return View();
+            var model = new RunResultsViewModel();
+
+            using (var context = new Entities())
+            {
+                var results = context.TestResults.Find(resultsID);
+                var run = context.TestRuns.Find(results.TestRunId);
+
+                if (run.RocCurveCalc)
+                {
+                    throw new UnauthorizedAccessException();
+                }
+
+                model.CorrectRate = (Convert.ToSingle(results.CorrectRate) * 100).ToString() + "%";
+                model.RunNumber = results.TestRunId.ToString();
+                var testID = run.TestSetId;
+                model.TestName = context.TestSets.Find(testID).Name;
+                model.AlgorithmName = context.Algorithms.Find(results.AlgorithmId).Name;
+                model.NumberOfRuns = (run.ReTeachNum + 1).ToString();
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public JsonResult GetCurveCoordinates(int runId)
+        {
+            var jsonResult = new List<float[]>();
+            var jsonResult2 = new List<List<float[]>>();
+
+            using (var context = new Entities())
+            {
+                var run = context.TestRuns.Find(runId);
+                if (!run.RocCurveCalc)
+                {
+                    return null;
+                }
+
+                var results = context.TestResults.Where(x => x.TestRunId == runId).ToArray()[0];
+
+                var rocCoordsSensiv = results.RocCoordinatesSensiv.TrimEnd().Split(' ');
+                var rocCoordsSpecif = results.RocCoordinatesSpecif.TrimEnd().Split(' ');
+
+                for (var i = 0; i < rocCoordsSensiv.Count(); i++)
+                {
+                    jsonResult.Add(new float[] { Convert.ToSingle(rocCoordsSpecif[i]),
+                        Convert.ToSingle(rocCoordsSensiv[i]) });
+                }
+            }
+
+            jsonResult2.Add(jsonResult);
+            var defaultCurve = new List<float[]>();
+            defaultCurve.Add(new float[] { 0, 0 });
+            defaultCurve.Add(new float[] { 1, 1 });
+
+            jsonResult2.Add(defaultCurve);
+
+            return Json(jsonResult2, JsonRequestBehavior.AllowGet);
         }
     }
 }

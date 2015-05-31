@@ -19,7 +19,7 @@ namespace TestSystem.Core
             var testingResults = new List<string>();
 
             string[] numbersActual = null;
-            string[] numbersExpected = expectedResults.Split(' ');
+            string[] numbersExpected = expectedResults.TrimEnd().Split(' ');
             var sb = new StringBuilder();
 
             using (StreamReader file = new System.IO.StreamReader(msActual, true))
@@ -30,18 +30,21 @@ namespace TestSystem.Core
                     numbersActual[i] = Regex.Replace(numbersActual[i], "\n", string.Empty);
                 }
             }
-
-            var classesInLine = numbersActual[0].Split(' ').Count();
-
+            
             testingResults = numbersActual.ToList();
 
-            if (testingResults.Count < 20 || testingResults.Count > 40)
+            if (testingResults.Count < 15 || testingResults.Count > 40)
             {
                 throw new FormatException();
             }
 
+            var correctResultsSum = 0f;
+            var allReulstsSum = 0f;
+
             foreach (var testResult in testingResults)
             {
+                var classesInLine = testResult.TrimEnd().Split(' ').Count();
+                allReulstsSum += classesInLine;
                 var result = analyzer.CalcTrueFalseNumbers(expectedResults, testResult, trueClassNumber);
                 analyzedResults.faultsNumbers.Add(result);
                 var sensivityItem = result[0] == 0 ? 0 : (result[0] / (result[0] + result[2]));
@@ -52,8 +55,10 @@ namespace TestSystem.Core
                 analyzedResults.FalsePositiveNumber.Add(result[1] / (float)classesInLine);
                 analyzedResults.FalseNegativeNumber.Add(result[2] / (float)classesInLine);
                 analyzedResults.TrueNegativeNumber.Add(result[3] / (float)classesInLine);
+                correctResultsSum += result[0] + result[3];
             }
 
+            analyzedResults.ErrorRate = correctResultsSum / allReulstsSum;
             var sumTpr = analyzedResults.sensivityNumbers.Sum();
             var sumFpr = analyzedResults.specifityNumbers.Sum();
             var previousTPR = 0f;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,12 +8,19 @@ namespace TestSystem.Models.RunsModels
 {
     public class RunResultsViewModel
     {
-        public string TruePositivesNumber { get; set; }
+        [Display(Name = "Run ID")]
+        public string RunNumber { get; set; }
 
-        public string TrueNegativesNumber { get; set; }
+        [Display(Name = "Test name")]
+        public string TestName { get; set; }
 
-        public string FalsePositivesNumber { get; set; }
+        [Display(Name = "Algorithm name")]
+        public string AlgorithmName { get; set; }
 
-        public string FalseNegativesNumber { get; set; }
+        [Display(Name = "Average correct classification rate")]
+        public string CorrectRate { get; set; }
+
+        [Display(Name = "Number of runs")]
+        public string NumberOfRuns { get; set; }
     }
 }

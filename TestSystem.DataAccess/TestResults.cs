@@ -22,7 +22,7 @@ namespace TestSystem.DataAccess
         public string FP { get; set; }
         public string RocCoordinatesSensiv { get; set; }
         public int TestRunId { get; set; }
-        public string ErrorRate { get; set; }
+        public string CorrectRate { get; set; }
         public string OtherInfo { get; set; }
         public string RocCoordinatesSpecif { get; set; }
     

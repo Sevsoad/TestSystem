@@ -1,0 +1,121 @@
+﻿@model TestSystem.Models.RunsModels.RunResultsRocViewModel
+
+@{
+    ViewBag.Title = "RunResults";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Run #@Html.DisplayFor(model => model.RunNumber) results</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RunNumber)
+        </dt>
+
+        <dd id="RunNumber">
+            @Html.DisplayFor(model => model.RunNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TestName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TestName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AlgorithmName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlgorithmName)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CorrectRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CorrectRate)
+        </dd>  
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TruePositivesNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TruePositivesNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrueNegativesNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrueNegativesNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FalsePositivesNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FalsePositivesNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FalseNegativesNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FalseNegativesNumber)
+        </dd>
+    </dl>
+</div>
+    <p>AUC - </p>
+
+
+
+<div id="chart2" style="height:400px;width:600px; "></div>
+
+<script>
+        $(document).ready(
+            function () {
+                var title = "Roc-curve";
+                var jsonurl = "/Runs/GetCurveCoordinates" + "?runId=" + $("#RunNumber").text();
+                var plot2 = $.jqplot('chart2', jsonurl, {
+                    title: title,
+                    axesDefaults: {
+                        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                    },
+                    dataRenderer: ajaxDataRenderer,
+                    axes: {
+                        xaxis: {
+                            label: "FPR",
+                            pad: 1
+                        },
+                        yaxis: {
+                            label: "TPR"
+                        }
+                    }
+                });
+            });
+
+        var ajaxDataRenderer = function (url) {
+            var ret = null;
+
+            $.ajax({
+                async: false,
+                url: url,
+                dataType: "json",
+                success: function (data) {
+                    ret = data;
+                }
+            });
+            return ret;
+        };
+</script>

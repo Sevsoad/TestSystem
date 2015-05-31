@@ -60,7 +60,7 @@ namespace TestSystem.Core
             return new[] { truePositiveNumber, falsePositiveNumber, falseNegativeNumber, trueNegativeNumber };
         }
 
-        public float CalcErrorPercentage(string expected, MemoryStream msActual)
+        public float CalcErrorPercentage(string expected, MemoryStream msActual, int testRunsNumber)
         {
             var all = 0f;
             var right = 0f;
@@ -68,22 +68,32 @@ namespace TestSystem.Core
 
             using (StreamReader file = new System.IO.StreamReader(msActual, true))
             {
-                numbersActual = file.ReadToEnd().Split(' ');
+                numbersActual = file.ReadToEnd().TrimStart().TrimEnd().Split(' ');
             }
-            string[] numbersExpected = expected.Split(' ');
+            for (var i = 0; i < numbersActual.Count(); i++)
+            {
+                numbersActual[i] = Regex.Replace(numbersActual[i], "\r\n", string.Empty);
+            }
 
-            if (numbersExpected.Count() != numbersActual.Count())
+            string[] numbersExpected = expected.TrimEnd().Split(' ');
+
+            if (numbersExpected.Count() * testRunsNumber != numbersActual.Count())
             {
                 throw new FormatException();
             }
 
-            for (var i = 0; i < numbersActual.Count(); i++)
+            var j = 0;
+            for (var i = 0; i < numbersActual.Count(); i++, j++)
             {
-                all++;
+                all++;                
 
-                if (numbersActual[i] == numbersExpected[i])
+                if (numbersActual[i] == numbersExpected[j])
                 {
                     right++;
+                }
+                if (j == numbersExpected.Count() - 1)
+                {
+                    j = -1;
                 }
             }
 

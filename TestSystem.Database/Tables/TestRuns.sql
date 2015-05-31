@@ -6,7 +6,7 @@
     [UserId] INT NOT NULL, 
     [DateOfRun] DATETIME NOT NULL, 
 	[RocCurveCalc] BIT NOT NULL, 
-    [Status] NCHAR(25) NOT NULL, 
+    [Status] NVARCHAR(25) NOT NULL, 
     [ReTeachNum] INT NULL,  
     [RocClassNumber] NVARCHAR(10) NULL, 
     CONSTRAINT [FK_TestRuns_ToUsers] FOREIGN KEY (UserId) REFERENCES Users(Id),

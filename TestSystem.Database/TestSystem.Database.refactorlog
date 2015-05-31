@@ -56,4 +56,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="RocCoordinatesSensiv" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="c6494ee4-bfa3-4519-a253-b4ec533ac0d9" ChangeDateTime="05/30/2015 10:10:30">
+    <Property Name="ElementName" Value="[dbo].[TestResults].[ErrorRate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TestResults]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CorrectRate" />
+  </Operation>
 </Operations>

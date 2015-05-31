@@ -36,7 +36,7 @@
                 <input id="checkbox1" type="checkbox"
                        class="checkbox" name="checkbox1" onclick="checkboxChanged()">                 
                 <input id="RocCurveRequired" name="RocCurveRequired" hidden />
-                <p class="text-info">(Require from 20 to 40 runs with variation of threshold value.)</p>
+                <p class="text-info">(Require from 15 to 40 runs with variation of threshold value.)</p>
             </div>
         </div>
         <div class="form-group" id="rerunsInfo">
@@ -44,7 +44,8 @@
             <div class="col-md-10">                
                 <input id="RepeatNumber" name="RepeatNumber" class="form-control" /> 
                 <p class="text-danger">@ViewBag.Rerun</p>                
-                <p class="text-info">(Times of re-teaching and runing test from the beggining. Maximum allowed 40.)</p>
+                <p class="text-info">(Don't include inital run here. Only times of re-teaching and re-runing
+                 test from the beggining. Maximum allowed 40. E.g. 20 re-runs + 1 intial run = 21 results uploaded to system.)</p>
                </div>
         </div>        
 
