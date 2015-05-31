@@ -10,16 +10,6 @@ namespace TestSystem.Core
 {
     public class DataWorker
     {
-        //public string GetExpectedResults()
-        //{
-            
-
-        //    FormatChecker formatConverter = new FormatChecker();
-        //    var testPath20percent = @"D:\DPtests\test10percNoise.txt";
-        //    var expectedResults = GetResultsFromTestSet(testPath20percent);
-
-        //    return expectedResults;
-        //}
 
         public List<string> GetTestingResults()
         {

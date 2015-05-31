@@ -68,10 +68,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lab02_MultilayerPerceptron\Lab02_MultilayerPerceptron.csproj">
-      <Project>{cd1f42f5-ecac-4f24-96eb-349191cac2c2}</Project>
-      <Name>Lab02_MultilayerPerceptron</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TestSystem.Core\TestSystem.Core.csproj">
       <Project>{d38fe040-8c1c-49ac-9c93-9426135cdefc}</Project>
       <Name>TestSystem.Core</Name>
