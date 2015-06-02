@@ -258,18 +258,18 @@ namespace TestSystem.Controllers
         }
 
         [Authorize]
-        public ActionResult RunResultsRoc(int resultsID)
+        public ActionResult RunResultsRoc(int resultsId)
         {
             var model = new RunResultsRocViewModel();
 
             using (var context = new Entities())
             {
-                var results = context.TestResults.Find(resultsID);
+                var results = context.TestResults.Find(resultsId);
                 var run = context.TestRuns.Find(results.TestRunId);
 
                 if (!run.RocCurveCalc)
                 {
-                    throw new UnauthorizedAccessException();
+                    return RedirectToAction("RunResults", new { resultsId = resultsId });
                 }
 
                 model.CorrectRate = (Convert.ToSingle(results.CorrectRate) * 100).ToString() + "%";
@@ -298,7 +298,7 @@ namespace TestSystem.Controllers
 
                 if (run.RocCurveCalc)
                 {
-                    throw new UnauthorizedAccessException();
+                    return RedirectToAction("RunResultsRoc", new { resultsId = resultsID });
                 }
 
                 model.CorrectRate = (Convert.ToSingle(results.CorrectRate) * 100).ToString() + "%";
@@ -346,6 +346,36 @@ namespace TestSystem.Controllers
             jsonResult2.Add(defaultCurve);
 
             return Json(jsonResult2, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult AllRuns()
+        {
+            List<AllRunsViewModel> runsList = new List<AllRunsViewModel>();
+
+            using (var context = new Entities())
+            {
+                var list = context.TestRuns.Take(40);
+
+                foreach (var run in list)
+                {
+                    var testRun = new AllRunsViewModel();
+
+                    testRun.AlgorithmName = context.Algorithms.Find(run.AlgorithmId).Name;
+                    testRun.DateStart = run.DateOfRun.ToString();
+                    testRun.RocCalc = run.RocCurveCalc.ToString();
+                    testRun.RocClass = run.RocClassNumber;
+                    testRun.RunNumber = run.Id.ToString();
+                    testRun.RunsNumber = run.ReTeachNum.ToString();
+                    testRun.Status = run.Status;
+                    testRun.TestName = context.TestSets.Find(run.TestSetId).Name;
+                    testRun.UserName = context.Users.Find(run.UserId).UserName;
+
+                    runsList.Add(testRun);
+                }
+            }
+
+            return View(runsList);
         }
     }
 }

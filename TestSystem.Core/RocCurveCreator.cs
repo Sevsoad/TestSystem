@@ -24,13 +24,13 @@ namespace TestSystem.Core
 
             using (StreamReader file = new System.IO.StreamReader(msActual, true))
             {
-                numbersActual = file.ReadToEnd().Split(new [] {'\r'});
+                numbersActual = file.ReadToEnd().Split(new[] { '\r' });
                 for (var i = 0; i < numbersActual.Count(); i++)
                 {
                     numbersActual[i] = Regex.Replace(numbersActual[i], "\n", string.Empty);
                 }
             }
-            
+
             testingResults = numbersActual.ToList();
 
             if (testingResults.Count < 15 || testingResults.Count > 40)
@@ -77,6 +77,53 @@ namespace TestSystem.Core
             }
 
             return analyzedResults;
+        }
+
+        public float CalculateAUC(string xValues, string yValues)
+        {
+            var xValsMs = xValues.Split(' ');
+            var yValsMs = yValues.Split(' ');
+
+            if (xValsMs.Length == 0 || yValsMs.Length == 0)
+            {
+                throw new FormatException();
+            }
+
+            var xValsFloatList = new List<float>();
+            var yValsFloatList = new List<float>();
+
+            foreach (var val in xValsMs)
+            {
+                xValsFloatList.Add(Convert.ToSingle(val));
+            }
+            foreach (var val in yValsMs)
+            {
+                yValsFloatList.Add(Convert.ToSingle(val));
+            }
+
+            var prevYCoord = yValsFloatList[0];
+            var prevXCoord = xValsFloatList[0];
+
+            var SummaryArea = 0f;
+
+            for (var i = 1; i < yValsFloatList.Count; i++)
+            {
+                var yDiffer = yValsFloatList[i] - prevYCoord;
+                var yBorderDot = yValsFloatList[i] < prevYCoord ? yValsFloatList[i] : prevYCoord;
+                var yUpperDot = yValsFloatList[i] > prevYCoord ? yValsFloatList[i] : prevYCoord;
+
+
+                var underBorderSquare = yBorderDot * (xValsFloatList[i] - prevXCoord);
+                var onBorderSquare = (yUpperDot - yBorderDot) * (xValsFloatList[i] - prevXCoord);
+
+                var sumSquare = underBorderSquare + onBorderSquare;
+                SummaryArea += sumSquare;
+
+                prevXCoord = xValsFloatList[i];
+                prevYCoord = yValsFloatList[i];
+            }
+
+            return SummaryArea;
         }
 
     }

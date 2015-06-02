@@ -152,6 +152,7 @@
     <Compile Include="Models\AlgorithmViewModel.cs" />
     <Compile Include="Models\CreateTestRunViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\RunsModels\AllRunsViewModel.cs" />
     <Compile Include="Models\RunsModels\RunDetailsViewModel.cs" />
     <Compile Include="Models\RunsModels\RunResultsViewModel.cs" />
     <Compile Include="Models\RunsModels\RunResultsRocViewModel.cs" />
@@ -181,6 +182,7 @@
     <Content Include="Views\Home\ErrorPage.cshtml" />
     <Content Include="Views\Runs\UploadResultsFile.cshtml" />
     <Content Include="Views\Runs\RunResults.cshtml" />
+    <Content Include="Views\Runs\AllRuns.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

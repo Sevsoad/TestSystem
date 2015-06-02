@@ -62,8 +62,6 @@
   <ItemGroup>
     <Compile Include="AnalyzedResults.cs" />
     <Compile Include="AzureVM\AzureManager.cs" />
-    <Compile Include="BiTestHelper.cs" />
-    <Compile Include="DataWorker.cs" />
     <Compile Include="FormatChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RocCurveCreator.cs" />
