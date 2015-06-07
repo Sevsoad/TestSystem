@@ -350,32 +350,8 @@ namespace TestSystem.Controllers
 
         [HttpGet]
         public ActionResult AllRuns()
-        {
-            List<AllRunsViewModel> runsList = new List<AllRunsViewModel>();
-
-            using (var context = new Entities())
-            {
-                var list = context.TestRuns.Take(40);
-
-                foreach (var run in list)
-                {
-                    var testRun = new AllRunsViewModel();
-
-                    testRun.AlgorithmName = context.Algorithms.Find(run.AlgorithmId).Name;
-                    testRun.DateStart = run.DateOfRun.ToString();
-                    testRun.RocCalc = run.RocCurveCalc.ToString();
-                    testRun.RocClass = run.RocClassNumber;
-                    testRun.RunNumber = run.Id.ToString();
-                    testRun.RunsNumber = run.ReTeachNum.ToString();
-                    testRun.Status = run.Status;
-                    testRun.TestName = context.TestSets.Find(run.TestSetId).Name;
-                    testRun.UserName = context.Users.Find(run.UserId).UserName;
-
-                    runsList.Add(testRun);
-                }
-            }
-
-            return View(runsList);
+        {            
+            return View();
         }
     }
 }
