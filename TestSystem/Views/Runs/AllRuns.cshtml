@@ -6,87 +6,110 @@
 }
 
 <h2>Latest test runs</h2>
+@*<div ng-app="runsSearch">
+    <div ng-controller="PhoneListCtrl">
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.RunNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AlgorithmName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TestName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateStart)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RocCalc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RocClass)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RunsNumber)
-        </th>
-        <th></th>
-    </tr>
+        Search:
+        <input ng-model="query">
+        Sort by:
+        <select ng-model="orderProp">
+            <option value="name">Alphabetical</option>
+            <option value="age">Newest</option>
+        </select>
+        </div>
+    </div>*@
 
-    @foreach (var item in Model)
-    {
+
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RunNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AlgorithmName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TestName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateStart)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RocCalc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RocClass)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RunsNumber)
-            </td>
-            @*@{
-        
-            if (item.RocCalc == "true")
-            {
-                <td>
-                    @Html.ActionLink("Details", "RunResults", new { resultsId = @Html.ValueFor(model => item.RunsNumber) })
-                </td>
-            }
-            else
-            {
-                <td>
-                    @Html.ActionLink("Details", "RunResultsRoc", new { resultsId = item.RunNumber })
-                </td>
-            }
-        
-            }*@
-
+            <th>
+                @Html.DisplayNameFor(model => model.RunNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlgorithmName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TestName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RocCalc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RocClass)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RunsNumber)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RunNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AlgorithmName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TestName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RocCalc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RocClass)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RunsNumber)
+                </td>
+                @*@{
+
+                    if (item.RocCalc == "true")
+                    {
+                        <td>
+                            @Html.ActionLink("Details", "RunResults", new { resultsId = @Html.ValueFor(model => item.RunsNumber) })
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.ActionLink("Details", "RunResultsRoc", new { resultsId = item.RunNumber })
+                        </td>
+                    }
+
+                    }*@               
+
+
+            </tr>
+        }
+
+    </table>
+
+<script>
+    //var phonecatApp = angular.module('runsSearch', []);
+
+    //phonecatApp.controller('runsSearchCtrl', function ($scope) {
+
+    //});
+</script>
+

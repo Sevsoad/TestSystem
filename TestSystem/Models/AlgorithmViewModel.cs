@@ -10,7 +10,7 @@ namespace TestSystem.Models
     {
         [Required]
         [Display(Name = "Algorithm name")]
-        [StringLength(20, MinimumLength = 2)]
+        [StringLength(30, MinimumLength = 2)]
         public string AlgorithmName { get; set; }
 
         [Required]

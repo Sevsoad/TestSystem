@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
 <h2>Create test run</h2>
 
 @using (Html.BeginForm())
@@ -18,7 +20,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TestName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TestName, new { htmlAttributes = new { @class = "form-control" } })
+                <input id="TestName" name="TestName" class="form-control" />
+                <p class="text-info">(Max 30 symbols allowed)</p>
                 @Html.ValidationMessageFor(model => model.TestName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -26,7 +29,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AlgorithmName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AlgorithmName, new { htmlAttributes = new { @class = "form-control" } })
+                <input id="AlgorithmName" name="AlgorithmName" class="form-control" />
+                <p class="text-info">(Max 30 symbols allowed)</p>
                 @Html.ValidationMessageFor(model => model.AlgorithmName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -58,6 +62,16 @@
 }
 
 <script>
+    $(function(){
+        $("#TestName").autocomplete({
+            autoFocus: true,
+            source: "/DataProvider/AutocompleteTestName"
+        })
+        $("#AlgorithmName").autocomplete({
+            autoFocus: true,
+            source: "/DataProvider/AutocompleteAlgName"
+        })
+    })
     function checkboxChanged() {
         if ($("#checkbox1")[0].checked == true) {
             document.getElementById("rerunsInfo").style.display = 'none';
@@ -68,8 +82,9 @@
             document.getElementById("rerunsInfo").style.display = 'block';
             $("#RepeatNumber").val("");
             $("#RocCurveRequired").val("false");
-        }
+        } 
     }
+
 
 </script>
 

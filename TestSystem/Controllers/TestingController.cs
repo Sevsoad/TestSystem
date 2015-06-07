@@ -59,7 +59,7 @@ namespace TestSystem.Controllers
                     });
                 }
             }
-                //redirect to runs associated with current algoritm ?? see runs in details?
+
             return View(algorithmList);
         }
 

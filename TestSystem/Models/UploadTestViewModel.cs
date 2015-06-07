@@ -11,7 +11,7 @@ namespace TestSystem.Models
 
         [Required]
         [Display(Name = "Test file name")]
-        [StringLength(50, MinimumLength = 3)]
+        [StringLength(30, MinimumLength = 3)]
         public string TestName { get; set; }
 
         [Required]

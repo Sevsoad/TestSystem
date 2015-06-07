@@ -13,6 +13,7 @@ namespace TestSystem
             bundles.Add(new ScriptBundle("~/bundles/jsScripts").Include(
                         "~/Scripts/jquery-1.9.1.min.js",
                         "~/Scripts/jquery.jqplot.min.js",
+                        "~/Scripts/jquery-ui-1.11.4.min.js",
                         "~/Scripts/excanvas.min.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/jquery.unobtrusive").Include(
