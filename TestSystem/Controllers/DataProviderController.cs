@@ -93,5 +93,34 @@ namespace TestSystem.Controllers
 
             return Json(count, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetRunResults(string runId)
+        {
+            var resultsId = 0;
+            var runIdInt = Convert.ToInt32(runId);
+
+            using (var context = new Entities())
+            {
+                var run = context.TestRuns.Find(runIdInt);
+
+                if (run.Status == "In progress")
+                {
+                    return RedirectToAction("UploadResultsFile", "Runs", new { runId = runIdInt });
+                }
+                else
+                {
+                    resultsId = context.TestResults
+                    .Where(x => x.TestRunId == runIdInt).ToArray()[0].Id;
+                    var isRoc = run.RocCurveCalc;
+
+                    if (isRoc)
+                    {
+                        return RedirectToAction("RunResultsRoc", "Runs", new { resultsID = resultsId });
+                    }
+                }              
+            }
+
+            return RedirectToAction("RunResults", "Runs", new { resultsID = resultsId});
+        }
     }
 }

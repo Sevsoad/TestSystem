@@ -207,12 +207,9 @@ namespace TestSystem.Controllers
                                 context.SaveChanges();
 
                                 return RedirectToAction("RunResultsRoc", new { resultsId = results.Id });
-                            }
-
-                            run.Status = "Results saved";
-                            run.RocClassNumber = model.RocClassNumber;
-                            context.SaveChanges();
+                            }                            
                         }
+
                     }
                     catch (Exception ex)
                     {

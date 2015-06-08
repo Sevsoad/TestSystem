@@ -12,6 +12,9 @@
 </div>
 
 <script>
+    var sizes = [10, 40, 40, 25, 30, 40, 20, 20];
+
+
     $(function () {
         $("#runsGrid").jsGrid({
             height: "auto",
@@ -53,16 +56,32 @@
                 }
             },
 
+            rowRenderer: function (item) { 
+                return $("<tr>").append($("<td>").css("width", sizes[0]).append(item.RunNumber))
+                    .append($("<td>").css("width", sizes[1]).append(item.AlgorithmName))
+                    .append($("<td>").css("width", sizes[2]).append(item.TestName))
+                    .append($("<td>").css("width", sizes[3]).append(item.Status))
+                    .append($("<td>").css("width", sizes[4]).append(item.UserName))
+                    .append($("<td>").css("width", sizes[5]).append(item.DateStart))
+                    .append($("<td>").css("width", sizes[6]).append(item.RocCalc))
+                .append($("<td>").css("width", sizes[7]).append($("<a>").css("color", "black")
+                    .attr("href", "/DataProvider/GetRunResults?runId=" + item.RunNumber).append("Details")))
+                ;
+            },
+
             fields: [
-                { name: "RunNumber", type: "text", title:"Run#", width: 10 },
-                { name: "AlgorithmName", type: "text", width: 40 },
-                { name: "TestName", type: "text", width: 40 },
-                { name: "Status", type: "text", width: 30 },
-                { name: "UserName", type: "text", width: 30 },
-                { name: "DateStart", type: "text", width: 40 },
-                { name: "RocCalc", type: "checkbox", title: "Is Roc Calc", width: 20 }
+                { name: "RunNumber", type: "text", title: "Run#", width: sizes[0] },
+                { name: "AlgorithmName", type: "text", width: sizes[1] },
+                { name: "TestName", type: "text", width: sizes[2] },
+                { name: "Status", type: "text", width: sizes[3] },
+                { name: "UserName", type: "text", width: sizes[4] },
+                { name: "DateStart", type: "text", width: sizes[5] },
+                { name: "RocCalc", type: "text", title: "Is Roc Calc", width: sizes[6] },
+            { name: "details", type: "text", title: "Details", width: sizes[7] }
             ]
         });
+
+
 
     });
 </script>
