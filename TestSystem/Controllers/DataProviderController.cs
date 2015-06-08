@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TestSystem.DataAccess;
+using TestSystem.Models;
 using TestSystem.Models.RunsModels;
 
 namespace TestSystem.Controllers
@@ -79,17 +80,77 @@ namespace TestSystem.Controllers
         }
 
         [HttpGet]
+        public JsonResult GetGridTests(string page, string size)
+        {
+            List<TestDescriptionViewModel> list = new List<TestDescriptionViewModel>();
+
+            using (var context = new Entities())
+            {
+                var pageSize = Convert.ToInt32(size);
+                var skipSize = pageSize * (Convert.ToInt32(page) - 1);
+                var rangeOfSets = context.TestSets.OrderByDescending(x => x.Id).Skip(skipSize).Take(pageSize);
+                var lastTestRun = string.Empty;
+
+                foreach (var set in rangeOfSets)
+                {
+                    if (context.TestRuns.Where(x => x.TestSetId == set.Id).Count() != 0)
+                    {
+                        lastTestRun = context.TestRuns.Where(x => x.TestSetId == set.Id).
+                            OrderByDescending(p => p.DateOfRun).Take(1).ToList()
+                            .Last().DateOfRun.ToString();
+                    }
+                    else
+                    {
+                        lastTestRun = "never";
+                    }
+
+                    var shortDescription = string.Empty;
+                    if (set.Description.Length > 25)
+                    {
+                        shortDescription = set.Description.Substring(0, 12) + "...";
+                    }
+                    else
+                    {
+                        shortDescription = set.Description;
+                    }
+
+                    var fileSize = string.Empty;
+                    fileSize = set.Size == 0 ? "< 1" : set.Size.ToString();
+
+                    var testSet = new TestDescriptionViewModel
+                    {
+                        CreatedBy = context.Users.FirstOrDefault<Users>(x => x.Id == set.CreatorId).UserName,
+                        DateCreated = set.DateOfCreation.ToString(),
+                        Description = shortDescription,
+                        FileSize = fileSize + " kb",
+                        LastRun = lastTestRun,
+                        Runs = context.TestRuns.Count(x => x.TestSetId == set.Id).ToString(),
+                        TestName = set.Name
+                    };
+
+                    list.Add(testSet);
+                }
+            }
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public JsonResult GetGridCount(string type)
         {
             var count = 0;
-
-            if (type == "Runs")
-            {
+            
                 using (var context = new Entities())
                 {
-                    count = context.TestRuns.Count();
-                }
-            }
+                    if (type == "Runs")
+                    {
+                        count = context.TestRuns.Count();
+                    }
+                    else if (type == "Tests")
+                    {
+                        count = context.TestSets.Count();
+                    }
+                }            
 
             return Json(count, JsonRequestBehavior.AllowGet);
         }

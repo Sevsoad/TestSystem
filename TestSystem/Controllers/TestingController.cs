@@ -105,54 +105,7 @@ namespace TestSystem.Controllers
 
         public ActionResult TestSets()
         {
-            List<TestDescriptionViewModel> testList = new List<TestDescriptionViewModel>();
-
-            using (var context = new Entities())
-            {
-                var list = context.TestSets.OrderByDescending(p => p.DateOfCreation).Take(10);
-
-                foreach (var test in list)
-                {
-                    var lastTestRun = string.Empty;
-
-                    if (context.TestRuns.Where(x => x.TestSetId == test.Id).Count() != 0)
-                    {
-                        lastTestRun = context.TestRuns.Where(x => x.TestSetId == test.Id).
-                            OrderByDescending(p => p.DateOfRun).Take(1).ToList()
-                            .Last().DateOfRun.ToString();
-                    }
-                    else
-                    {
-                        lastTestRun = "never";
-                    }
-
-                    var shortDescription = string.Empty;
-                    if (test.Description.Length > 25)
-                    {
-                        shortDescription = test.Description.Substring(0, 12) + "...";
-                    }
-                    else
-                    {
-                        shortDescription = test.Description;
-                    }
-
-                    var fileSize = string.Empty;
-                    fileSize = test.Size == 0 ? "< 1" : test.Size.ToString();
-
-                    testList.Add(new TestDescriptionViewModel
-                    {
-                        CreatedBy = context.Users.FirstOrDefault<Users>(x => x.Id == test.CreatorId).UserName,
-                        DateCreated = test.DateOfCreation.ToString(),
-                        Description = shortDescription,
-                        FileSize = fileSize + " kb",
-                        LastRun = lastTestRun,
-                        Runs = context.TestRuns.Count(x => x.TestSetId == test.Id).ToString(),
-                        TestName = test.Name
-                    });
-                }
-            }
-
-            return View(testList);
+            return View();
         }      
 
         [Authorize]
@@ -215,6 +168,43 @@ namespace TestSystem.Controllers
             }
 
             return RedirectToAction("TestSets", "Testing");
+        }
+
+        public ActionResult TestDetails(string testName)
+        {
+            var result = new TestDescriptionViewModel();
+
+            using (var context = new Entities())
+            {
+                var set = context.TestSets.Where(x => x.Name == testName).ToArray()[0];
+                var lastTestRun = string.Empty;
+                if (context.TestRuns.Where(x => x.TestSetId == set.Id).Count() != 0)
+                {
+                    lastTestRun = context.TestRuns.Where(x => x.TestSetId == set.Id).
+                        OrderByDescending(p => p.DateOfRun).Take(1).ToList()
+                        .Last().DateOfRun.ToString();
+                }
+                else
+                {
+                    lastTestRun = "never";
+                }
+
+                var fileSize = string.Empty;
+                fileSize = set.Size == 0 ? "< 1" : set.Size.ToString();
+
+                result = new TestDescriptionViewModel
+                    {
+                        CreatedBy = context.Users.FirstOrDefault<Users>(x => x.Id == set.CreatorId).UserName,
+                        DateCreated = set.DateOfCreation.ToString(),
+                        Description = set.Description,
+                        FileSize = fileSize,
+                        LastRun = lastTestRun,
+                        Runs = context.TestRuns.Count(x => x.TestSetId == set.Id).ToString(),
+                        TestName = set.Name
+                    };
+            }
+
+            return View(result);
         }
     }
 }

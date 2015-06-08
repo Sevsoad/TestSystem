@@ -1,0 +1,87 @@
+﻿@model TestSystem.Models.TestDescriptionViewModel
+
+@{
+    ViewBag.Title = "TestDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Test Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TestName)
+        </dt>
+
+        <dd>
+            <p id="testName">@Html.DisplayFor(model => model.TestName)</p>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FileSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FileSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastRun)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastRun)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Runs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Runs)
+        </dd>
+
+    </dl>
+    <div style="margin-left : 10%">
+        <a id="download" class="btn btn-primary"
+           href="/Runs/DownloadTestFile?testName=" download>Download test file</a>
+    </div>
+
+</div>
+<p>    
+    @Html.ActionLink("Back to List", "/TestSets")
+</p>
+
+<script>
+    $(document).ready(function () {
+        var testName = $("#testName").text();
+        var newValue = $("#download").attr("href") + testName;
+        $("#download").attr("href", newValue);
+    });
+
+</script>

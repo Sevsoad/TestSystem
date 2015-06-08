@@ -222,6 +222,7 @@
     <Content Include="Views\Runs\UploadResultsFile.cshtml" />
     <Content Include="Views\Runs\RunResults.cshtml" />
     <Content Include="Views\Runs\AllRuns.cshtml" />
+    <Content Include="Views\Testing\TestDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
