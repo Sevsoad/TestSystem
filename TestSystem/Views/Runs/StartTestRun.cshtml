@@ -34,35 +34,54 @@
                 @Html.ValidationMessageFor(model => model.AlgorithmName, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.RocCurveRequired, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class=" col-md-10">
-                <input id="checkbox1" type="checkbox"
-                       class="checkbox" name="checkbox1" onclick="checkboxChanged()">                 
-                <input id="RocCurveRequired" name="RocCurveRequired" hidden />
-                <p class="text-info">(Require from 15 to 40 runs with variation of threshold value.)</p>
-            </div>
-        </div>
-        <div class="form-group" id="rerunsInfo">
-            <b class="control-label col-md-2">Number of re-runs</b>
-            <div class="col-md-10">                
-                <input id="RepeatNumber" name="RepeatNumber" class="form-control" /> 
-                <p class="text-danger">@ViewBag.Rerun</p>                
-                <p class="text-info">(Don't include inital run here. Only times of re-teaching and re-runing
-                 test from the beggining. Maximum allowed 40. E.g. 20 re-runs + 1 intial run = 21 results uploaded to system.)</p>
-               </div>
-        </div>        
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Next" class="btn btn-info" />
+        <div class="form-group"> 
+            @Html.HiddenFor(model => model.Ratio)
+            <label class="control-label col-md-2">Train-test ratio</label>
+            <div class="col-md-10">
+                <select class="form-control" id="selectRatio" onchange="selectBoxChanged()">
+                    <option>10/90</option>
+                    <option>20/80</option>
+                    <option>30/70</option>
+                    <option>40/60</option>
+                    <option>50/50</option>
+                </select>
             </div>
         </div>
-    </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RocCurveRequired, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class=" col-md-10">
+                    <input id="checkbox1" type="checkbox"
+                           class="checkbox" name="checkbox1" onclick="checkboxChanged()">
+                    <input id="RocCurveRequired" name="RocCurveRequired" hidden />
+                    <p class="text-info">(Require from 15 to 40 runs with variation of threshold value.)</p>
+                </div>
+            </div>
+
+            <div class="form-group" id="rerunsInfo">
+                <b class="control-label col-md-2">Number of re-runs</b>
+                <div class="col-md-10">
+                    <input id="RunsNumber" name="RunsNumber" class="form-control" />
+                    <p class="text-danger">@ViewBag.Rerun</p>
+                    <p class="text-info">
+                        (Don't include inital run here. Only times of re-teaching and re-runing
+                        test from the beggining. Maximum allowed 40. E.g. 20 re-runs + 1 intial run = 21 results uploaded to system.)
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Next" class="btn btn-info" />
+                </div>
+            </div>
+        </div>
 }
 
 <script>
-    $(function(){
+    $(function () {
+        selectBoxChanged();
         $("#TestName").autocomplete({
             autoFocus: true,
             source: "/DataProvider/AutocompleteTestName"
@@ -75,16 +94,18 @@
     function checkboxChanged() {
         if ($("#checkbox1")[0].checked == true) {
             document.getElementById("rerunsInfo").style.display = 'none';
-            $("#RepeatNumber").val("0");
+            $("#RunsNumber").val("-");
             $("#RocCurveRequired").val("true");
         }
         else {
             document.getElementById("rerunsInfo").style.display = 'block';
-            $("#RepeatNumber").val("");
+            $("#RunsNumber").val("");
             $("#RocCurveRequired").val("false");
         } 
     }
-
+    function selectBoxChanged() {
+        $("#Ratio").val($("#selectRatio").val())
+    }
 
 </script>
 

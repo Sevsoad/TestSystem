@@ -67,7 +67,7 @@ namespace TestSystem.Controllers
                     testRun.RocCalc = run.RocCurveCalc.ToString();
                     testRun.RocClass = run.RocClassNumber;
                     testRun.RunNumber = run.Id.ToString();
-                    testRun.RunsNumber = run.ReTeachNum.ToString();
+                    testRun.RunsNumber = run.RunsNumber.ToString();
                     testRun.Status = run.Status;
                     testRun.TestName = context.TestSets.Find(run.TestSetId).Name;
                     testRun.UserName = context.Users.Find(run.UserId).UserName;
@@ -101,7 +101,7 @@ namespace TestSystem.Controllers
                     testRun.RocCalc = run.RocCurveCalc.ToString();
                     testRun.RocClass = run.RocClassNumber;
                     testRun.RunNumber = run.Id.ToString();
-                    testRun.RunsNumber = run.ReTeachNum.ToString();
+                    testRun.RunsNumber = run.RunsNumber.ToString();
                     testRun.Status = run.Status;
                     testRun.TestName = context.TestSets.Find(run.TestSetId).Name;
                     testRun.UserName = context.Users.Find(run.UserId).UserName;

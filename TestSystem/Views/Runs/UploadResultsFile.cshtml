@@ -14,11 +14,10 @@
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.RunNumber)
-                @Html.HiddenFor(model => model.RunNumber)
-            </dt>
+                @Html.HiddenFor(model => model.RunNumber)</dt>
 
-            <dd>
-                <p>@Html.DisplayFor(model => model.RunNumber)</p>
+            <dd> 
+                <p id="runNum">@Html.DisplayFor(model => model.RunNumber)</p>
             </dd>
 
             <dt>
@@ -27,7 +26,7 @@
             </dt>
 
             <dd>
-                <p id="testName">@Html.DisplayFor(model => model.TestName)</p>
+                <p>@Html.DisplayFor(model => model.TestName)</p>
             </dd>
 
             <dt>
@@ -61,7 +60,7 @@
 
         <div style="margin-left : 10%">
             <a id="download" class="btn btn-primary"
-               href="DownloadTestFile?testName=" download>Download test file</a>
+               href="DownloadTestFile?testRun=" download>Download test file</a>
         </div>
 
         <div class="panel panel-success" style="margin-top : 20px">
@@ -94,8 +93,8 @@
         if ($("#RocCalc").val() != "yes") {
             document.getElementById("rocDiv").style.display = 'none';
         }
-        var testName = $("#testName").text();
-        var newValue = $("#download").attr("href") + testName;
+        var runNum = $("#runNum").text();
+        var newValue = $("#download").attr("href") + runNum;
         $("#download").attr("href", newValue)
     });
 </script>

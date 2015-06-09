@@ -26,8 +26,9 @@ namespace TestSystem.DataAccess
         public System.DateTime DateOfRun { get; set; }
         public bool RocCurveCalc { get; set; }
         public string Status { get; set; }
-        public Nullable<int> ReTeachNum { get; set; }
+        public string RunsNumber { get; set; }
         public string RocClassNumber { get; set; }
+        public string TrainRatio { get; set; }
     
         public virtual Algorithms Algorithms { get; set; }
         public virtual ICollection<TestResults> TestResults { get; set; }

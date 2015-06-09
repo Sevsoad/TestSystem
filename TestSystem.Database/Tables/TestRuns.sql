@@ -7,8 +7,9 @@
     [DateOfRun] DATETIME NOT NULL, 
 	[RocCurveCalc] BIT NOT NULL, 
     [Status] NVARCHAR(25) NOT NULL, 
-    [RunsNumber] INT NULL,  
+    [RunsNumber] NVARCHAR(20) NULL,  
     [RocClassNumber] NVARCHAR(10) NULL, 
+    [TrainRatio] NVARCHAR(20) NULL, 
     CONSTRAINT [FK_TestRuns_ToUsers] FOREIGN KEY (UserId) REFERENCES Users(Id),
 	CONSTRAINT [FK_TestRuns_ToTestSets] FOREIGN KEY (TestSetId) REFERENCES TestSets(Id),
 	CONSTRAINT [FK_TestRuns_ToAlgorithms] FOREIGN KEY (AlgorithmId) REFERENCES Algorithms(Id)

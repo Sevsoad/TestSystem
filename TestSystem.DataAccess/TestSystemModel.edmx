@@ -12,7 +12,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreatorId" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="DateOfCreation" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
@@ -49,8 +49,9 @@
           <Property Name="DateOfRun" Type="datetime" Nullable="false" />
           <Property Name="RocCurveCalc" Type="bit" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="ReTeachNum" Type="int" />
+          <Property Name="RunsNumber" Type="nvarchar" MaxLength="20" />
           <Property Name="RocClassNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="TrainRatio" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="TestSets">
           <Key>
@@ -277,7 +278,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreatorId" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DateOfCreation" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Algorithms_ToUsers" FromRole="Algorithms" ToRole="Users" />
           <NavigationProperty Name="TestResults" Relationship="Self.FK_TestResults_ToAlgorithms" FromRole="Algorithms" ToRole="TestResults" />
@@ -320,8 +321,9 @@
           <Property Name="DateOfRun" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RocCurveCalc" Type="Boolean" Nullable="false" />
           <Property Name="Status" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ReTeachNum" Type="Int32" />
+          <Property Name="RunsNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="RocClassNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TrainRatio" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Algorithms" Relationship="Self.FK_TestRuns_ToAlgorithms" FromRole="TestRuns" ToRole="Algorithms" />
           <NavigationProperty Name="TestResults" Relationship="Self.FK_TestResults_ToTestRuns" FromRole="TestRuns" ToRole="TestResults" />
           <NavigationProperty Name="TestSets" Relationship="Self.FK_TestRuns_ToTestSets" FromRole="TestRuns" ToRole="TestSets" />
@@ -602,8 +604,9 @@
                 <ScalarProperty Name="DateOfRun" ColumnName="DateOfRun" />
                 <ScalarProperty Name="RocCurveCalc" ColumnName="RocCurveCalc" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ReTeachNum" ColumnName="ReTeachNum" />
+                <ScalarProperty Name="RunsNumber" ColumnName="RunsNumber" />
                 <ScalarProperty Name="RocClassNumber" ColumnName="RocClassNumber" />
+                <ScalarProperty Name="TrainRatio" ColumnName="TrainRatio" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

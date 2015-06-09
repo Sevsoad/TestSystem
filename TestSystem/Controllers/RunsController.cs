@@ -24,17 +24,22 @@ namespace TestSystem.Controllers
         [HttpPost]
         public ActionResult StartTestRun(RunDetailsViewModel runDetails)
         {
-            var regex = new Regex("^([0-9]|[0-4][0]|[0-3][0-9])$");
+            var regex = new Regex("^([1-9]|[1-4][0]|[1-3][0-9]|[-])$"); //todo check 0 04 03 02 and ok numbers
 
             if (!ModelState.IsValid)
             {
                 return View(runDetails);
             }
-            if (runDetails.RepeatNumber == null ||
-                !regex.IsMatch(runDetails.RepeatNumber))
+            if (runDetails.RunsNumber == null ||
+                !regex.IsMatch(runDetails.RunsNumber))
             {
                 ViewBag.ReRun = "Re-run number is invalid";
                 return View(runDetails);
+            }
+
+            if (runDetails.RunsNumber == "-")
+            {
+                runDetails.RunsNumber = "roc calculated";
             }
 
             using (var context = new Entities())
@@ -70,7 +75,8 @@ namespace TestSystem.Controllers
                         (x => x.Name.ToLower() == runDetails.TestName).Id,
                         RocCurveCalc = runDetails.RocCurveRequired == "true" ? true : false,
                         Status = "In progress",
-                        ReTeachNum = Convert.ToInt32(runDetails.RepeatNumber)
+                        RunsNumber = runDetails.RunsNumber,
+                        TrainRatio = runDetails.Ratio.Split('/')[0]
                     };
 
                     context.TestRuns.Add(testRun);
@@ -107,9 +113,9 @@ namespace TestSystem.Controllers
                 model.RunNumber = runId;
                 model.TestName = context.TestSets.Find(run.TestSetId).Name;
                 model.AlgorithmName = context.Algorithms.Find(run.AlgorithmId).Name;
-                model.RepeatNumber = (run.ReTeachNum == null ||
-                    run.ReTeachNum == 0) ? "no re-runs"
-                    : run.ReTeachNum.ToString();
+                model.RepeatNumber = (run.RunsNumber == null ||
+                    run.RunsNumber == "roc calculation") ? "roc calculation" //todo
+                    : run.RunsNumber.ToString();
                 model.RocCalc = run.RocCurveCalc == true ? "yes" : "no";
             }
 
@@ -225,27 +231,30 @@ namespace TestSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult DownloadTestFile(string testName)
+        public ActionResult DownloadTestFile(string testRun)
         {
             byte[] testFile = null;
+            var formatter = new TestRatioFormatter();
+
             using (var context = new Entities())
             {
-                var testSet = context.TestSets.Where
-                    (x => x.Name == testName);
+                var testRunDb = context.TestRuns.Find(Convert.ToInt32(testRun));
 
-                if (testSet.Count() == 0)
-                {
-                    return View();
-                }
-                else
-                {
-                    testFile = testSet.ToArray()[0].Data;
-                }
+                testFile = formatter.GenerateTestData(testRunDb.TestSetId, testRunDb.TrainRatio);
+
+                //if (testSet.Count() == 0)
+                //{
+                //    return View();
+                //}
+                //else
+                //{
+                //    testFile = testSet.ToArray()[0].Data;
+                //}
             }
 
             var cd = new System.Net.Mime.ContentDisposition
             {
-                FileName = "TestSet-" + testName + ".txt",
+                FileName = "TestRun_#" + testRun + ".txt",
                 Inline = false
             };
 
@@ -303,7 +312,7 @@ namespace TestSystem.Controllers
                 var testID = run.TestSetId;
                 model.TestName = context.TestSets.Find(testID).Name;
                 model.AlgorithmName = context.Algorithms.Find(results.AlgorithmId).Name;
-                model.NumberOfRuns = (run.ReTeachNum + 1).ToString();
+                model.NumberOfRuns = (run.RunsNumber).ToString();
             }
 
             return View(model);
