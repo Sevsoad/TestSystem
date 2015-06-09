@@ -17,10 +17,13 @@ namespace TestSystem.Models.RunsModels
         [Display(Name = "Algorithm name")]
         public string AlgorithmName { get; set; }
 
-        [Display(Name = "Average correct classification rate")]
+        [Display(Name = "Average correct rate")]
         public string CorrectRate { get; set; }
 
         [Display(Name = "Number of runs")]
         public string NumberOfRuns { get; set; }
+
+        [Display(Name = "Teach-test ratio")]
+        public string Ratio { get; set; }
     }
 }

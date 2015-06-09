@@ -24,7 +24,7 @@ namespace TestSystem.Controllers
         [HttpPost]
         public ActionResult StartTestRun(RunDetailsViewModel runDetails)
         {
-            var regex = new Regex("^([1-9]|[1-4][0]|[1-3][0-9]|[-])$"); //todo check 0 04 03 02 and ok numbers
+            var regex = new Regex("^([1-9]|[1-4][0]|[1-3][0-9]|[-])$");
 
             if (!ModelState.IsValid)
             {
@@ -145,6 +145,8 @@ namespace TestSystem.Controllers
                 {
                     var run = context.TestRuns.Find(model.RunNumber);
 
+                    run.RocClassNumber = model.RocClassNumber;
+
                     var results = new TestResults()
                     {
                         AlgorithmId = context.Algorithms
@@ -164,7 +166,7 @@ namespace TestSystem.Controllers
                                 ms.Seek(0, SeekOrigin.Begin);
 
                                 var statistics = analyzer.CalcErrorPercentage
-                                    (test.ExpectedResults, ms, Convert.ToInt32(model.RepeatNumber) + 1);
+                                    (test.ExpectedResults, ms, Convert.ToInt32(model.RepeatNumber));
 
                                 results.CorrectRate = statistics.ToString("0.000");
                                 context.TestResults.Add(results);
@@ -180,6 +182,7 @@ namespace TestSystem.Controllers
                         }
                         else if (model.RocCalc == "yes")
                         {
+                             
                             using (MemoryStream ms = new MemoryStream())
                             {
                                 model.file.InputStream.CopyTo(ms);
@@ -231,7 +234,7 @@ namespace TestSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult DownloadTestFile(string testRun)
+        public ActionResult DownloadTestFileRun(string testRun)
         {
             byte[] testFile = null;
             var formatter = new TestRatioFormatter();
@@ -264,6 +267,37 @@ namespace TestSystem.Controllers
         }
 
         [Authorize]
+        [HttpGet]
+        public ActionResult DownloadTestFile(string testName)
+        {
+            byte[] testFile = null;
+            using (var context = new Entities())
+            {
+                var testSet = context.TestSets.Where
+                    (x => x.Name == testName);
+
+                if (testSet.Count() == 0)
+                {
+                    return View();
+                }
+                else
+                {
+                    testFile = testSet.ToArray()[0].Data;
+                }
+            }
+
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                FileName = "TestSet-" + testName + ".txt",
+                Inline = false
+            };
+
+            Response.AppendHeader("Content-Disposition", cd.ToString());
+
+            return File(testFile, "text/plain");
+        }
+
+        [Authorize]
         public ActionResult RunResultsRoc(int resultsId)
         {
             var model = new RunResultsRocViewModel();
@@ -287,6 +321,9 @@ namespace TestSystem.Controllers
                 model.TruePositivesNumber = Convert.ToSingle(results.TP) * 100 + "%";
                 model.FalseNegativesNumber = Convert.ToSingle(results.FN) * 100 + "%";
                 model.FalsePositivesNumber = Convert.ToSingle(results.FP) * 100 + "%";
+                var ratioInt = Convert.ToInt32(run.TrainRatio);
+                model.Ratio = ratioInt.ToString() + @"/" + (100 - ratioInt).ToString();
+                model.RocClass = run.RocClassNumber;
             }
 
             return View(model);
@@ -313,6 +350,9 @@ namespace TestSystem.Controllers
                 model.TestName = context.TestSets.Find(testID).Name;
                 model.AlgorithmName = context.Algorithms.Find(results.AlgorithmId).Name;
                 model.NumberOfRuns = (run.RunsNumber).ToString();
+
+                var ratioInt = Convert.ToInt32(run.TrainRatio);
+                model.Ratio = ratioInt.ToString() + @"/" + (100 - ratioInt).ToString();
             }
 
             return View(model);

@@ -17,14 +17,14 @@ namespace TestSystem.Core
 
         public StringBuilder GetExpectedValuesFromTestSet(MemoryStream ms)
         {
-            var expectedResults = new StringBuilder();
+            var expectedResults = new StringBuilder();            
 
             using (StreamReader file = new System.IO.StreamReader(ms, true))
             {
                 while (!file.EndOfStream)
                 {
                     var testLine = file.ReadLine();
-                    expectedResults.Append(testLine.ToCharArray()[0] + " ");
+                    expectedResults.Append(testLine.TrimStart().ToCharArray()[0] + " ");
                 }
             }
 

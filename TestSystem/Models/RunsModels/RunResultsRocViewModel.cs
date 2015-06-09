@@ -20,23 +20,25 @@ namespace TestSystem.Models.RunsModels
         [Display(Name = "Algorithm name")]
         public string AlgorithmName { get; set; }
 
-        [Display(Name = "Average true positive number")]
+        [Display(Name = "Average TP number")]
         public string TruePositivesNumber { get; set; }
 
-        [Display(Name = "Average true negative number")]
+        [Display(Name = "Average TN number")]
         public string TrueNegativesNumber { get; set; }
 
-        [Display(Name = "Average false positive number")]
+        [Display(Name = "Average FP number")]
         public string FalsePositivesNumber { get; set; }
 
-        [Display(Name = "Average false negative number")]
+        [Display(Name = "Average FN number")]
         public string FalseNegativesNumber { get; set; }
 
-        [Display(Name = "Average correct classification rate")]
+        [Display(Name = "Average correct rate")]
         public string CorrectRate { get; set; }
 
-        //public Json RocCoorinates { get; set; }
+        [Display(Name = "Teach-test ratio")]
+        public string Ratio { get; set; }
 
-        //public string RocCoorinatesSpecif { get; set; }
+        [Display(Name = "Roc positive class")]
+        public string RocClass { get; set; }
     }
 }

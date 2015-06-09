@@ -17,7 +17,7 @@ namespace TestSystem.Controllers
 
         [HttpGet]
         public ActionResult Algorithms()
-        {         
+        {
             return View();
         }
 
@@ -97,7 +97,7 @@ namespace TestSystem.Controllers
                 var expectedResults = new StringBuilder();
 
                 using (MemoryStream ms = new MemoryStream())
-                { //todo check if can extract expected results
+                { 
                     model.file.InputStream.CopyTo(ms);
                     array = ms.GetBuffer();
                     ms.Seek(0, SeekOrigin.Begin);
@@ -117,7 +117,7 @@ namespace TestSystem.Controllers
                     Data = array,
                     Name = model.TestName,
                     Size = fileSize,
-                    ExpectedResults = expectedResults.ToString()
+                    ExpectedResults = expectedResults.ToString().TrimStart().TrimEnd()
                 };
 
                 context.TestSets.Add(testSet);
