@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace TestSystem.Core
@@ -24,7 +25,14 @@ namespace TestSystem.Core
                 while (!file.EndOfStream)
                 {
                     var testLine = file.ReadLine();
-                    expectedResults.Append(testLine.TrimStart().ToCharArray()[0] + " ");
+                    var res = testLine.TrimStart().ToCharArray()[0];
+
+                    if (!Regex.IsMatch(res.ToString(), @"^\d+$"))
+                    {
+                        throw new FormatException();
+                    }
+
+                    expectedResults.Append(res + " ");
                 }
             }
 
