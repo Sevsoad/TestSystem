@@ -25,7 +25,7 @@ namespace TestSystem.Core
                 while (!file.EndOfStream)
                 {
                     var testLine = file.ReadLine();
-                    var res = testLine.TrimStart().ToCharArray()[0];
+                    var res = testLine.TrimStart().Split(' ')[0];
 
                     if (!Regex.IsMatch(res.ToString(), @"^\d+$"))
                     {
