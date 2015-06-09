@@ -1,56 +1,80 @@
-﻿@model IEnumerable<TestSystem.Models.AlgorithmDescriptionViewModel>
-
-@{
+﻿@{
     ViewBag.Title = "Algorithms";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Algorithms</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.AlgorithmName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastRun)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Runs)
-        </th>
-        <th></th>
-    </tr>
+<link type="text/css" rel="stylesheet" href="/Content/jsgrid-theme.min.css" />
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AlgorithmName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateCreated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastRun)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Runs)
-        </td>
-    </tr>
-}
+<div id="runsGrid">
+</div>
 
-</table>
+<script>
+    var sizes = [30, 30, 25, 25, 30, 7, 10];
+
+    $(function () {
+        $("#runsGrid").jsGrid({
+            height: "auto",
+            width: "100%",
+
+            sorting: false,
+            paging: true,
+            selecting: true,
+            editing: false,
+            autoload: true,
+            pageLoading: true,
+            pageSize: 15,
+            pageIndex: 1,
+
+            controller: {
+                loadData: function (filter) {
+                    var results;
+                    var count
+
+                    $.ajax({
+                        url: "/DataProvider/GetGridAlg?page=" + filter.pageIndex + "&size=" + filter.pageSize,
+                        dataType: "json",
+                        async: false
+                    }).done(function (response) {
+                        results = response;
+                    });
+                    $.ajax({
+                        url: "/DataProvider/GetGridCount?type=Algs",
+                        dataType: "json",
+                        async: false
+                    }).done(function (res) {
+                        count = res;
+                    });
+
+                    return {
+                        data: results,
+                        itemsCount: count
+                    };
+                }
+            },
+
+            rowRenderer: function (item) {
+                return $("<tr>").append($("<td>").css("width", sizes[0]).append(item.AlgorithmName))
+                    .append($("<td>").css("width", sizes[1]).append(item.Description))
+                    .append($("<td>").css("width", sizes[2]).append(item.CreatedBy))
+                    .append($("<td>").css("width", sizes[3]).append(item.DateCreated))
+                    .append($("<td>").css("width", sizes[4]).append(item.LastRun))
+                    .append($("<td>").css("width", sizes[5]).append(item.Runs))
+                    .append($("<td>").css("width", sizes[6]).append($("<a>").css("color", "black")
+                        .attr("href", "/Testing/AlgDetails?algName=" + item.AlgorithmName).append("Details")))
+                ;
+            },
+
+            fields: [
+                { name: "AlgorithmName", type: "text", title: "Name", width: sizes[0] },
+                { name: "Description", type: "text", width: sizes[1] },
+                { name: "CreatedBy", type: "text", title: "Created by", width: sizes[2] },
+                { name: "DateCreated", type: "text", title: "Date created", width: sizes[3] },
+                { name: "LastRun", type: "text", title: "Last run", width: sizes[4] },
+                { name: "Runs", type: "text", title: "Total runs", width: sizes[5] },
+                { name: "Details", type: "text", title: "Details", width: sizes[6] }
+            ]
+        });
+    });
+</script>

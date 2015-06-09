@@ -17,50 +17,8 @@ namespace TestSystem.Controllers
 
         [HttpGet]
         public ActionResult Algorithms()
-        {
-            List<AlgorithmDescriptionViewModel> algorithmList = new List<AlgorithmDescriptionViewModel>();
-
-            using (var context = new Entities())
-            {
-                var list = context.Algorithms.Take(10);
-                foreach (var algorithm in list)
-                {
-                    var lastAlgRun = string.Empty;
-
-                    if (context.TestRuns.Where(x => x.AlgorithmId == algorithm.Id).Count() != 0)
-                    {
-                        lastAlgRun = context.TestRuns.Where(x => x.AlgorithmId == algorithm.Id).
-                            OrderByDescending(p => p.DateOfRun).Take(1).ToList()
-                            .Last().DateOfRun.ToString();
-                    }
-                    else
-                    {
-                        lastAlgRun = "never";
-                    }
-
-                    var shortDescription = string.Empty;
-                    if (algorithm.Description.Length > 25)
-                    {
-                        shortDescription = algorithm.Description.Substring(0, 12) + "...";
-                    }
-                    else
-                    {
-                        shortDescription = algorithm.Description;
-                    }
-
-                    algorithmList.Add(new AlgorithmDescriptionViewModel
-                    {
-                        CreatedBy = context.Users.FirstOrDefault<Users>(x => x.Id == algorithm.CreatorId).UserName,
-                        DateCreated = algorithm.DateOfCreation.ToString(),
-                        Description = shortDescription,
-                        LastRun = lastAlgRun,
-                        Runs = context.TestRuns.Count<TestRuns>(x => x.AlgorithmId == algorithm.Id).ToString(),
-                        AlgorithmName = algorithm.Name
-                    });
-                }
-            }
-
-            return View(algorithmList);
+        {         
+            return View();
         }
 
         [Authorize]
@@ -202,6 +160,39 @@ namespace TestSystem.Controllers
                         Runs = context.TestRuns.Count(x => x.TestSetId == set.Id).ToString(),
                         TestName = set.Name
                     };
+            }
+
+            return View(result);
+        }
+
+        public ActionResult AlgDetails(string algName)
+        {
+            var result = new AlgorithmDescriptionViewModel();
+
+            using (var context = new Entities())
+            {
+                var set = context.Algorithms.Where(x => x.Name == algName).ToArray()[0];
+                var lastTestRun = string.Empty;
+                if (context.TestRuns.Where(x => x.AlgorithmId == set.Id).Count() != 0)
+                {
+                    lastTestRun = context.TestRuns.Where(x => x.AlgorithmId == set.Id).
+                        OrderByDescending(p => p.DateOfRun).Take(1).ToList()
+                        .Last().DateOfRun.ToString();
+                }
+                else
+                {
+                    lastTestRun = "never";
+                }
+
+                result = new AlgorithmDescriptionViewModel
+                {
+                    CreatedBy = context.Users.FirstOrDefault<Users>(x => x.Id == set.CreatorId).UserName,
+                    DateCreated = set.DateOfCreation.ToString(),
+                    Description = set.Description,
+                    LastRun = lastTestRun,
+                    Runs = context.TestRuns.Count(x => x.AlgorithmId == set.Id).ToString(),
+                    AlgorithmName = set.Name
+                };
             }
 
             return View(result);

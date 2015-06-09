@@ -1,0 +1,146 @@
+﻿@model TestSystem.Models.AlgorithmDescriptionViewModel
+
+@{
+    ViewBag.Title = "AlgDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Algorithm Details</h2>
+<link type="text/css" rel="stylesheet" href="/Content/jsgrid-theme.min.css" />
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AlgorithmName)
+        </dt>
+
+        <dd>
+            <p id="algName">@Html.DisplayFor(model => model.AlgorithmName) </p>
+</dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastRun)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastRun)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Runs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Runs)
+        </dd>
+
+    </dl>
+</div>
+
+<h3>Algoritm runs:</h3>
+
+<div id="runsGrid">
+</div>
+
+<p>
+    @Html.ActionLink("Back to List", "/Algorithms")
+</p>
+
+
+
+<script>
+    var sizes = [10, 40, 40, 25, 30, 40, 20, 20];
+
+    $(function () {
+        $("#runsGrid").jsGrid({
+            height: "auto",
+            width: "100%",
+
+            sorting: false,
+            paging: true,
+            selecting: true,
+            editing: false,
+            autoload: true,
+            pageLoading: true,
+            pageSize: 15,
+            pageIndex: 1,
+
+            controller: {
+                loadData: function (filter) {
+                    var results;
+                    var count
+
+                    $.ajax({
+                        url: "/DataProvider/GetGridRunsForAlg?page=" + filter.pageIndex + "&size=" +
+                            filter.pageSize + "&algName=" + $("#algName").text(),
+                        dataType: "json",
+                        async: false
+                    }).done(function (response) {
+                        results = response;
+                    });
+                    $.ajax({
+                        url: "/DataProvider/GetAlgRunGridCount?algName=" + $("#algName").text(),
+                        dataType: "json",
+                        async: false
+                    }).done(function (res) {
+                        count = res;
+                    });
+
+                    return {
+                        data: results,
+                        itemsCount: count
+                    };
+                }
+            },
+
+            rowRenderer: function (item) {
+                return $("<tr>").append($("<td>").css("width", sizes[0]).append(item.RunNumber))
+                    .append($("<td>").css("width", sizes[1]).append(item.AlgorithmName))
+                    .append($("<td>").css("width", sizes[2]).append(item.TestName))
+                    .append($("<td>").css("width", sizes[3]).append(item.Status))
+                    .append($("<td>").css("width", sizes[4]).append(item.UserName))
+                    .append($("<td>").css("width", sizes[5]).append(item.DateStart))
+                    .append($("<td>").css("width", sizes[6]).append(item.RocCalc))
+                .append($("<td>").css("width", sizes[7]).append($("<a>").css("color", "black")
+                    .attr("href", "/DataProvider/GetRunResults?runId=" + item.RunNumber).append("Details")))
+                ;
+            },
+
+            fields: [
+                { name: "RunNumber", type: "text", title: "Run#", width: sizes[0] },
+                { name: "AlgorithmName", type: "text", width: sizes[1] },
+                { name: "TestName", type: "text", width: sizes[2] },
+                { name: "Status", type: "text", width: sizes[3] },
+                { name: "UserName", type: "text", width: sizes[4] },
+                { name: "DateStart", type: "text", width: sizes[5] },
+                { name: "RocCalc", type: "text", title: "Is Roc Calc", width: sizes[6] },
+            { name: "details", type: "text", title: "Details", width: sizes[7] }
+            ]
+        });
+    });
+</script>
