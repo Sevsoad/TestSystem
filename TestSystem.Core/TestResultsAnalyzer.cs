@@ -19,12 +19,6 @@ namespace TestSystem.Core
 
             var expectedCollection = Regex.Matches(expectedIn, @"[\S]+");
             var actualCollection = Regex.Matches(actualIn, @"[\S]+");
-            //var checker = new FormatChecker();
-            //if (!checker.CheckTestFormat(expectedIn)
-            //    || checker.CheckTestFormat(actualIn))
-            //{
-            //    throw new ArgumentException();
-            //}
 
             for (var i = 0; i < expectedCollection.Count; i++)
             {

@@ -40,5 +40,8 @@ namespace TestSystem.Models.RunsModels
 
         [Display(Name = "Roc positive class")]
         public string RocClass { get; set; }
+
+        [Display(Name = "AUC")]
+        public string AUC { get; set; }
     }
 }

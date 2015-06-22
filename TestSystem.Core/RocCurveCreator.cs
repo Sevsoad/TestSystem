@@ -81,6 +81,9 @@ namespace TestSystem.Core
 
         public float CalculateAUC(string xValues, string yValues)
         {
+            xValues = xValues.TrimEnd();
+            yValues = yValues.TrimEnd();
+
             var xValsMs = xValues.Split(' ');
             var yValsMs = yValues.Split(' ');
 
@@ -114,7 +117,7 @@ namespace TestSystem.Core
 
 
                 var underBorderSquare = yBorderDot * (xValsFloatList[i] - prevXCoord);
-                var onBorderSquare = (yUpperDot - yBorderDot) * (xValsFloatList[i] - prevXCoord);
+                var onBorderSquare = (yUpperDot - yBorderDot) * (xValsFloatList[i] - prevXCoord) / 2.0f;
 
                 var sumSquare = underBorderSquare + onBorderSquare;
                 SummaryArea += sumSquare;

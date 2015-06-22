@@ -191,13 +191,15 @@ namespace TestSystem.Controllers
                                 var sbSensivity = new StringBuilder();
                                 var sbSpecifity = new StringBuilder();
 
-                                var statistics = rocCreator.GenerateRocCurveCoordinates(test.ExpectedResults, ms, model.RocClassNumber);
+                                var statistics = rocCreator.GenerateRocCurveCoordinates(test.ExpectedResults, ms, model.RocClassNumber);                                
 
                                 for (var i = 0; i < statistics.rocCoordinatesSensivity.Count(); i++)
                                 {
                                     sbSensivity.Append(statistics.rocCoordinatesSensivity[i].ToString("0.000") + " ");
                                     sbSpecifity.Append(statistics.rocCoordinatesSpecifity[i].ToString("0.000") + " ");
                                 }
+
+                                var AUCrate = rocCreator.CalculateAUC(sbSpecifity.ToString(), sbSensivity.ToString());
 
                                 results.RocCoordinatesSensiv = sbSensivity.ToString();
                                 results.RocCoordinatesSpecif = sbSpecifity.ToString();
@@ -206,6 +208,7 @@ namespace TestSystem.Controllers
                                 results.TN = statistics.TrueNegativeNumber.Average().ToString("0.000");
                                 results.TP = statistics.TruePositiveNumber.Average().ToString("0.000");
                                 results.CorrectRate = statistics.ErrorRate.ToString("0.000");
+                                results.OtherInfo = AUCrate.ToString("0.000");
 
                                 context.TestResults.Add(results);
 
@@ -324,6 +327,7 @@ namespace TestSystem.Controllers
                 var ratioInt = Convert.ToInt32(run.TrainRatio);
                 model.Ratio = ratioInt.ToString() + @"/" + (100 - ratioInt).ToString();
                 model.RocClass = run.RocClassNumber;
+                model.AUC = results.OtherInfo;
             }
 
             return View(model);

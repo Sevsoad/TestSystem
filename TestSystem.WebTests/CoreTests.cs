@@ -12,6 +12,22 @@ namespace TestSystem.WebTests
     public class CoreTests
     {
         [TestMethod]
+        public void RocCurveCreator_CalculateAUC_NoErrorThrown()
+        {
+            //Arrange
+            var creator = new RocCurveCreator();
+            var xVals = "0 0,5 1";
+            var yVals = "0 0,5 1";
+
+            //Act
+            var auc = creator.CalculateAUC(xVals, yVals);
+
+            //Assert
+
+            Assert.AreEqual(auc.ToString(), "0,5");
+        }
+
+        [TestMethod]
         public void ResultsAnalyzer_RightFormatInput_NoErrorThrown()
         {
             //Arrange
@@ -25,6 +41,7 @@ namespace TestSystem.WebTests
                 actualStringRightFormat, classNumber);
 
             //Assert
+            
         }
 
         //[TestMethod]
