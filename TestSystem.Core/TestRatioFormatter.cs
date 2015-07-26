@@ -44,15 +44,35 @@ namespace TestSystem.Core
 
                 List<byte> list = new List<byte>();
 
-                list.AddRange(System.Text.Encoding.UTF8.GetBytes("Teach part: "));
+                list.AddRange(System.Text.Encoding.UTF8.GetBytes("Teach part: \n"));
                 list.AddRange(testSet.Data.Take(teachBytes));
-                list.AddRange(System.Text.Encoding.UTF8.GetBytes("Test part: "));
-                list.AddRange(testSet.Data.Skip(teachBytes).Take(testSet.Data.Length - teachBytes));
+                list.AddRange(System.Text.Encoding.UTF8.GetBytes("Test part: \n"));
+                var testPartSb = new StringBuilder();
+
+                var testPart = testSet.Data.Skip(teachBytes).Take(testSet.Data.Length - teachBytes);
+                var str = System.Text.Encoding.UTF8.GetString(testPart.ToArray());
+                var array = str.TrimStart().TrimEnd().Split('\r');
+
+                foreach(var part in array)
+                {
+                    var partArray = part.Split(' ');
+                    for (var i = 1; i < partArray.Length; i++)
+                    {
+                        testPartSb.Append(partArray[i]);
+                        if (i != partArray.Length - 1)
+                        {
+                            testPartSb.Append(" ");
+                        }
+                        
+                    }
+                    testPartSb.Append(Environment.NewLine);
+                }
+
+                list.AddRange(System.Text.Encoding.UTF8.GetBytes(testPartSb.ToString()));
 
                 return list.ToArray(); 
             }
 
-            return null;
         }
 
     }

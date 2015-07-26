@@ -13,7 +13,7 @@ using TestSystem.Models.RunsModels;
 namespace TestSystem.Controllers
 {
     public class RunsController : Controller
-    {
+    {//pretty bad structured because of diploma class diagramm requirements
         [Authorize]
         public ActionResult StartTestRun()
         {
@@ -248,14 +248,6 @@ namespace TestSystem.Controllers
 
                 testFile = formatter.GenerateTestData(testRunDb.TestSetId, testRunDb.TrainRatio);
 
-                //if (testSet.Count() == 0)
-                //{
-                //    return View();
-                //}
-                //else
-                //{
-                //    testFile = testSet.ToArray()[0].Data;
-                //}
             }
 
             var cd = new System.Net.Mime.ContentDisposition
