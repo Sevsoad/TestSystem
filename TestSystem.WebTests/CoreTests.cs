@@ -28,6 +28,14 @@ namespace TestSystem.WebTests
         }
 
         [TestMethod]
+        public void GenerateTestData_ValidInput_ValidOutput()
+        {
+            var formatter = new TestRatioFormatter();
+            var result = formatter.GenerateTestData(1, "10");
+
+        }
+
+        [TestMethod]
         public void ResultsAnalyzer_RightFormatInput_NoErrorThrown()
         {
             //Arrange
